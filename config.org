@@ -1,32 +1,37 @@
 #+TITLE: Emacs Configuration
-#+AUTHOR: Your Name Here
+#+AUTHOR: Durant Schoon
 
-Boilerplate for a ~/.emacs.d/config.org emacs configuration using
-"Sane Defaults".
+While I'm debugging, I'll have emacs automatically open these files:
 
-Steps to making this file yours:
+#+BEGIN_SRC emacs-lisp
+  ;; Open these files when in a window (not in the terminal)
+  (when window-system
+    (setq inhibit-startup-message t)        ; Disable startup message 
+    (find-file "/Users/durantschoon/EMACS_BACKUP/.emacs")
+    (find-file "/Users/durantschoon/EMACS_BACKUP/init_work.el")
+    (split-window-right)
+    (find-file "/Users/durantschoon/.emacs.d/config.org")
+    (setq default-frame-alist
+          '(
+            (width . 200) ; character
+            (height . 58) ; lines
+            ))
+    )
+#+END_SRC
 
-1) Change all instances of "Your Name Here" to your name.
-2) Change all instances of "your@email.here" to your email address.
-3) Create ~/.emacs.d/custom.el even if it's empty.
-   Emacs will now write your (interactive) customizations to that
-   file. 
-4) Change the Sane Defaults if you need to. 
-   For example if you read and write Chinese and so prefer to default
-   to utf-16.
-5) Teach yourself what goes into your backup directories
-   ~/.emacs.d/backups
-   ~/.emacs.d/auto-save-list
-   So you'll know where to look for older versions of files that
-   you've edited. 
-6) Delete these instructions and replace them with a personalized
-   introduction. 
+* Setup Instructions
+
+  This file was created with boilerplate files described in the video
+  [[https://www.youtube.com/watch?v=dyWn30HMgQg&index=7&list=PLqHVwAuIChUK8GE6eDzCQAgP5cJIByQQ5][here]]. You might want to start with the first video in the [[https://www.youtube.com/playlist?list=PLqHVwAuIChUK8GE6eDzCQAgP5cJIByQQ5][playlist]].
 
 * Personal Information
 
+  I'm using `concat` so the bots don't find my entire email address
+  and spam me. 
+
 #+begin_src emacs-lisp
-(setq user-full-name "Your Name Here"
-      user-mail-address "your@email.here")
+  (setq user-full-name "Durant Schoon"
+        user-mail-address (concat "durant.schoon" "@" "gmail.com"))
 #+end_src
 
 * Customize settings
@@ -46,71 +51,186 @@ Let's start with some sane defaults, shall we?
 Sources for this section include [[https://github.com/magnars/.emacs.d/blob/master/settings/sane-defaults.el][Magnars Sveen]] and [[http://pages.sachachua.com/.emacs.d/Sacha.html][Sacha Chua]].
 
 #+begin_src emacs-lisp
-;; These functions are useful. Activate them.
-(put 'downcase-region 'disabled nil)
-(put 'upcase-region 'disabled nil)
-(put 'narrow-to-region 'disabled nil)
-(put 'dired-find-alternate-file 'disabled nil)
+  ;; These functions are useful. Activate them.
+  (put 'downcase-region 'disabled nil)
+  (put 'upcase-region 'disabled nil)
+  (put 'narrow-to-region 'disabled nil)
+  (put 'dired-find-alternate-file 'disabled nil)
 
-;; Answering just 'y' or 'n' will do
-(defalias 'yes-or-no-p 'y-or-n-p)
+  ;; Answering just 'y' or 'n' will do
+  (defalias 'yes-or-no-p 'y-or-n-p)
 
-;; Keep all backup and auto-save files in one directory
-(setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
-(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)))
+  ;; Keep all backup and auto-save files in one directory
+  (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+  (setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)))
 
-;; UTF-8 please
-(setq locale-coding-system 'utf-8) ; pretty
-(set-terminal-coding-system 'utf-8) ; pretty
-(set-keyboard-coding-system 'utf-8) ; pretty
-(set-selection-coding-system 'utf-8) ; please
-(prefer-coding-system 'utf-8) ; with sugar on top
-(setq-default indent-tabs-mode nil)
+  ;; UTF-8 please
+  (setq locale-coding-system 'utf-8) ; pretty
+  (set-terminal-coding-system 'utf-8) ; pretty
+  (set-keyboard-coding-system 'utf-8) ; pretty
+  (set-selection-coding-system 'utf-8) ; please
+  (prefer-coding-system 'utf-8) ; with sugar on top
+  (setq-default indent-tabs-mode nil)
 
-;; Turn off the blinking cursor
-(blink-cursor-mode -1)
+  ;; Turn off the blinking cursor
+  (blink-cursor-mode -1)
 
-(setq-default indent-tabs-mode nil)
-(setq-default indicate-empty-lines t)
+  (setq-default indent-tabs-mode nil)
+  (setq-default indicate-empty-lines t)
 
-;; Don't count two spaces after a period as the end of a sentence.
-;; Just one space is needed.
-(setq sentence-end-double-space nil)
+  ;; Don't count two spaces after a period as the end of a sentence.
+  ;; Just one space is needed.
+  (setq sentence-end-double-space nil)
 
-;; delete the region when typing, just like as we expect nowadays.
-(delete-selection-mode t)
+  ;; delete the region when typing, just like as we expect nowadays.
+  (delete-selection-mode t)
 
-(show-paren-mode t)
+  (show-paren-mode t)
 
-(column-number-mode t)
+  (column-number-mode t)
 
-(global-visual-line-mode)
-(diminish 'visual-line-mode)
+  (global-visual-line-mode)
+  (diminish 'visual-line-mode) ; remove this from the mode-line display
 
-(setq uniquify-buffer-name-style 'forward)
+  (setq uniquify-buffer-name-style 'forward)
 
-;; -i gets alias definitions from .bash_profile
-(setq shell-command-switch "-ic")
+  ;; -i gets alias definitions from .bash_profile
+  (setq shell-command-switch "-ic")
 
-;; Don't beep at me
-(setq visible-bell t)
+  ;; Don't beep at me
+  ;; (setq visible-bell t)
+  ;; because of a bug in El Capitan, setting this to nil
+  (setq visible-bell nil)
+
 #+end_src
 
 The following function for ~occur-dwim~ is taken from [[https://github.com/abo-abo][Oleh Krehel]] from
-[[http://oremacs.com/2015/01/26/occur-dwim/][his blog post at (or emacs]]. It takes the current region or the symbol
+[[http://oremacs.com/2015/01/26/occur-dwim/][his blog post at "(or emacs"]]. It takes the current region or the symbol
 at point as the default value for occur.
 
 #+begin_src emacs-lisp
-(defun occur-dwim ()
-  "Call `occur' with a sane default."
-  (interactive)
-  (push (if (region-active-p)
-            (buffer-substring-no-properties
-             (region-beginning)
-             (region-end))
-          (thing-at-point 'symbol))
-        regexp-history)
-  (call-interactively 'occur))
+  (defun occur-dwim ()
+    "Call `occur' with a sane default."
+    (interactive)
+    (push (if (region-active-p)
+              (buffer-substring-no-properties
+               (region-beginning)
+               (region-end))
+            (let ((sym (thing-at-point 'symbol)))
+              (when (stringp sym)
+                (regexp-quote sym))))
+          regexp-history)
+    (call-interactively 'occur))
 
-(bind-key "M-s o" 'occur-dwim)
+  (bind-key "M-s o" 'occur-dwim)
 #+end_src
+
+* Global Key Bindings
+
+;; key bindings
+;; http://ergoemacs.org/emacs/emacs_hyper_super_keys.html
+
+#+BEGIN_SRC emacs-lisp
+  (when (eq system-type 'darwin)          ; mac specific settings
+    ;; (setq mac-option-modifier 'alt)    ; not needed, I think
+    (setq mac-command-modifier 'meta)
+    (setq mac-option-modifier 'super)     ; make opt key do Super
+    (setq mac-control-modifier 'control)  ; make Control key do Control
+    (setq ns-function-modifier 'hyper)    ; make Fn key do Hyper
+    )
+
+  (global-set-key [kp-delete] 'delete-char) ;; sets fn-delete to be right-delete
+
+#+END_SRC
+
+* Window/Frames Settings
+
+#+BEGIN_SRC emacs-lisp
+  (when (eq system-type 'darwin)          ; mac specific settings
+    (global-set-key "\M-`" 'other-frame)  ; configure to act like other mac programs
+    )
+#+END_SRC
+
+* Org mode
+
+TODO go through [[https://github.com/danielmai/.emacs.d/blob/master/config.org#org-mode][daniel mai's org configuration]]
+
+** key bindings
+
+#+begin_src emacs-lisp
+  (bind-key "C-c l" 'org-store-link)
+  (bind-key "C-c c" 'org-capture)
+  (bind-key "C-c a" 'org-agenda)
+#+end_src
+
+** Org-bullets
+
+#+BEGIN_SRC emacs-lisp
+(use-package org-bullets
+  :ensure t)
+#+END_SRC
+
+** Hooks
+
+   The clocking expressions are for [[http://orgmode.org/manual/Clocking-work-time.html][clocking work time]].
+
+   #+BEGIN_SRC emacs-lisp
+     (add-hook 'org-mode-hook (lambda ()
+                                (setq org-clock-persist 'history)
+                                (org-clock-persistence-insinuate)
+                                (org-bullets-mode 1)
+                                (auto-fill-mode 1)
+                                ))
+   #+END_SRC
+
+* Magit
+
+A great interface for git projects. It's much more pleasant to use
+than the git interface on the command line. Use an easy keybinding to
+access magit.
+
+STOPPED_HERE
+maybe this is breaking things?! yes
+
+#+begin_src emacs-lisp :tangle no
+(use-package magit
+  :ensure t
+  :defer t
+  :bind ("C-c g" . magit-status)
+  :config
+  (define-key magit-status-mode-map (kbd "q") 'magit-quit-session))
+#+end_src
+
+* Utilities
+
+** Clean Recompile
+
+   FIXME
+
+Check if a unix system before running ^gnu ^darwin
+
+Should I try to run all these with elisp?
+
+#+BEGIN_SRC sh
+cd ~/.emacs.d
+find . -iname 'org.el*'
+find . -iname 'org.el*' | xargs rm
+
+; (byte-recompile-directory (expand-file-name "~/.emacs.d") 0)
+#+END_SRC
+
+* Personal Notes
+
+** What to explore next
+
+   - Add code from work emacs file
+
+   - Add code from home emacs file
+
+   - Add code from daniel's emacs file
+
+   - Test each of these and see if I like them
+     [[https://github.com/magnars/.emacs.d/blob/master/settings/sane-defaults.el][Magnars Sveen's Sane Defaults]]
+
+   - [[https://github.com/abo-abo/hydra][hydra]]
+     referenced here: http://oremacs.com/2015/01/26/occur-dwim/
