@@ -153,7 +153,6 @@ at point as the default value for occur.
 #+END_SRC
 
 * Org mode
-
 ** key bindings
    
    #+begin_src emacs-lisp
@@ -203,28 +202,11 @@ hold out for now :tangle
 #+end_src
 
 * Utilities
-
-** Clean Recompile
-
-   FIXME
-
-Check if a unix system before running ^gnu ^darwin
-
-Should I try to run all these with elisp?
-
-#+BEGIN_SRC sh
-cd ~/.emacs.d
-find . -iname 'org.el*'
-find . -iname 'org.el*' | xargs rm
-
-; (byte-recompile-directory (expand-file-name "~/.emacs.d") 0)
-#+END_SRC
-
 * Personal Notes
 
 First things I want to do:
 
-- Get pylint configured with flymake to ignore the warnings I don't want 
+- Get pylint configured with flycheck to ignore the warnings I don't want 
   set up with version control to share with work
 - See: "What to explore next"
 
@@ -232,9 +214,9 @@ First things I want to do:
 
    Turn on one section at a time where applicable
 
-   - Add code from work emacs file
+   - Add code from [[file:/Users/durantschoon/EMACS_BACKUP/init_work.el][work emacs dot files]]
 
-   - Add code from home emacs file
+   - Add code from [[file/Users/durantschoon/EMACS_BACKUP/.emacs][home emacs dot files]]
 
    - Add code from daniel's emacs file
      
@@ -262,3 +244,29 @@ First things I want to do:
          (add-hook 'after-init-hook 'server-start t)
          (add-hook 'after-init-hook 'edit-server-start t))
      #+end_src
+
+** Need to figure out the best way to do these:
+
+*** Utilities / Clean Recompile
+
+   FIXME
+
+Check if a unix system before running ^gnu ^darwin
+
+Should I try to run all these with elisp?
+
+#+BEGIN_SRC sh
+  cd ~/.emacs.d
+  find . -iname 'org.el*'
+  find . -iname 'org.el*' | xargs rm
+
+  ; (byte-recompile-directory (expand-file-name "~/.emacs.d") 0)
+#+END_SRC
+
+*** Where to put cheetsheet files
+
+    - personal cheatsheet
+      - C-x C-h for C-x commands (for global Commands)
+      - C-x r C-h for "C-x r" commands
+      - C-c C-h for C-c commands (for mode specific "C"ommands)
+
