@@ -19,13 +19,14 @@ While I'm debugging, I'll have emacs automatically open these files:
     )
 #+END_SRC
 
-* Setup Instructions
+* Introduction
+** Setup Instructions
 
-  This file was created with boilerplate files described in the video
-  [[https://www.youtube.com/watch?v=dyWn30HMgQg&index=7&list=PLqHVwAuIChUK8GE6eDzCQAgP5cJIByQQ5][here]]. If you're just getting started with emacs, you might want to
-  start with the first video in the [[https://www.youtube.com/playlist?list=PLqHVwAuIChUK8GE6eDzCQAgP5cJIByQQ5][playlist]].
+   This file was created with boilerplate files described in the video
+   [[https://www.youtube.com/watch?v=dyWn30HMgQg&index=7&list=PLqHVwAuIChUK8GE6eDzCQAgP5cJIByQQ5][here]]. If you're just getting started with emacs, you might want to
+   start with the first video in the [[https://www.youtube.com/playlist?list=PLqHVwAuIChUK8GE6eDzCQAgP5cJIByQQ5][playlist]].
 
-* Personal Information
+** Personal Information
 
   I'm using `concat` so the bots don't find my entire email address
   and spam me. 
@@ -35,7 +36,7 @@ While I'm debugging, I'll have emacs automatically open these files:
         user-mail-address (concat "durant.schoon" "@" "gmail.com"))
 #+end_src
 
-* Customize settings
+** Customize settings
 
 Set up the customize file to its own separate file, instead of saving
 customize settings in [[file:init.el][init.el]]. 
@@ -45,7 +46,8 @@ customize settings in [[file:init.el][init.el]].
 (load custom-file)
 #+end_src
 
-* Sane defaults
+* Settings
+** Sane defaults
 
 Let's start with some sane defaults, shall we?
 
@@ -126,7 +128,7 @@ at point as the default value for occur.
   (bind-key "M-s o" 'occur-dwim)
 #+end_src
 
-* Global Key Bindings
+** Global Key Bindings
 
 ;; key bindings
 ;; http://ergoemacs.org/emacs/emacs_hyper_super_keys.html
@@ -144,7 +146,7 @@ at point as the default value for occur.
 
 #+END_SRC
 
-* Window/Frames Settings
+** Window/Frames Settings
 
 #+BEGIN_SRC emacs-lisp
   (when (eq system-type 'darwin)          ; mac specific settings
@@ -152,40 +154,41 @@ at point as the default value for occur.
     )
 #+END_SRC
 
-* Org mode
-** key bindings
-   
-   #+begin_src emacs-lisp
-     (bind-key "C-c l" 'org-store-link)
-     (bind-key "C-c c" 'org-capture)
-     (bind-key "C-c a" 'org-agenda)
-   #+end_src
+* Modes
+** Org mode
+*** key bindings
+    
+    #+begin_src emacs-lisp
+      (bind-key "C-c l" 'org-store-link)
+      (bind-key "C-c c" 'org-capture)
+      (bind-key "C-c a" 'org-agenda)
+    #+end_src
 
-** Org-bullets
-   
-   #+BEGIN_SRC emacs-lisp
-     (use-package org-bullets
-       :ensure t)
-   #+END_SRC
+*** Org-bullets
+    
+    #+BEGIN_SRC emacs-lisp
+      (use-package org-bullets
+        :ensure t)
+    #+END_SRC
 
-** Hooks
+*** Hooks
 
-   The clocking expressions are for [[http://orgmode.org/manual/Clocking-work-time.html][clocking work time]].
+    The clocking expressions are for [[http://orgmode.org/manual/Clocking-work-time.html][clocking work time]].
 
-   #+BEGIN_SRC emacs-lisp
-     (add-hook 'org-mode-hook (lambda ()
-                                (setq org-clock-persist 'history)
-                                (org-clock-persistence-insinuate)
-                                (org-bullets-mode 1)
-                                (auto-fill-mode 1)
-                                ))
-   #+END_SRC
+    #+BEGIN_SRC emacs-lisp
+      (add-hook 'org-mode-hook (lambda ()
+                                 (setq org-clock-persist 'history)
+                                 (org-clock-persistence-insinuate)
+                                 (org-bullets-mode 1)
+                                 (auto-fill-mode 1)
+                                 ))
+    #+END_SRC
 
-** Reference
+*** Reference
 
-   - [[http://orgmode.org/manual/Easy-templates.html#Easy-templates][Easy templates]]
+    - [[http://orgmode.org/manual/Easy-templates.html#Easy-templates][Easy templates]]
 
-* Magit
+** Magit
 
 A great interface for git projects. It's much more pleasant to use
 than the git interface on the command line. Use an easy keybinding to
@@ -201,14 +204,40 @@ hold out for now :tangle
     (define-key magit-status-mode-map (kbd "q") 'magit-quit-session))
 #+end_src
 
-* Utilities
-* Personal Notes
+** Flycheck
+   
+   #+begin_src emacs-lisp
+     (use-package flycheck
+       :ensure t
+       :config
+       (progn
+         (setq flycheck-html-tidy-executable
+               "/usr/local/Cellar/tidy-html5/5.2.0/bin/tidy")
+         (setq flycheck-javascript-jshint-executable
+               "/usr/local/bin/jshint")
+         (global-flycheck-mode))
+       )
+   #+end_src
 
-First things I want to do:
+*** Linter setups
 
-- Get pylint configured with flycheck to ignore the warnings I don't want 
-  set up with version control to share with work
-- See: "What to explore next"
+    Install the HTML5/CSS/JavaScript linters.
+
+    #+begin_src sh
+      pip install pylint
+      brew install tidy-html5
+      npm install -g jshint
+      npm install -g csslint
+    #+end_src
+
+* Personal Notes about how to modify this file next
+
+** First things I want to do:
+
+   - Get pylint configured with flycheck to ignore the warnings I don't want 
+     set up with version control to share with work
+
+   - See: "What to explore next"
 
 ** What to explore next 
 
@@ -270,3 +299,11 @@ Should I try to run all these with elisp?
       - C-x r C-h for "C-x r" commands
       - C-c C-h for C-c commands (for mode specific "C"ommands)
 
+*** Possible to make emacs also install missing programs on OS?
+
+    eg. tidy5 on os x for flycheck
+
+    brew update
+    brew install tidy-html5
+
+    Why didn't this link to an executable tidy5?
