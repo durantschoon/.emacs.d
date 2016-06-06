@@ -22,7 +22,8 @@ While I'm debugging, I'll have emacs automatically open these files:
 * Setup Instructions
 
   This file was created with boilerplate files described in the video
-  [[https://www.youtube.com/watch?v=dyWn30HMgQg&index=7&list=PLqHVwAuIChUK8GE6eDzCQAgP5cJIByQQ5][here]]. You might want to start with the first video in the [[https://www.youtube.com/playlist?list=PLqHVwAuIChUK8GE6eDzCQAgP5cJIByQQ5][playlist]].
+  [[https://www.youtube.com/watch?v=dyWn30HMgQg&index=7&list=PLqHVwAuIChUK8GE6eDzCQAgP5cJIByQQ5][here]]. If you're just getting started with emacs, you might want to
+  start with the first video in the [[https://www.youtube.com/playlist?list=PLqHVwAuIChUK8GE6eDzCQAgP5cJIByQQ5][playlist]].
 
 * Personal Information
 
@@ -101,7 +102,7 @@ Sources for this section include [[https://github.com/magnars/.emacs.d/blob/mast
   ;; (setq visible-bell t)
   ;; because of a bug in El Capitan, setting this to nil
   (setq visible-bell nil)
-
+   
 #+end_src
 
 The following function for ~occur-dwim~ is taken from [[https://github.com/abo-abo][Oleh Krehel]] from
@@ -153,22 +154,20 @@ at point as the default value for occur.
 
 * Org mode
 
-TODO go through [[https://github.com/danielmai/.emacs.d/blob/master/config.org#org-mode][daniel mai's org configuration]]
-
 ** key bindings
-
-#+begin_src emacs-lisp
-  (bind-key "C-c l" 'org-store-link)
-  (bind-key "C-c c" 'org-capture)
-  (bind-key "C-c a" 'org-agenda)
-#+end_src
+   
+   #+begin_src emacs-lisp
+     (bind-key "C-c l" 'org-store-link)
+     (bind-key "C-c c" 'org-capture)
+     (bind-key "C-c a" 'org-agenda)
+   #+end_src
 
 ** Org-bullets
-
-#+BEGIN_SRC emacs-lisp
-(use-package org-bullets
-  :ensure t)
-#+END_SRC
+   
+   #+BEGIN_SRC emacs-lisp
+     (use-package org-bullets
+       :ensure t)
+   #+END_SRC
 
 ** Hooks
 
@@ -183,22 +182,24 @@ TODO go through [[https://github.com/danielmai/.emacs.d/blob/master/config.org#o
                                 ))
    #+END_SRC
 
+** Reference
+
+   - [[http://orgmode.org/manual/Easy-templates.html#Easy-templates][Easy templates]]
+
 * Magit
 
 A great interface for git projects. It's much more pleasant to use
 than the git interface on the command line. Use an easy keybinding to
 access magit.
 
-STOPPED_HERE
-maybe this is breaking things?! yes
+hold out for now :tangle
 
-#+begin_src emacs-lisp :tangle no
-(use-package magit
-  :ensure t
-  :defer t
-  :bind ("C-c g" . magit-status)
-  :config
-  (define-key magit-status-mode-map (kbd "q") 'magit-quit-session))
+#+begin_src emacs-lisp
+  (use-package magit
+    :ensure t
+    :bind ("C-c g" . magit-status)
+    :config
+    (define-key magit-status-mode-map (kbd "q") 'magit-quit-session))
 #+end_src
 
 * Utilities
@@ -221,16 +222,43 @@ find . -iname 'org.el*' | xargs rm
 
 * Personal Notes
 
-** What to explore next
+First things I want to do:
+
+- Get pylint configured with flymake to ignore the warnings I don't want 
+  set up with version control to share with work
+- See: "What to explore next"
+
+** What to explore next 
+
+   Turn on one section at a time where applicable
 
    - Add code from work emacs file
 
    - Add code from home emacs file
 
    - Add code from daniel's emacs file
+     
+     TODO go through [[https://github.com/danielmai/.emacs.d/blob/master/config.org#org-mode][daniel mai's org configuration]]
+     theme: https://github.com/sjrmanning/darkokai
+   
+     org and capture
 
    - Test each of these and see if I like them
      [[https://github.com/magnars/.emacs.d/blob/master/settings/sane-defaults.el][Magnars Sveen's Sane Defaults]]
 
+   - Do I need [[http://stackoverflow.com/questions/1568987/getting-emacs-to-respect-my-default-shell-options][this]] to work with zsh in emacs
+
    - [[https://github.com/abo-abo/hydra][hydra]]
      referenced here: http://oremacs.com/2015/01/26/occur-dwim/
+
+   - edit-server
+
+     config [[https://github.com/jwiegley/use-package][example]]:
+     
+     #+begin_src emacs-lisp :tangle no
+       (use-package edit-server
+         :if window-system
+         :init
+         (add-hook 'after-init-hook 'server-start t)
+         (add-hook 'after-init-hook 'edit-server-start t))
+     #+end_src
