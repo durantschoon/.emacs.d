@@ -11,6 +11,8 @@ While I'm debugging, I'll have emacs automatically open these files:
     (find-file "/Users/durantschoon/EMACS_BACKUP/init_work.el")
     (split-window-right)
     (find-file "/Users/durantschoon/.emacs.d/config.org")
+    (linum-mode 1)
+    (toggle-truncate-lines)
     (setq default-frame-alist
           '(
             (width . 200) ; character
@@ -45,6 +47,15 @@ customize settings in [[file:init.el][init.el]].
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file)
 #+end_src
+
+* Understand
+** Key bindings
+*** Prefixes
+    You can see all commands that begin with a prefix by using C-h afterward, 
+    e.g `C-x C-h` or `C-c C-h` 
+
+    C-x is for built-in emacs commands
+    C-c is for customized (major and minor mode) commands
 
 * Settings
 ** Sane defaults
@@ -106,6 +117,41 @@ Sources for this section include [[https://github.com/magnars/.emacs.d/blob/mast
   (setq visible-bell nil)
    
 #+end_src
+** Package management
+
+   I don't think I need this
+
+   #+BEGIN_SRC emacs-lisp :tangle no
+     (let ((default-directory "~/.emacs.d/elpa/"))
+       (normal-top-level-add-subdirs-to-load-path))
+   #+END_SRC
+
+** Global Key Bindings (Alphabetical by description)
+*** Completion
+
+    #+BEGIN_SRC emacs-lisp
+      (global-set-key (kbd "C-M-/") 'comint-dynamic-complete-filename)
+    #+END_SRC
+
+*** Darwin, OS X
+    
+    ;; key bindings
+    ;; http://ergoemacs.org/emacs/emacs_hyper_super_keys.html
+    
+    #+BEGIN_SRC emacs-lisp
+      (when (eq system-type 'darwin)          ; mac specific settings
+        ;; (setq mac-option-modifier 'alt)    ; not needed, I think
+        (setq mac-command-modifier 'meta)
+        (setq mac-option-modifier 'super)     ; make opt key do Super
+        (setq mac-control-modifier 'control)  ; make Control key do Control
+        (setq ns-function-modifier 'hyper)    ; make Fn key do Hyper
+        )
+
+      (global-set-key [kp-delete] 'delete-char) ;; sets fn-delete to be right-delete
+
+    #+END_SRC
+
+*** occur-dwim
 
 The following function for ~occur-dwim~ is taken from [[https://github.com/abo-abo][Oleh Krehel]] from
 [[http://oremacs.com/2015/01/26/occur-dwim/][his blog post at "(or emacs"]]. It takes the current region or the symbol
@@ -128,81 +174,113 @@ at point as the default value for occur.
   (bind-key "M-s o" 'occur-dwim)
 #+end_src
 
-** Global Key Bindings
+*** frames (really windows) and windows (really panes)
+    
+    #+BEGIN_SRC emacs-lisp
+      ;;; windowsandframes.el --- <one-line description of the library>
+      ;;; Commentary:
+      ;;; Code:
 
-;; key bindings
-;; http://ergoemacs.org/emacs/emacs_hyper_super_keys.html
 
-#+BEGIN_SRC emacs-lisp
-  (when (eq system-type 'darwin)          ; mac specific settings
-    ;; (setq mac-option-modifier 'alt)    ; not needed, I think
-    (setq mac-command-modifier 'meta)
-    (setq mac-option-modifier 'super)     ; make opt key do Super
-    (setq mac-control-modifier 'control)  ; make Control key do Control
-    (setq ns-function-modifier 'hyper)    ; make Fn key do Hyper
-    )
+      ;;; Windows (known as 'frames' in emacs)
 
-  (global-set-key [kp-delete] 'delete-char) ;; sets fn-delete to be right-delete
+      ;;; Code:
+      (when (eq system-type 'darwin)          ; mac specific settings
+        (global-set-key "\M-`" 'other-frame)  ; act like other mac programs
+        )
+
+      ;;; Panes/Frames (known as 'windows' in emacs)
+
+
+      ;; clearly my intuition for up and down are reversed
+      (global-set-key [(meta down)] 'scroll-other-window)    ; C-M-v
+      (global-set-key [(meta up)] 'scroll-other-window-down) ; C-M-S-v
+
+      (global-set-key (kbd "C-x 4 o") 'switch-to-buffer-other-window-return)
+
+      (defun switch-to-buffer-other-window-return ()
+        "Like `switch-to-buffer-other-window`, but return to original buffer."
+        (interactive)
+        (switch-to-buffer-other-window (other-buffer))
+        (other-window 1))
+
+      ;;; windowsandframes.el ends here
 
 #+END_SRC
 
-** Window/Frames Settings
-
-#+BEGIN_SRC emacs-lisp
-  (when (eq system-type 'darwin)          ; mac specific settings
-    (global-set-key "\M-`" 'other-frame)  ; configure to act like other mac programs
-    )
-#+END_SRC
-
-* Modes
-** Org mode
-*** key bindings
-    
-    #+begin_src emacs-lisp
-      (bind-key "C-c l" 'org-store-link)
-      (bind-key "C-c c" 'org-capture)
-      (bind-key "C-c a" 'org-agenda)
-    #+end_src
-
-*** Org-bullets
+*** Function Keys (f1-f4 are defined by emacs f5 on is for user customization)
     
     #+BEGIN_SRC emacs-lisp
-      (use-package org-bullets
-        :ensure t)
+      (global-set-key [f5] 'global-whitespace-mode)
+      (global-set-key [f6] 'toggle-truncate-lines)
     #+END_SRC
 
-*** Hooks
-
-    The clocking expressions are for [[http://orgmode.org/manual/Clocking-work-time.html][clocking work time]].
+*** web development
 
     #+BEGIN_SRC emacs-lisp
-      (add-hook 'org-mode-hook (lambda ()
-                                 (setq org-clock-persist 'history)
-                                 (org-clock-persistence-insinuate)
-                                 (org-bullets-mode 1)
-                                 (auto-fill-mode 1)
-                                 ))
+      (global-set-key (kbd "H-o") 'browse-url-of-buffer)
     #+END_SRC
 
-*** Reference
+** Themes
+*** Cyberpunk theme
 
-    - [[http://orgmode.org/manual/Easy-templates.html#Easy-templates][Easy templates]]
+The [[https://github.com/n3mo/cyberpunk-theme.el][cyberpunk theme]] is dark and colorful. However, I don't like the
+boxes around the mode line.
 
-** Magit
+#+begin_src emacs-lisp :tangle no
+(use-package cyberpunk-theme
+  :if (window-system)
+  :ensure t
+  :init
+  (progn
+    (load-theme 'cyberpunk t)
+    (set-face-attribute `mode-line nil
+                        :box nil)
+    (set-face-attribute `mode-line-inactive nil
+                        :box nil)))
+#+end_src
+*** Monokai theme
 
-A great interface for git projects. It's much more pleasant to use
-than the git interface on the command line. Use an easy keybinding to
-access magit.
+#+begin_src emacs-lisp :tangle no
+(use-package monokai-theme
+  :if (window-system)
+  :ensure t
+  :init
+  (setq monokai-use-variable-pitch nil))
+#+end_src
 
-hold out for now :tangle
+*** Convenient theme functions
 
 #+begin_src emacs-lisp
-  (use-package magit
-    :ensure t
-    :bind ("C-c g" . magit-status)
-    :config
-    (define-key magit-status-mode-map (kbd "q") 'magit-quit-session))
+(defun switch-theme (theme)
+  "Disables any currently active themes and loads THEME."
+  ;; This interactive call is taken from `load-theme'
+  (interactive
+   (list
+    (intern (completing-read "Load custom theme: "
+                             (mapc 'symbol-name
+                                   (custom-available-themes))))))
+  (let ((enabled-themes custom-enabled-themes))
+    (mapc #'disable-theme custom-enabled-themes)
+    (load-theme theme t)))
+
+(defun disable-active-themes ()
+  "Disables any currently active themes listed in `custom-enabled-themes'."
+  (interactive)
+  (mapc #'disable-theme custom-enabled-themes))
+
+(bind-key "s-<f12>" 'switch-theme)
+(bind-key "s-<f11>" 'disable-active-themes)
 #+end_src
+
+* Modes (Alphabetical)
+** Coffee-mode
+
+   #+begin_src emacs-lisp
+     (use-package coffee-mode
+       :defer t
+       :ensure t)
+   #+end_src
 
 ** Flycheck
    
@@ -230,12 +308,93 @@ hold out for now :tangle
       npm install -g csslint
     #+end_src
 
-* Personal Notes about how to modify this file next
+** Smartscan
 
+   Quickly move to previous and next symbol under the cursor (or replace)
+
+   #+begin_src emacs-lisp
+     (use-package smartscan
+       :ensure t
+       :config (global-smartscan-mode 1)
+       :bind (("M-n" . smartscan-symbol-go-forward)
+              ("M-p" . smartscan-symbol-go-backward)
+              ("M-'" . smartscan-symbol-replace) ; overrides abbrev-prefix-mark
+              ))
+   #+end_src
+
+** Magit
+
+A great interface for git projects. It's much more pleasant to use
+than the git interface on the command line. Use an easy keybinding to
+access magit.
+
+hold out for now :tangle
+
+#+begin_src emacs-lisp
+  (use-package magit
+    :ensure t
+    :bind ("C-c g" . magit-status)
+    :config
+    (define-key magit-status-mode-map (kbd "q") 'magit-quit-session))
+#+end_src
+
+** Org mode
+*** key bindings
+    
+    #+begin_src emacs-lisp
+      (bind-key "C-c l" 'org-store-link)
+      (bind-key "C-c c" 'org-capture)
+      (bind-key "C-c a" 'org-agenda)
+    #+end_src
+
+*** Org-bullets
+    
+    #+BEGIN_SRC emacs-lisp
+      (use-package org-bullets
+        :ensure t)
+    #+END_SRC
+
+*** Org hide markers
+    
+    #+BEGIN_SRC emacs-lisp
+      (setq org-hide-emphasis-markers t)
+    #+END_SRC
+
+*** Hooks
+
+    The clocking expressions are for [[http://orgmode.org/manual/Clocking-work-time.html][clocking work time]].
+
+    #+BEGIN_SRC emacs-lisp
+      (add-hook 'org-mode-hook (lambda ()
+                                 (setq org-clock-persist 'history)
+                                 (org-clock-persistence-insinuate)
+                                 (org-bullets-mode 1)
+                                 (auto-fill-mode 1)
+                                 ))
+    #+END_SRC
+
+*** Reference
+
+    - [[http://orgmode.org/manual/Easy-templates.html#Easy-templates][Easy templates]]
+** Python
+
+   Integrates with IPython.
+   
+   #+begin_src emacs-lisp
+     (use-package python-mode
+       :defer t
+       :ensure t)
+   #+end_src
+
+* Personal Notes about how to modify this file next
 ** First things I want to do:
+
+   - See: STOPPED_HERE in init_work.el
 
    - Get pylint configured with flycheck to ignore the warnings I don't want 
      set up with version control to share with work
+
+   - Do I have my yasnippets from work? Are they part of the repo?
 
    - See: "What to explore next"
 
@@ -243,9 +402,27 @@ hold out for now :tangle
 
    Turn on one section at a time where applicable
 
+   - Add
+
+     set in elisp: 
+
+     <!-- mode: web; web-mode-markup-indent-offset: 2; -->
+
    - Add code from [[file:/Users/durantschoon/EMACS_BACKUP/init_work.el][work emacs dot files]]
 
+     + Packages to decide about installing later
+       + [[https://www.gnu.org/software/emacs/manual/html_mono/eshell.html][eshell]]
+       + https://github.com/winterTTr/ace-jump-mode
+       + http://doc.norang.ca/org-mode.html#Capture
+       + https://github.com/benma/visual-regexp-steroids.el
+       + org-to-blog
+       + google calendar integration
+
    - Add code from [[file/Users/durantschoon/EMACS_BACKUP/.emacs][home emacs dot files]]
+
+     + Packages to decide about installing later
+       + mo-git-blame
+       + 
 
    - Add code from daniel's emacs file
      
@@ -254,8 +431,44 @@ hold out for now :tangle
    
      org and capture
 
+   - List by feature the things I want to explore next
+     + Sublime-like
+       + multiple cursors
+       + jumping
+       + project navigation
+       + completion: 
+         + [[https://www.emacswiki.org/emacs/Icicles_-_Ido_and_IswitchB][Ido and IswitchB]] over icicles 
+           "You cannot use Icicles and Ido together"
+
+           #+BEGIN_SRC emacs-lisp :tangle no
+             (require 'ido)
+             (ido-mode t)
+           #+END_SRC
+
+         + vs. Helm (replaces Anything.el)
+           + HelmSwoop – like occur, but /live/
+
    - Test each of these and see if I like them
      [[https://github.com/magnars/.emacs.d/blob/master/settings/sane-defaults.el][Magnars Sveen's Sane Defaults]]
+
+   - include notes about which the packages someone should learn
+     in order and why
+
+   - Make a yasnippet for these? Someone must have done it. 
+     Do I really need these just to make flycheck happy when editing
+     in elisp-mode?
+
+;;; <name>.el --- <one-line description of the library>
+;;; Commentary:
+;;; Change Log: (optional)
+;;; Code:
+;;; <name>.el ends here
+
+   - kill other buffer? 
+
+     see useful things for killing buffers
+
+     https://www.emacswiki.org/emacs/KillingBuffers
 
    - Do I need [[http://stackoverflow.com/questions/1568987/getting-emacs-to-respect-my-default-shell-options][this]] to work with zsh in emacs
 
