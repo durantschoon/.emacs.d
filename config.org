@@ -50,12 +50,28 @@ customize settings in [[file:init.el][init.el]].
 
 * Understand
 ** Key bindings
+
+   [[https://www.gnu.org/software/emacs/refcards/pdf/refcard.pdf][Cheatsheet for emacs v24]]
+
 *** Prefixes
     You can see all commands that begin with a prefix by using C-h afterward, 
     e.g `C-x C-h` or `C-c C-h` 
 
     C-x is for built-in emacs commands
     C-c is for customized (major and minor mode) commands
+** Remember these!
+
+   |-------------+---------------------------------|
+   | Key Binding | Description                     |
+   |-------------+---------------------------------|
+   | C-x C-=     | like +, increase font of buffer |
+   |-------------+---------------------------------|
+   | C-x C-1     | decrease font of buffer         |
+   |-------------+---------------------------------|
+
+
+   To select `org-mode-hook` with your mouse, click on the '-'
+   otherwise click on "org" to select only that part.
 
 * Settings
 ** Sane defaults
@@ -85,12 +101,10 @@ Sources for this section include [[https://github.com/magnars/.emacs.d/blob/mast
   (set-selection-coding-system 'utf-8) ; please
   (prefer-coding-system 'utf-8) ; with sugar on top
   (setq-default indent-tabs-mode nil)
+  (setq-default indicate-empty-lines t)
 
   ;; Turn off the blinking cursor
   (blink-cursor-mode -1)
-
-  (setq-default indent-tabs-mode nil)
-  (setq-default indicate-empty-lines t)
 
   ;; Don't count two spaces after a period as the end of a sentence.
   ;; Just one space is needed.
@@ -221,6 +235,16 @@ at point as the default value for occur.
       (global-set-key (kbd "H-o") 'browse-url-of-buffer)
     #+END_SRC
 
+** Mouse
+
+   #+BEGIN_SRC emacs-lisp
+     ;; from the iterm2 FAQ, how to use the mouse in emacs in iterm
+     ;; should I make this darwin specific?
+     (require 'mouse)
+     (xterm-mouse-mode t)
+     (defun track-mouse (e) "Make an empty 'track-mouse' function for event E.")
+   #+END_SRC
+
 ** Themes
 *** Cyberpunk theme
 
@@ -273,6 +297,66 @@ boxes around the mode line.
 (bind-key "s-<f11>" 'disable-active-themes)
 #+end_src
 
+** Tabs
+
+   When adding a new mode which has its own name for a tab variable,
+   add it to the list below. Then changing `tab-width` will change all
+   the other values.
+
+   #+BEGIN_SRC emacs-lisp
+     (setq tab-width 2)                      ; or any other preferred value
+     (let ((tab-variables `(c-basic-offset
+                            py-indent-offset
+                            sgml-basic-offset
+                            css-indent-offset
+                            web-mode-code-indent-offset
+                            web-mode-markup-indent-offset
+                            web-mode-code-indent-offset
+                            js-indent-level
+                            js2-indent-level
+                            coffee-tab-width
+                            )))
+       (dolist (tab-var tab-variables)
+         (defvaralias tab-var 'tab-width)))
+   #+END_SRC
+
+** Automatically setting modes
+
+   Most modes seem to recoginze the right file names when loading, but
+   these need to be set here.
+
+   #+BEGIN_SRC emacs-lisp
+     (add-to-list 'auto-mode-alist '("\\.aliases\\'" . sh-mode))
+     (add-to-list 'auto-mode-alist '("\\.json\\'" . js2-mode))
+   #+END_SRC
+
+** Zooming DISABLED (does weird things on mac)
+
+   #+BEGIN_SRC emacs-lisp :tangle no
+     ;; Zoom in and out
+     ;; from: http://blog.vivekhaldar.com/post/4809065853/dotemacs-extract-interactively-change-font-size
+
+     (defun zoom-in ()
+       "Increase font size by 10 points."
+       (interactive)
+       (set-face-attribute 'default nil
+                           :height
+                           (+ (face-attribute 'default :height)
+                              10)))
+
+     (defun zoom-out ()
+       "Decrease font size by 10 points."
+       (interactive)
+       (set-face-attribute 'default nil
+                           :height
+                           (- (face-attribute 'default :height)
+                              10)))
+
+     ;; change font size, interactively
+     (global-set-key (kbd "C-.") 'zoom-in)
+     (global-set-key (kbd "C-,") 'zoom-out) ; overrides org-cycle-agenda-files
+   #+END_SRC
+
 * Modes (Alphabetical)
 ** Coffee-mode
 
@@ -308,6 +392,16 @@ boxes around the mode line.
       npm install -g csslint
     #+end_src
 
+** JS2
+   #+begin_src emacs-lisp
+     (use-package js2-mode
+       :defer t
+       :ensure t
+       :config
+       (add-to-list 'auto-mode-alist '("\\.json\\'" . js2-mode))
+       (add-to-list 'interpreter-mode-alist '("node" . js2-mode))
+       )
+   #+end_src
 ** Smartscan
 
    Quickly move to previous and next symbol under the cursor (or replace)
@@ -338,6 +432,12 @@ hold out for now :tangle
     (define-key magit-status-mode-map (kbd "q") 'magit-quit-session))
 #+end_src
 
+** Markdown
+   #+begin_src emacs-lisp
+     (use-package markdown-mode
+       :defer t
+       :ensure t)
+   #+end_src
 ** Org mode
 *** key bindings
     
@@ -345,6 +445,7 @@ hold out for now :tangle
       (bind-key "C-c l" 'org-store-link)
       (bind-key "C-c c" 'org-capture)
       (bind-key "C-c a" 'org-agenda)
+      (global-set-key "\C-cb" 'org-iswitchb)
     #+end_src
 
 *** Org-bullets
@@ -370,12 +471,26 @@ hold out for now :tangle
                                  (org-clock-persistence-insinuate)
                                  (org-bullets-mode 1)
                                  (auto-fill-mode 1)
+                                 (indent-tabs-mode t)
                                  ))
     #+END_SRC
 
 *** Reference
 
     - [[http://orgmode.org/manual/Easy-templates.html#Easy-templates][Easy templates]]
+** "Pretty C-l"
+   
+   Display Control-l characters in a pretty way
+
+   #+begin_src emacs-lisp
+     (use-package pp-c-l
+       :defer t
+       :ensure t
+       :config
+       (pretty-control-l-mode 1)
+       )
+   #+end_src
+
 ** Python
 
    Integrates with IPython.
@@ -385,6 +500,34 @@ hold out for now :tangle
        :defer t
        :ensure t)
    #+end_src
+* Macros
+** Org macros
+*** "Times" macros in my times.org file :work:
+
+    My simple experiments with tracking work. There's nothing
+    really interesting here.
+
+    #+BEGIN_SRC emacs-lisp
+      ;; macros for my times.org file (org-mode specific)
+
+      (fset 'times-last
+            (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ([134217788 19 42 32 60 19 67108896 19 62 67108896 tab 11 25 tab 18 42 32 60 18 67108896 5 67108896 25] 0 "%d")) arg)))
+
+      (fset 'times-new
+            (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ([134217788 19 42 32 84 69 77 80 76 65 84 69 1 67108896 14 14 23 25 25 24 24 67108896 tab 6 6 6 2 11 3 46 return 14 14 5 51 48 19 42 32 60 67108896 16 67108896 backspace backspace backspace backspace 18 42 32 60 67108896 19 105 110 19 67108896 5 67108896] 0 "%d")) arg)))
+
+      (fset 'times-ba
+            [?\C-s ?t ?i ?m ?e ?s ?- ?b ?a ?\C-a ?\C-  ?\C-k ?\C-k ?\C-y ?\C-s ?t ?e ?m ?p ?l ?a ?t ?e ?\C-  ?\C-c ?\C-n ?\C-  ?\C-o ?\C-y ?\C-c ?\C-p tab ?\M-f ?\M-b ?\C-k ?\C-c ?. return])
+    #+END_SRC
+
+*** TODO md-link-to-org (did I get this working?)
+
+    what about link-to-md-org
+
+    #+BEGIN_SRC emacs-lisp
+      (fset 'md-link-to-org
+            [?\C-s ?\] ?\( ?\C-  ?\M-z ?\) ?\) ?\C-r ?\[ ?\C-  ?\[ ?\[ ?\C-y backspace ?\] ?\C-s ?\) ?\C-  backspace backspace ?\]])
+    #+END_SRC
 
 * Personal Notes about how to modify this file next
 ** First things I want to do:
@@ -402,13 +545,21 @@ hold out for now :tangle
 
    Turn on one section at a time where applicable
 
-   - Add
+   - Resolve all tabs issues:
 
-     set in elisp: 
+     Need to think about this. Are modes are smart and set the tab
+     indent to the one detected in a file? So I only want to force the
+     value to 2 in some cases?
 
      <!-- mode: web; web-mode-markup-indent-offset: 2; -->
 
+   - Does md-link-to-org work? the reverse org-to-md-link?
+
    - Add code from [[file:/Users/durantschoon/EMACS_BACKUP/init_work.el][work emacs dot files]]
+
+     skewer-mode
+     projectile
+     multiple-cursors
 
      + Packages to decide about installing later
        + [[https://www.gnu.org/software/emacs/manual/html_mono/eshell.html][eshell]]
@@ -422,7 +573,8 @@ hold out for now :tangle
 
      + Packages to decide about installing later
        + mo-git-blame
-       + 
+       + [[https://github.com/magnars/dash.el][Magnar's dash]] (some library I had required it once and there was
+         a minor problem)
 
    - Add code from daniel's emacs file
      
@@ -430,6 +582,10 @@ hold out for now :tangle
      theme: https://github.com/sjrmanning/darkokai
    
      org and capture
+
+   - Look into babel?
+
+     How about evaluating code from various languages?
 
    - List by feature the things I want to explore next
      + Sublime-like
@@ -448,27 +604,41 @@ hold out for now :tangle
          + vs. Helm (replaces Anything.el)
            + HelmSwoop – like occur, but /live/
 
+         + vs.? company mode "COMPlete ANYthing"
+           http://company-mode.github.io/
+           (add-hook 'after-init-hook 'global-company-mode)
+
    - Test each of these and see if I like them
      [[https://github.com/magnars/.emacs.d/blob/master/settings/sane-defaults.el][Magnars Sveen's Sane Defaults]]
 
    - include notes about which the packages someone should learn
      in order and why
 
+     + anything-sublime-can-do
+
+     + completions
+     + Programming
+       + consistent tabs
+       + projectile management
+       + running an interpretter, debugging
+
    - Make a yasnippet for these? Someone must have done it. 
      Do I really need these just to make flycheck happy when editing
      in elisp-mode?
 
-;;; <name>.el --- <one-line description of the library>
-;;; Commentary:
-;;; Change Log: (optional)
-;;; Code:
-;;; <name>.el ends here
+     ;;; <name>.el --- <one-line description of the library>
+     ;;; Commentary:
+     ;;; Change Log: (optional)
+     ;;; Code:
+     ;;; <name>.el ends here
 
    - kill other buffer? 
 
      see useful things for killing buffers
 
      https://www.emacswiki.org/emacs/KillingBuffers
+
+   - [[https://github.com/magnars/js2-refactor.el][js2-refactor]] A JavaScript refactoring library for emacs
 
    - Do I need [[http://stackoverflow.com/questions/1568987/getting-emacs-to-respect-my-default-shell-options][this]] to work with zsh in emacs
 
