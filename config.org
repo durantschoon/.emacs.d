@@ -8,11 +8,12 @@ While I'm debugging, I'll have emacs automatically open these files:
   (when window-system
     (setq inhibit-startup-message t)        ; Disable startup message 
     (find-file "/Users/durantschoon/EMACS_BACKUP/.emacs")
+    (linum-mode 1)
     (find-file "/Users/durantschoon/EMACS_BACKUP/init_work.el")
+    (linum-mode 1)
     (split-window-right)
     (find-file "/Users/durantschoon/.emacs.d/config.org")
-    (linum-mode 1)
-    (toggle-truncate-lines)
+    (toggle-truncate-lines t)
     (setq default-frame-alist
           '(
             (width . 200) ; character
@@ -205,22 +206,26 @@ at point as the default value for occur.
 
       ;;; Panes/Frames (known as 'windows' in emacs)
 
-
       ;; clearly my intuition for up and down are reversed
       (global-set-key [(meta down)] 'scroll-other-window)    ; C-M-v
       (global-set-key [(meta up)] 'scroll-other-window-down) ; C-M-S-v
 
       (global-set-key (kbd "C-x 4 o") 'switch-to-buffer-other-window-return)
+      (global-set-key (kbd "C-x 4 k") 'kill-buffer-other-window)
 
       (defun switch-to-buffer-other-window-return ()
         "Like `switch-to-buffer-other-window`, but return to original buffer."
         (interactive)
-        (switch-to-buffer-other-window (other-buffer))
         (other-window 1))
 
-      ;;; windowsandframes.el ends here
+      (defun kill-buffer-other-window ()
+        "kill the buffer in the other window"
+        (interactive)
+        (other-window 1)
+        (kill-buffer (current-buffer))
+        (other-window 1))
 
-#+END_SRC
+        #+END_SRC
 
 *** Function Keys (f1-f4 are defined by emacs f5 on is for user customization)
     
@@ -243,6 +248,14 @@ at point as the default value for occur.
      (require 'mouse)
      (xterm-mouse-mode t)
      (defun track-mouse (e) "Make an empty 'track-mouse' function for event E.")
+   #+END_SRC
+
+** Programming
+
+   #+BEGIN_SRC emacs-lisp
+     (defun my-prog-mode-hook ()
+       (linum-mode 1))
+     (add-hook 'prog-mode-hook 'my-prog-mode-hook)
    #+END_SRC
 
 ** Themes
@@ -330,6 +343,13 @@ boxes around the mode line.
      (add-to-list 'auto-mode-alist '("\\.json\\'" . js2-mode))
    #+END_SRC
 
+** Whitespace
+
+   #+BEGIN_SRC emacs-lisp
+     ;; automatically clean up bad whitespace
+     (setq whitespace-action '(auto-cleanup))
+   #+END_SRC
+
 ** Zooming DISABLED (does weird things on mac)
 
    #+BEGIN_SRC emacs-lisp :tangle no
@@ -358,12 +378,44 @@ boxes around the mode line.
    #+END_SRC
 
 * Modes (Alphabetical)
+** Ag
+
+   #+begin_src emacs-lisp
+     (add-hook 'ag-mode-hook (lambda () (toggle-truncate-lines)))
+   #+end_src
+
 ** Coffee-mode
 
    #+begin_src emacs-lisp
      (use-package coffee-mode
        :defer t
-       :ensure t)
+       :ensure t
+       :config
+       (add-hook 'coffee-after-compile-hook 'sourcemap-goto-corresponding-point)
+       ;; (define-key coffee-mode-map [(meta r)] 'coffee-compile-buffer)
+       ;; (define-key coffee-mode-map (kbd "C-j") 'coffee-newline-and-indent))
+       )
+   #+end_src
+** CSS mode
+
+   #+BEGIN_SRC emacs-lisp
+     (add-hook 'css-mode-hook (lambda () (rainbow-mode t)))
+   #+END_SRC
+
+** Emmet
+
+   According to [[http://emmet.io/][their website]], "Emmet — the essential toolkit for web-developers."
+   
+   #+begin_src emacs-lisp
+     (use-package emmet-mode
+       :ensure t
+       :commands emmet-mode
+       :config
+       (add-hook 'html-mode-hook 'emmet-mode)
+       (add-hook 'css-mode-hook 'emmet-mode)
+       (add-hook 'sass-mode-hook 'emmet-mode)
+       (add-hook 'sgml-mode-hook 'emmet-mode)
+       )
    #+end_src
 
 ** Flycheck
@@ -392,6 +444,17 @@ boxes around the mode line.
       npm install -g csslint
     #+end_src
 
+** HTML
+   
+   #+BEGIN_SRC emacs-lisp
+     (defun my-html-mode-hook ()
+       (linum-mode 1)
+       (column-number-mode 1)
+       (toggle-truncate-lines)
+       )
+     (add-hook 'html-mode-hook 'my-html-mode-hook)
+   #+END_SRC
+
 ** JS2
    #+begin_src emacs-lisp
      (use-package js2-mode
@@ -416,6 +479,17 @@ boxes around the mode line.
               ))
    #+end_src
 
+** Livescript
+
+   #+begin_src emacs-lisp
+     (use-package livescript-mode
+       :defer t
+       :ensure t
+       :config
+       (add-hook 'livescript-after-compile-hook 'sourcemap-goto-corresponding-point)
+       )
+   #+end_src
+
 ** Magit
 
 A great interface for git projects. It's much more pleasant to use
@@ -438,6 +512,31 @@ hold out for now :tangle
        :defer t
        :ensure t)
    #+end_src
+
+** Octave
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package octave-mode
+       :defer t
+       :ensure t)
+   #+END_SRC
+
+   Decide if I still need this:
+
+   #+BEGIN_SRC emacs-lisp :tangle no
+     (autoload 'octave-mode "octave-mod" nil t)
+
+     (setq auto-mode-alist
+           (cons '("\\.m$" . octave-mode) auto-mode-alist))
+
+     (add-hook 'octave-mode-hook
+               (lambda ()
+                 (abbrev-mode 1)
+                 (auto-fill-mode 1)
+                 (if (eq window-system 'x)
+                     (font-lock-mode 1))))
+   #+END_SRC
+
 ** Org mode
 *** key bindings
     
@@ -476,8 +575,14 @@ hold out for now :tangle
     #+END_SRC
 
 *** Reference
-
     - [[http://orgmode.org/manual/Easy-templates.html#Easy-templates][Easy templates]]
+*** Todo
+
+    #+BEGIN_SRC emacs-lisp
+      (setq org-todo-keywords
+            '((sequence "TODO" "IN_PROGRESS" "|" "DONE")))
+    #+END_SRC
+
 ** "Pretty C-l"
    
    Display Control-l characters in a pretty way
@@ -500,6 +605,66 @@ hold out for now :tangle
        :defer t
        :ensure t)
    #+end_src
+
+** Recentf
+
+   Recentf is a minor mode that builds a list of recently opened
+   files. This list is is automatically saved across sessions on
+   exiting Emacs - you can then access this list through a command or
+   the menu.
+   
+   https://www.emacswiki.org/emacs/RecentFiles
+
+   #+begin_src emacs-lisp
+     (use-package recentf
+       :bind ("C-x C-r" . helm-recentf)
+       :config
+       (recentf-mode t)
+       (setq recentf-max-saved-items 200))
+   #+end_src
+
+** Sass
+
+   #+begin_src emacs-lisp
+     (use-package sass-mode
+       :defer t
+       :ensure t
+       :config
+       (linum-mode 1)
+       (rainbow-mode t)
+       )
+   #+end_src
+
+** Web Mode
+  
+   #+begin_src emacs-lisp
+     (use-package web-mode
+       :defer t
+       :ensure t
+       :config
+       (local-set-key "\C-cv" 'browse-url-of-file)
+       (add-hook 'html-mode-hook 'web-mode) ;; enable web mode in html
+       )
+   #+end_src
+
+** Yasnippet
+   #+begin_src emacs-lisp
+     (use-package yasnippet
+       :ensure t
+       :defer t
+       :diminish yas-minor-mode
+       :config
+       (setq yas-snippet-dirs (concat user-emacs-directory "snippets"))
+       (yas-global-mode))
+   #+end_src
+
+** Zsh
+
+   #+BEGIN_SRC emacs-lisp
+     (setq auto-mode-alist
+           (cons '("\\.zsh$" . sh-mode) auto-mode-alist))
+   #+END_SRC
+
 * Macros
 ** Org macros
 *** "Times" macros in my times.org file :work:
@@ -575,6 +740,28 @@ hold out for now :tangle
        + mo-git-blame
        + [[https://github.com/magnars/dash.el][Magnar's dash]] (some library I had required it once and there was
          a minor problem)
+
+   - put this with recentf?
+
+    #+BEGIN_SRC emacs-lisp :tangle no
+    (defun ido-recentf-open ()
+      "Use `ido-completing-read' to \\[find-file] a recent file."
+      (interactive)
+      (if (find-file (ido-completing-read "Find recent file: " recentf-list))
+          (message "Opening file...")
+        (message "Aborting")))
+    #+END_SRC
+
+   - yasnippets
+
+    Daniel's description:
+
+    Yeah, snippets! I start with snippets from [[https://github.com/AndreaCrotti/yasnippet-snippets][Andrea Crotti's collection]]
+    and have also modified them and added my own.
+
+    It takes a few seconds to load and I don't need them immediately when
+    Emacs starts up, so we can defer loading yasnippet until there's some
+    idle time.
 
    - Add code from daniel's emacs file
      
@@ -690,3 +877,4 @@ Should I try to run all these with elisp?
     brew install tidy-html5
 
     Why didn't this link to an executable tidy5?
+
