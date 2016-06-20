@@ -6,7 +6,7 @@ While I'm debugging, I'll have emacs automatically open these files:
 #+BEGIN_SRC emacs-lisp
   ;; Open these files when in a window (not in the terminal)
   (when window-system
-    (setq inhibit-startup-message t)        ; Disable startup message 
+    (setq inhibit-startup-message t)        ; Disable startup message
     (find-file "/Users/durantschoon/EMACS_BACKUP/init_work.el")
     (linum-mode 1)
     (find-file "/Users/durantschoon/EMACS_BACKUP/.emacs")
@@ -32,7 +32,7 @@ While I'm debugging, I'll have emacs automatically open these files:
 ** Personal Information
 
   I'm using `concat` so the bots don't find my entire email address
-  and spam me. 
+  and spam me.
 
 #+begin_src emacs-lisp
   (setq user-full-name "Durant Schoon"
@@ -42,7 +42,7 @@ While I'm debugging, I'll have emacs automatically open these files:
 ** Customize settings
 
 Set up the customize file to its own separate file, instead of saving
-customize settings in [[file:init.el][init.el]]. 
+customize settings in [[file:init.el][init.el]].
 
 #+begin_src emacs-lisp
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
@@ -55,8 +55,8 @@ customize settings in [[file:init.el][init.el]].
    [[https://www.gnu.org/software/emacs/refcards/pdf/refcard.pdf][Cheatsheet for emacs v24]]
 
 *** Prefixes
-    You can see all commands that begin with a prefix by using C-h afterward, 
-    e.g `C-x C-h` or `C-c C-h` 
+    You can see all commands that begin with a prefix by using C-h afterward,
+    e.g `C-x C-h` or `C-c C-h`
 
     C-x is for built-in emacs commands
     C-c is for customized (major and minor mode) commands
@@ -87,7 +87,7 @@ Sources for this section include [[https://github.com/magnars/.emacs.d/blob/mast
   (put 'upcase-region 'disabled nil)
   (put 'narrow-to-region 'disabled nil)
   ;; Remember
-  ;; C-x n n 
+  ;; C-x n n
   ;;   Narrow down to between point and mark (narrow-to-region).
   ;; C-x n w
   ;;   Widen to make the entire buffer accessible again (widen).
@@ -135,7 +135,7 @@ Sources for this section include [[https://github.com/magnars/.emacs.d/blob/mast
   ;; (setq visible-bell t)
   ;; because of a bug in El Capitan, setting this to nil
   (setq visible-bell nil)
-   
+
 #+end_src
 ** Package management
 
@@ -154,10 +154,10 @@ Sources for this section include [[https://github.com/magnars/.emacs.d/blob/mast
     #+END_SRC
 
 *** Darwin, OS X
-    
+
     ;; key bindings
     ;; http://ergoemacs.org/emacs/emacs_hyper_super_keys.html
-    
+
     #+BEGIN_SRC emacs-lisp
       (when (eq system-type 'darwin)          ; mac specific settings
         ;; (setq mac-option-modifier 'alt)    ; not needed, I think
@@ -195,7 +195,7 @@ at point as the default value for occur.
 #+end_src
 
 *** frames (really windows) and windows (really panes)
-    
+
     #+BEGIN_SRC emacs-lisp
             ;;; windowsandframes.el
             ;;; Commentary:
@@ -224,7 +224,11 @@ at point as the default value for occur.
         (other-window 1))
 
       (defun kill-buffer-other-window ()
-        "kill the buffer in the other window"
+        "Kill the buffer in the other window.
+      I usually work with 2 windows side by side so when I do anything
+      that opens a buffer in the other window (eg. looking at a function
+      definition), I'll want to kill it after when I'm done. That's when
+      I use kill-buffer-other-window."
         (interactive)
         (other-window 1)
         (kill-buffer (current-buffer))
@@ -233,7 +237,7 @@ at point as the default value for occur.
         #+END_SRC
 
 *** Function Keys (f1-f4 are defined by emacs f5 on is for user customization)
-    
+
     #+BEGIN_SRC emacs-lisp
       (global-set-key [f5] 'global-whitespace-mode)
       (global-set-key [f6] 'toggle-truncate-lines)
@@ -270,7 +274,7 @@ at point as the default value for occur.
 The [[https://github.com/n3mo/cyberpunk-theme.el][cyberpunk theme]] is dark and colorful. However, I don't like the
 boxes around the mode line.
 
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp
 (use-package cyberpunk-theme
   :if (window-system)
   :ensure t
@@ -398,7 +402,7 @@ boxes around the mode line.
         ))
      ;;   (coq . t)
      ;;   (cpp . t) ; C++
-     ;;   (prolog . t)   
+     ;;   (prolog . t)
 
      (defun my-org-confirm-babel-evaluate (lang body)
        (not (or (string= lang "C")
@@ -419,12 +423,12 @@ boxes around the mode line.
    Following Daniel here to use Emacs to edit posts on Discourse,
    which has a post editor that overrides normal Emacs key bindings
    with other functions. As such, ~markdown-mode~ is used.
-   
+
    #+begin_src emacs-lisp
      (use-package edit-server
        :ensure t
        :config
-       (progn 
+       (progn
          (edit-server-start)
          (setq edit-server-default-major-mode 'markdown-mode)
          (setq edit-server-new-frame nil)))
@@ -459,7 +463,7 @@ boxes around the mode line.
 ** Emmet
 
    According to [[http://emmet.io/][their website]], "Emmet — the essential toolkit for web-developers."
-   
+
    #+begin_src emacs-lisp
      (use-package emmet-mode
        :ensure t
@@ -492,7 +496,7 @@ boxes around the mode line.
    #+END_SRC
 
 ** Flycheck
-   
+
    #+begin_src emacs-lisp
      (use-package flycheck
        :ensure t
@@ -525,7 +529,7 @@ boxes around the mode line.
                   (toggle-truncate-lines t)))
    #+END_SRC
 ** HTML
-   
+
    #+BEGIN_SRC emacs-lisp
      (defun my-html-mode-hook ()
        (linum-mode 1)
@@ -609,9 +613,9 @@ hold out for now :tangle
    #+end_src
 
 ** Multiple Cursors
-   
+
    For some reason I need to require 'cl. Some of the mc libraries
-   require 'cl-lib, but that doesn't seem to be enough. 
+   require 'cl-lib, but that doesn't seem to be enough.
 
    #+begin_src emacs-lisp
      (use-package multiple-cursors
@@ -647,7 +651,7 @@ hold out for now :tangle
 
 ** Org mode
 *** key bindings
-    
+
     #+begin_src emacs-lisp
       (bind-key "C-c l" 'org-store-link)
       (bind-key "C-c c" 'org-capture)
@@ -656,14 +660,14 @@ hold out for now :tangle
     #+end_src
 
 *** Org-bullets
-    
+
     #+BEGIN_SRC emacs-lisp
       (use-package org-bullets
         :ensure t)
     #+END_SRC
 
 *** Org hide markers
-    
+
     #+BEGIN_SRC emacs-lisp
       (setq org-hide-emphasis-markers t)
     #+END_SRC
@@ -697,7 +701,7 @@ hold out for now :tangle
                                          (toggle-truncate-lines t)))
    #+END_SRC
 ** "Pretty C-l"
-   
+
    Display Control-l characters in a pretty way
 
    #+begin_src emacs-lisp
@@ -711,7 +715,7 @@ hold out for now :tangle
 ** Python
 
    Integrates with IPython.
-   
+
    #+begin_src emacs-lisp
      (use-package python-mode
        :defer t
@@ -719,13 +723,13 @@ hold out for now :tangle
    #+end_src
 
 ** Projectile
-   
+
    #+BEGIN_QUOTE
    Project navigation and management library for Emacs.
    #+END_QUOTE
- 
+
   http://batsov.com/projectile/
-    
+
    #+begin_src emacs-lisp
      (use-package projectile
        :ensure t
@@ -746,7 +750,7 @@ hold out for now :tangle
    files. This list is is automatically saved across sessions on
    exiting Emacs - you can then access this list through a command or
    the menu.
-   
+
    https://www.emacswiki.org/emacs/RecentFiles
 
    #+begin_src emacs-lisp
@@ -772,7 +776,7 @@ hold out for now :tangle
    #+end_src
 
 ** Web Mode
-  
+
    #+begin_src emacs-lisp
      (use-package web-mode
        :defer t
@@ -850,12 +854,12 @@ hold out for now :tangle
    - confirm :config takes one thing afterward so I need (progn ...)
      ask_daniel
 
-   - Get pylint configured with flycheck to ignore the warnings I don't want 
+   - Get pylint configured with flycheck to ignore the warnings I don't want
      set up with version control to share with work
 
    - See: "What to explore next"
 
-** What to explore next 
+** What to explore next
 
    Turn on one section at a time where applicable
 
@@ -880,7 +884,7 @@ hold out for now :tangle
        + projectile
        + multiple-cursors
          Is this still needed?
-         We'll also need to ~(require 'multiple-cusors)~ because of [[https://github.com/magnars/multiple-cursors.el/issues/105][an autoload issue]].   
+         We'll also need to ~(require 'multiple-cusors)~ because of [[https://github.com/magnars/multiple-cursors.el/issues/105][an autoload issue]].
        + skewer-mode
        + https://github.com/winterTTr/ace-jump-mode
        + http://doc.norang.ca/org-mode.html#Capture
@@ -926,10 +930,10 @@ hold out for now :tangle
      macros in ~/.emacs.d/macros/durants_macros.el
 
    - Add code from daniel's emacs file
-     
+
      TODO go through [[https://github.com/danielmai/.emacs.d/blob/master/config.org#org-mode][daniel mai's org configuration]]
      theme: https://github.com/sjrmanning/darkokai
-   
+
      org and capture
 
    - Look into babel?
@@ -943,8 +947,8 @@ hold out for now :tangle
        + multiple cursors
        + jumping
        + project navigation
-       + completion: 
-         + [[https://www.emacswiki.org/emacs/Icicles_-_Ido_and_IswitchB][Ido and IswitchB]] over icicles 
+       + completion:
+         + [[https://www.emacswiki.org/emacs/Icicles_-_Ido_and_IswitchB][Ido and IswitchB]] over icicles
            "You cannot use Icicles and Ido together"
 
            #+BEGIN_SRC emacs-lisp :tangle no
@@ -983,7 +987,7 @@ hold out for now :tangle
 
    - flycheck wigging out in elisp source blocks
 
-     Make a yasnippet for these? Someone must have done it. 
+     Make a yasnippet for these? Someone must have done it.
      Do I really need these just to make flycheck happy when editing
      in elisp-mode?
 
@@ -1003,7 +1007,7 @@ hold out for now :tangle
    - edit-server
 
      config [[https://github.com/jwiegley/use-package][example]]:
-     
+
      #+begin_src emacs-lisp :tangle no
        (use-package edit-server
          :if window-system
@@ -1033,7 +1037,7 @@ Should I try to run all these with elisp?
 *** Where to put cheetsheet files
 
     - personal cheatsheet
-      - 
+      -
 
 *** Possible to make emacs also install missing programs on OS?
 
@@ -1085,8 +1089,8 @@ Should I try to run all these with elisp?
          (insert "\n")
          (comment-region beg (point))))
    #+END_SRC
-** ? 
-   #+BEGIN_SRC emacs-lisp   
+** ?
+   #+BEGIN_SRC emacs-lisp
      (defun insert-python-durant-debug-class ()
        "Insert my python debugging class: "
        (interactive)
