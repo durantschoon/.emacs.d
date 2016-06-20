@@ -16,7 +16,7 @@ While I'm debugging, I'll have emacs automatically open these files:
     (toggle-truncate-lines t)
     (setq default-frame-alist
           '(
-            (width . 200) ; character
+            (width . 177) ; character
             (height . 58) ; lines
             ))
     )
@@ -192,19 +192,18 @@ at point as the default value for occur.
 *** frames (really windows) and windows (really panes)
     
     #+BEGIN_SRC emacs-lisp
-      ;;; windowsandframes.el --- <one-line description of the library>
-      ;;; Commentary:
-      ;;; Code:
+            ;;; windowsandframes.el
+            ;;; Commentary:
+            ;;; Code:
 
+            ;;; Windows (known as 'frames' in emacs)
 
-      ;;; Windows (known as 'frames' in emacs)
-
-      ;;; Code:
+            ;;; Code:
       (when (eq system-type 'darwin)          ; mac specific settings
         (global-set-key "\M-`" 'other-frame)  ; act like other mac programs
         )
 
-      ;;; Panes/Frames (known as 'windows' in emacs)
+            ;;; Panes/Frames (known as 'windows' in emacs)
 
       ;; clearly my intuition for up and down are reversed
       (global-set-key [(meta down)] 'scroll-other-window)    ; C-M-v
@@ -216,6 +215,7 @@ at point as the default value for occur.
       (defun switch-to-buffer-other-window-return ()
         "Like `switch-to-buffer-other-window`, but return to original buffer."
         (interactive)
+        (switch-to-buffer-other-window (other-buffer))
         (other-window 1))
 
       (defun kill-buffer-other-window ()
@@ -377,6 +377,53 @@ boxes around the mode line.
      (global-set-key (kbd "C-,") 'zoom-out) ; overrides org-cycle-agenda-files
    #+END_SRC
 
+** Babel
+
+   #+BEGIN_SRC emacs-lisp
+     (org-babel-do-load-languages
+      'org-babel-load-languages
+      '((C . t)
+        (css . t)
+        (emacs-lisp . t)
+        (haskell . t)
+        (python . t)
+        (ruby . t)
+        (sh . t)
+        ))
+     ;;   (coq . t)
+     ;;   (cpp . t) ; C++
+     ;;   (prolog . t)   
+
+     (defun my-org-confirm-babel-evaluate (lang body)
+       (not (or (string= lang "C")
+                (string= lang "emacs-lisp")
+                (string= lang "haskell")
+                (string= lang "python")
+                (string= lang "ruby")
+                ;; (string= lang "shell") ;; commented = do confirm
+                )))
+     (setq org-confirm-babel-evaluate 'my-org-confirm-babel-evaluate)
+
+   #+END_SRC
+
+** Edit With Emacs
+
+   [[https://chrome.google.com/webstore/detail/edit-with-emacs/ljobjlafonikaiipfkggjbhkghgicgoh?hl=en][Chrome plugin]]
+
+   Following Daniel here to use Emacs to edit posts on Discourse,
+   which has a post editor that overrides normal Emacs key bindings
+   with other functions. As such, ~markdown-mode~ is used.
+   
+   #+begin_src emacs-lisp
+     (use-package edit-server
+       :ensure t
+       :config
+       (progn 
+         (edit-server-start)
+         (setq edit-server-default-major-mode 'markdown-mode)
+         (setq edit-server-new-frame nil)))
+   #+end_src
+
 * Modes (Alphabetical)
 ** Ag
 
@@ -391,10 +438,11 @@ boxes around the mode line.
        :defer t
        :ensure t
        :config
-       (add-hook 'coffee-after-compile-hook 'sourcemap-goto-corresponding-point)
-       ;; (define-key coffee-mode-map [(meta r)] 'coffee-compile-buffer)
-       ;; (define-key coffee-mode-map (kbd "C-j") 'coffee-newline-and-indent))
-       )
+       (progn
+         (add-hook 'coffee-after-compile-hook 'sourcemap-goto-corresponding-point)
+         ;; (define-key coffee-mode-map [(meta r)] 'coffee-compile-buffer)
+         ;; (define-key coffee-mode-map (kbd "C-j") 'coffee-newline-and-indent))
+         ))
    #+end_src
 ** CSS mode
 
@@ -411,10 +459,11 @@ boxes around the mode line.
        :ensure t
        :commands emmet-mode
        :config
-       (add-hook 'html-mode-hook 'emmet-mode)
-       (add-hook 'css-mode-hook 'emmet-mode)
-       (add-hook 'sass-mode-hook 'emmet-mode)
-       (add-hook 'sgml-mode-hook 'emmet-mode)
+       (progn
+         (add-hook 'html-mode-hook 'emmet-mode)
+         (add-hook 'css-mode-hook 'emmet-mode)
+         (add-hook 'sass-mode-hook 'emmet-mode)
+         (add-hook 'sgml-mode-hook 'emmet-mode))
        )
    #+end_src
 
@@ -461,8 +510,9 @@ boxes around the mode line.
        :defer t
        :ensure t
        :config
-       (add-to-list 'auto-mode-alist '("\\.json\\'" . js2-mode))
-       (add-to-list 'interpreter-mode-alist '("node" . js2-mode))
+       (progn
+         (add-to-list 'auto-mode-alist '("\\.json\\'" . js2-mode))
+         (add-to-list 'interpreter-mode-alist '("node" . js2-mode)))
        )
    #+end_src
 ** Smartscan
@@ -513,15 +563,28 @@ hold out for now :tangle
        :ensure t)
    #+end_src
 
+** Multiple Cursors
+   
+   For some reason I need to require 'cl. Some of the mc libraries
+   require 'cl-lib, but that doesn't seem to be enough. 
+
+   #+begin_src emacs-lisp
+     (use-package multiple-cursors
+       :ensure t
+       :init
+       (require 'cl)
+       :bind (("C-S-c C-S-c" . mc/edit-lines)
+              ("C->"         . mc/mark-next-like-this)
+              ("C-<"         . mc/mark-previous-like-this)
+              ("C-c C-<"     . mc/mark-all-like-this)
+              ("C-!"         . mc/mark-next-symbol-like-this)
+              ("s-d"         . mc/mark-all-dwim))
+       )
+   #+end_src
+
 ** Octave
 
-   #+BEGIN_SRC emacs-lisp
-     (use-package octave-mode
-       :defer t
-       :ensure t)
-   #+END_SRC
-
-   Decide if I still need this:
+   Decide if I still need this (from [[https://www.gnu.org/software/octave/doc/v4.0.0/Using-Octave-Mode.html][Using Octave Mode]]):
 
    #+BEGIN_SRC emacs-lisp :tangle no
      (autoload 'octave-mode "octave-mod" nil t)
@@ -589,7 +652,6 @@ hold out for now :tangle
 
    #+begin_src emacs-lisp
      (use-package pp-c-l
-       :defer t
        :ensure t
        :config
        (pretty-control-l-mode 1)
@@ -606,6 +668,28 @@ hold out for now :tangle
        :ensure t)
    #+end_src
 
+** Projectile
+   
+   #+BEGIN_QUOTE
+   Project navigation and management library for Emacs.
+   #+END_QUOTE
+ 
+  http://batsov.com/projectile/
+    
+   #+begin_src emacs-lisp
+     (use-package projectile
+       :ensure t
+       :diminish projectile-mode
+       :commands projectile-mode
+       :config
+       (progn
+         (projectile-global-mode t)
+         (setq projectile-enable-caching t)
+         (use-package ag
+           :commands ag
+           :ensure t)))
+   #+end_src
+
 ** Recentf
 
    Recentf is a minor mode that builds a list of recently opened
@@ -619,8 +703,9 @@ hold out for now :tangle
      (use-package recentf
        :bind ("C-x C-r" . helm-recentf)
        :config
-       (recentf-mode t)
-       (setq recentf-max-saved-items 200))
+       (progn
+         (recentf-mode t)
+         (setq recentf-max-saved-items 200)))
    #+end_src
 
 ** Sass
@@ -630,8 +715,9 @@ hold out for now :tangle
        :defer t
        :ensure t
        :config
-       (linum-mode 1)
-       (rainbow-mode t)
+       (progn
+         (linum-mode 1)
+         (rainbow-mode t))
        )
    #+end_src
 
@@ -642,8 +728,9 @@ hold out for now :tangle
        :defer t
        :ensure t
        :config
-       (local-set-key "\C-cv" 'browse-url-of-file)
-       (add-hook 'html-mode-hook 'web-mode) ;; enable web mode in html
+       (progn
+         (local-set-key "\C-cv" 'browse-url-of-file)
+         (add-hook 'html-mode-hook 'web-mode)) ;; enable web mode in html
        )
    #+end_src
 
@@ -654,8 +741,9 @@ hold out for now :tangle
        :defer t
        :diminish yas-minor-mode
        :config
-       (setq yas-snippet-dirs (concat user-emacs-directory "snippets"))
-       (yas-global-mode))
+       (progn
+         (setq yas-snippet-dirs (concat user-emacs-directory "snippets"))
+         (yas-global-mode)))
    #+end_src
 
 ** Zsh
@@ -699,6 +787,8 @@ hold out for now :tangle
 
    - See: STOPPED_HERE in init_work.el
 
+   - confirm :config takes one thing afterward so I need (progn ...)
+
    - Get pylint configured with flycheck to ignore the warnings I don't want 
      set up with version control to share with work
 
@@ -722,17 +812,24 @@ hold out for now :tangle
 
    - Add code from [[file:/Users/durantschoon/EMACS_BACKUP/init_work.el][work emacs dot files]]
 
-     skewer-mode
-     projectile
-     multiple-cursors
+     + install for sure
+       + https://github.com/benma/visual-regexp-steroids.el
+
+     + install for sure next
+       + projectile
+       + multiple-cursors
+         Is this still needed?
+         We'll also need to ~(require 'multiple-cusors)~ because of [[https://github.com/magnars/multiple-cursors.el/issues/105][an autoload issue]].   
+       + skewer-mode
+       + https://github.com/winterTTr/ace-jump-mode
+       + http://doc.norang.ca/org-mode.html#Capture
+
+     + install sometime
+       + org-to-blog
+       + google calendar integration
 
      + Packages to decide about installing later
        + [[https://www.gnu.org/software/emacs/manual/html_mono/eshell.html][eshell]]
-       + https://github.com/winterTTr/ace-jump-mode
-       + http://doc.norang.ca/org-mode.html#Capture
-       + https://github.com/benma/visual-regexp-steroids.el
-       + org-to-blog
-       + google calendar integration
 
    - Add code from [[file/Users/durantschoon/EMACS_BACKUP/.emacs][home emacs dot files]]
 
@@ -743,14 +840,14 @@ hold out for now :tangle
 
    - put this with recentf?
 
-    #+BEGIN_SRC emacs-lisp :tangle no
-    (defun ido-recentf-open ()
-      "Use `ido-completing-read' to \\[find-file] a recent file."
-      (interactive)
-      (if (find-file (ido-completing-read "Find recent file: " recentf-list))
-          (message "Opening file...")
-        (message "Aborting")))
-    #+END_SRC
+     #+BEGIN_SRC emacs-lisp :tangle no
+       (defun ido-recentf-open ()
+         "Use `ido-completing-read' to \\[find-file] a recent file."
+         (interactive)
+         (if (find-file (ido-completing-read "Find recent file: " recentf-list))
+             (message "Opening file...")
+           (message "Aborting")))
+     #+END_SRC
 
    - yasnippets
 
@@ -771,6 +868,8 @@ hold out for now :tangle
      org and capture
 
    - Look into babel?
+
+     So much to explore ... http://orgmode.org/worg/org-contrib/babel/
 
      How about evaluating code from various languages?
 
@@ -798,7 +897,7 @@ hold out for now :tangle
    - Test each of these and see if I like them
      [[https://github.com/magnars/.emacs.d/blob/master/settings/sane-defaults.el][Magnars Sveen's Sane Defaults]]
 
-   - include notes about which the packages someone should learn
+   - include notes about which the development packages someone should learn
      in order and why
 
      + anything-sublime-can-do
@@ -809,7 +908,9 @@ hold out for now :tangle
        + projectile management
        + running an interpretter, debugging
 
-   - Make a yasnippet for these? Someone must have done it. 
+   - flycheck wigging out in elisp source blocks
+
+     Make a yasnippet for these? Someone must have done it. 
      Do I really need these just to make flycheck happy when editing
      in elisp-mode?
 
@@ -818,12 +919,6 @@ hold out for now :tangle
      ;;; Change Log: (optional)
      ;;; Code:
      ;;; <name>.el ends here
-
-   - kill other buffer? 
-
-     see useful things for killing buffers
-
-     https://www.emacswiki.org/emacs/KillingBuffers
 
    - [[https://github.com/magnars/js2-refactor.el][js2-refactor]] A JavaScript refactoring library for emacs
 
