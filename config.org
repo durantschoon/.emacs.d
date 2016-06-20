@@ -7,9 +7,9 @@ While I'm debugging, I'll have emacs automatically open these files:
   ;; Open these files when in a window (not in the terminal)
   (when window-system
     (setq inhibit-startup-message t)        ; Disable startup message 
-    (find-file "/Users/durantschoon/EMACS_BACKUP/.emacs")
-    (linum-mode 1)
     (find-file "/Users/durantschoon/EMACS_BACKUP/init_work.el")
+    (linum-mode 1)
+    (find-file "/Users/durantschoon/EMACS_BACKUP/.emacs")
     (linum-mode 1)
     (split-window-right)
     (find-file "/Users/durantschoon/.emacs.d/config.org")
@@ -86,10 +86,15 @@ Sources for this section include [[https://github.com/magnars/.emacs.d/blob/mast
   (put 'downcase-region 'disabled nil)
   (put 'upcase-region 'disabled nil)
   (put 'narrow-to-region 'disabled nil)
+  ;; Remember
+  ;; C-x n n 
+  ;;   Narrow down to between point and mark (narrow-to-region).
+  ;; C-x n w
+  ;;   Widen to make the entire buffer accessible again (widen).
   (put 'dired-find-alternate-file 'disabled nil)
 
   ;; Answering just 'y' or 'n' will do
-  (defalias 'yes-or-no-p 'y-or-n-p)
+  (defalias 'yes-or-no-p 'y-or-n-p) ;; "No me rompas las pelotas" cr
 
   ;; Keep all backup and auto-save files in one directory
   (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
@@ -254,7 +259,8 @@ at point as the default value for occur.
 
    #+BEGIN_SRC emacs-lisp
      (defun my-prog-mode-hook ()
-       (linum-mode 1))
+       (linum-mode 1)
+       (toggle-truncate-lines t))
      (add-hook 'prog-mode-hook 'my-prog-mode-hook)
    #+END_SRC
 
@@ -467,6 +473,24 @@ boxes around the mode line.
        )
    #+end_src
 
+** Ediff
+
+   #+BEGIN_SRC emacs-lisp
+     (setq ediff-split-window-function 'split-window-horizontally)
+     (setq ediff-highlight-all-diffs 'nil)
+
+     ;; rod bogart kicks ass!
+     ;; these probably went with an alias
+     ;; alias ediff='emacs --eval cmd-ediff'
+     ;; usage: ediff FILE1 FILE2
+     (defun cmd-ediff ()
+       "A command line access to ediff."
+       (interactive)
+       (let ((buf1 (current-buffer)))
+         (other-window 1)
+         (ediff-buffers (current-buffer) buf1)))
+   #+END_SRC
+
 ** Flycheck
    
    #+begin_src emacs-lisp
@@ -493,6 +517,13 @@ boxes around the mode line.
       npm install -g csslint
     #+end_src
 
+** Grep
+
+   #+BEGIN_SRC emacs-lisp
+     (add-hook 'grep-mode-hook
+               '(lambda ()
+                  (toggle-truncate-lines t)))
+   #+END_SRC
 ** HTML
    
    #+BEGIN_SRC emacs-lisp
@@ -504,6 +535,30 @@ boxes around the mode line.
      (add-hook 'html-mode-hook 'my-html-mode-hook)
    #+END_SRC
 
+** Livescript
+
+   #+begin_src emacs-lisp
+     (use-package livescript-mode
+       :defer t
+       :ensure t
+       :config
+       (add-hook 'livescript-after-compile-hook 'sourcemap-goto-corresponding-point)
+       )
+   #+end_src
+
+** Ido
+   #+begin_src emacs-lisp
+     (use-package ido
+       :init
+       (setq ido-enable-flex-matching t)
+       (setq ido-everywhere t)
+       (ido-mode t)
+       (use-package ido-vertical-mode
+         :ensure t
+         :defer t
+         :init (ido-vertical-mode 1)
+         (setq ido-vertical-define-keys 'C-n-and-C-p-only)))
+   #+end_src
 ** JS2
    #+begin_src emacs-lisp
      (use-package js2-mode
@@ -511,6 +566,7 @@ boxes around the mode line.
        :ensure t
        :config
        (progn
+         (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
          (add-to-list 'auto-mode-alist '("\\.json\\'" . js2-mode))
          (add-to-list 'interpreter-mode-alist '("node" . js2-mode)))
        )
@@ -527,17 +583,6 @@ boxes around the mode line.
               ("M-p" . smartscan-symbol-go-backward)
               ("M-'" . smartscan-symbol-replace) ; overrides abbrev-prefix-mark
               ))
-   #+end_src
-
-** Livescript
-
-   #+begin_src emacs-lisp
-     (use-package livescript-mode
-       :defer t
-       :ensure t
-       :config
-       (add-hook 'livescript-after-compile-hook 'sourcemap-goto-corresponding-point)
-       )
    #+end_src
 
 ** Magit
@@ -645,7 +690,12 @@ hold out for now :tangle
       (setq org-todo-keywords
             '((sequence "TODO" "IN_PROGRESS" "|" "DONE")))
     #+END_SRC
+** Package
 
+   #+BEGIN_SRC emacs-lisp
+     (add-hook 'package-menu-mode-hook (lambda ()
+                                         (toggle-truncate-lines t)))
+   #+END_SRC
 ** "Pretty C-l"
    
    Display Control-l characters in a pretty way
@@ -734,6 +784,12 @@ hold out for now :tangle
        )
    #+end_src
 
+** Yaml
+   #+BEGIN_SRC emacs-lisp
+     (use-package yaml-mode
+       :defer t
+       :ensure t)
+   #+END_SRC
 ** Yasnippet
    #+begin_src emacs-lisp
      (use-package yasnippet
@@ -785,14 +841,17 @@ hold out for now :tangle
 * Personal Notes about how to modify this file next
 ** First things I want to do:
 
-   - See: STOPPED_HERE in init_work.el
+   STOPPED_HERE
+
+   - upload to github and ensure sharing works
+
+     - Do I have my yasnippets from work? Are they part of the repo?
 
    - confirm :config takes one thing afterward so I need (progn ...)
+     ask_daniel
 
    - Get pylint configured with flycheck to ignore the warnings I don't want 
      set up with version control to share with work
-
-   - Do I have my yasnippets from work? Are they part of the repo?
 
    - See: "What to explore next"
 
@@ -811,6 +870,8 @@ hold out for now :tangle
    - Does md-link-to-org work? the reverse org-to-md-link?
 
    - Add code from [[file:/Users/durantschoon/EMACS_BACKUP/init_work.el][work emacs dot files]]
+
+     File done, not do these which I wanted to set up there:
 
      + install for sure
        + https://github.com/benma/visual-regexp-steroids.el
@@ -851,14 +912,18 @@ hold out for now :tangle
 
    - yasnippets
 
-    Daniel's description:
+     Daniel's description:
 
-    Yeah, snippets! I start with snippets from [[https://github.com/AndreaCrotti/yasnippet-snippets][Andrea Crotti's collection]]
-    and have also modified them and added my own.
+     Yeah, snippets! I start with snippets from [[https://github.com/AndreaCrotti/yasnippet-snippets][Andrea Crotti's collection]]
+     and have also modified them and added my own.
 
-    It takes a few seconds to load and I don't need them immediately when
-    Emacs starts up, so we can defer loading yasnippet until there's some
-    idle time.
+     It takes a few seconds to load and I don't need them immediately when
+     Emacs starts up, so we can defer loading yasnippet until there's some
+     idle time.
+
+     Also, I should have functions that do debugging: printing the
+     value of the variable (symbol?) under the cursor similar to
+     macros in ~/.emacs.d/macros/durants_macros.el
 
    - Add code from daniel's emacs file
      
@@ -893,6 +958,14 @@ hold out for now :tangle
          + vs.? company mode "COMPlete ANYthing"
            http://company-mode.github.io/
            (add-hook 'after-init-hook 'global-company-mode)
+
+           example from [[http://www.lunaryorn.com/2015/01/06/my-emacs-configuration-with-use-package.html][LunarYorn]] (note loads during idle)
+           #+BEGIN_SRC emacs-lisp :tangle no
+             (use-package company
+               :ensure t
+               :defer t
+               :idle (global-company-mode))
+           #+END_SRC
 
    - Test each of these and see if I like them
      [[https://github.com/magnars/.emacs.d/blob/master/settings/sane-defaults.el][Magnars Sveen's Sane Defaults]]
@@ -949,7 +1022,7 @@ Check if a unix system before running ^gnu ^darwin
 
 Should I try to run all these with elisp?
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC sh :tangle no
   cd ~/.emacs.d
   find . -iname 'org.el*'
   find . -iname 'org.el*' | xargs rm
@@ -960,9 +1033,7 @@ Should I try to run all these with elisp?
 *** Where to put cheetsheet files
 
     - personal cheatsheet
-      - C-x C-h for C-x commands (for global Commands)
-      - C-x r C-h for "C-x r" commands
-      - C-c C-h for C-c commands (for mode specific "C"ommands)
+      - 
 
 *** Possible to make emacs also install missing programs on OS?
 
@@ -973,3 +1044,72 @@ Should I try to run all these with elisp?
 
     Why didn't this link to an executable tidy5?
 
+* Nostalgia
+** January 1997
+   #+BEGIN_SRC emacs-lisp :tangle no
+     ;; ok, my elisp sucks at this stage, but it's a start (1/97)
+     ;; durant
+     ;; seems to be broken
+     (defun comment-block (beg end)
+       "Special commenting block for a region. Line of dashes before and after
+        as long as the longest line. Strips white space off ends."
+       (interactive "r")             ; ? check if already commented
+       (let ((max 0)
+             (dash 45)               ; 45 is the ascii value of -, "dash"
+             (current beg)
+             (lmargin "")            ; lmargin can be a space, " ", "> ",...
+             (last-line (save-excursion
+                          (goto-char end)
+                          (string-to-int (substring (what-line) 5)))))
+         (progn
+           (goto-char current)
+           (while (<= current end)
+             (beginning-of-line)
+             (setq line-begin (point))
+             (insert lmargin)
+             (end-of-line)
+             (delete-horizontal-space)
+             (setq len (- (point) line-begin))
+             (if (< max len) (setq max len))
+             (forward-line)
+             (setq current (point))))
+         (message "Longest line is: %d chars long." (- max (length lmargin)))
+         (goto-char beg)
+         (beginning-of-line)
+         (setq beg (point))
+         (insert-char dash max)        ; insert 'max' dashes at begining
+         (insert "\n")
+         (setq last-line (+ 2 last-line))    ; add two for lines of dashes
+         (goto-line last-line)
+         (insert-char dash max)        ; insert 'max' dashes at end
+         (insert "\n")
+         (comment-region beg (point))))
+   #+END_SRC
+** ? 
+   #+BEGIN_SRC emacs-lisp   
+     (defun insert-python-durant-debug-class ()
+       "Insert my python debugging class: "
+       (interactive)
+       (insert "class Debug:\n")
+       (insert "    \"\"\"Usage in a method call: \n")
+       (insert "\n")
+       (insert "    DEBUG.where(self)\n")
+       (insert "\n")
+       (insert "    \"\"\"\n")
+       (insert "    def where(self,instance):\n")
+       (insert "        # `instance.__class__` is '<class A at 10f6caa8>'\n")
+       (insert "        _class = string.split(`instance.__class__`)[1]\n")
+       (insert "        if string.find(_class,'.') > 0:\n")
+       (insert "            _class = string.split(_class,'.')[1]\n")
+       (insert "        method = traceback.extract_stack()[-2][-2]\n")
+       (insert "        print \"DEBUG: In %s.%s\" % (_class,method)\n")
+       (insert "\n")
+       (insert "DEBUG = Debug()\n")
+       (insert "\n"))
+
+     (defun insert-python-durant-debug ()
+       "Insert my python debugging string: "
+       (interactive)
+       (insert "DEBUG.where(self)\n")
+       (insert "print '\\t ', "))
+   #+END_SRC
