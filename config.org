@@ -166,10 +166,9 @@ customize settings in [[file:init.el][init.el]].
 
      [[http://orgmode.org/manual/Easy-Templates.html][Easy Templates]]
 
-     #+BEGIN_QUOTE
      <s         then <TAB> to get a source block     
+
      <q         then <TAB> to get a quote
-     #+END_QUOTE
 
 **** yas-mode
 
