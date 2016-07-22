@@ -63,18 +63,143 @@ customize settings in [[file:init.el][init.el]].
     C-c is for customized (major and minor mode) commands
 ** Remember these!
 
-   Some bindings I'm practicing remembering
+   Some bindings I'm practicing remembering.
 
-   |-------------+---------------------------------|
-   | Key Binding | Description                     |
-   |-------------+---------------------------------|
-   | C-x C-=     | like +, increase font of buffer |
-   |-------------+---------------------------------|
-   | C-x C-1     | decrease font of buffer         |
-   |-------------+---------------------------------|
+   Checkout http://orgmode.org/manual/Tables.html if you haven't seen them
 
-   To select `org-mode-hook` with your mouse, click on the '-'
-   otherwise click on "org" to select only that part.
+   |-------------+-------------------------------------------|
+   | Key Binding | Description                               |
+   |-------------+-------------------------------------------|
+   | C-/         | undo or expand word                       |
+   |             | does expand word if at the end of a word  |
+   |-------------+-------------------------------------------|
+   | C-h v       | describe-variable                         |
+   |             | put cursor on a variable in an elisp file |
+   |             | default will be the variable              |
+   |-------------+-------------------------------------------|
+   | C-u C-space | cycle through previously set marks        |
+   |-------------+-------------------------------------------|
+   | C-x C-e     | eval last sexp                            |
+   |             | Symbolic EXPression, elisp                |
+   |-------------+-------------------------------------------|
+   | C-x n w     | exit narrow region                        |
+   |-------------+-------------------------------------------|
+   | C-x n w     | exit narrow region                        |
+   |-------------+-------------------------------------------|
+   | C-y         | yank                                      |
+   |             | M-y then cycles through kill ring         |
+   |-------------+-------------------------------------------|
+   | C-S-delete  | delete entire line                        |
+   |-------------+-------------------------------------------|
+   | C-S-down    | select until last non-empty line          |
+   |             | great for code blocks                     |
+   |-------------+-------------------------------------------|
+   | C-M-\       | indent-region                             |
+   |-------------+-------------------------------------------|
+   | C-x ESC ESC | repeat-complex-command                    |
+   |-------------+-------------------------------------------|
+   | C-z         | zap to char                               |
+   |             | remember, you can set a numeric prefix    |
+   |             | `C-u 3 C-z x` to delete up to 3rd x       |
+   |-------------+-------------------------------------------|
+   | C-x z z z   | to repeat 3 times                         |
+   |             | like . in vi                              |
+   |-------------+-------------------------------------------|
+   | C-x 8 <RET> | unicode, eg. snowman ☃                    |
+   |             | enter unicode name,                       |
+   |             | like snowman (has completions)            |
+   |-------------+-------------------------------------------|
+   | C-x =       | what-cursor-position                      |
+   |-------------+-------------------------------------------|
+   | C-x C-=     | like +, increase font of buffer           |
+   |-------------+-------------------------------------------|
+   | C-x C-1     | decrease font of buffer                   |
+   |-------------+-------------------------------------------|
+
+
+   |-----------------------+-------------------------------|
+   | Pattern               | Description                   |
+   |-----------------------+-------------------------------|
+   | C-s then C-w then C-s | select and search             |
+   |                       | select moving forward by word |
+   |                       | then find the selection       |
+   |-----------------------+-------------------------------|
+
+   |-------------+--------------------------------------------|
+   | Key Binding | Description                                |
+   |-------------+--------------------------------------------|
+   | H-h         | Hide a code block (my definition)          |
+   | H-s         | Show a code block (my definition)          |
+   | H-t         | Toggle hiding a code block (my definition) |
+   |-------------+--------------------------------------------|
+
+*** Mode specific
+**** hs-minor-mode
+
+     |-------------------+---------------------------|
+     | Command           | Description               |
+     |-------------------+---------------------------|
+     | M-x hs-minor-mode | hide-show                 |
+     |-------------------+---------------------------|
+     | M-x hs-hide-all   | hide all comments         |
+     |-------------------+---------------------------|
+     | M-x hs-show-all   | show all (comments again) |
+     |-------------------+---------------------------|
+
+**** html-mode
+
+     |---------+-----------------|
+     | Command | Description     |
+     |---------+-----------------|
+     | C-c C-t | tag             |
+     |---------+-----------------|
+     | C-c /   | close-tag       |
+     |---------+-----------------|
+     | C-c C-v | view in browser |
+     |---------+-----------------|
+
+**** ido-mode
+
+     |---------+--------------|
+     | Command | Description  |
+     |---------+--------------|
+     | C-f     | in ido exits |
+     |---------+--------------|
+
+**** org-mode
+
+     |---------+-------------------------------------------|
+     | Command | Description                               |
+     |---------+-------------------------------------------|
+     | C-c C-c | in a new #+TODO line will reload org mode |
+     |---------+-------------------------------------------|
+
+     [[http://orgmode.org/manual/Easy-Templates.html][Easy Templates]]
+
+     <s         then <TAB> to get a source block     
+     <q         then <TAB> to get a quote
+
+*** M-x commands
+
+   |--------------------------------+--------------------|
+   | Command                        | Description        |
+   |--------------------------------+--------------------|
+   | M-x customize-variable         |                    |
+   |--------------------------------+--------------------|
+   | M-x customize-face RET default |                    |
+   |--------------------------------+--------------------|
+   | M-x customize-group            | emacs              |
+   |                                | grep               |
+   |--------------------------------+--------------------|
+   | M-x ffap                       | find-file-at-point |
+   |--------------------------------+--------------------|
+   | M-x list-colors-display        |                    |
+   |--------------------------------+--------------------|
+
+*** Clicking
+
+    To select `org-mode-hook` with your mouse, click on the '-'
+    otherwise click on "org" to select only that part.
 
 * Settings
 ** Sane defaults
