@@ -38,9 +38,10 @@ customize settings in [[file:init.el][init.el]].
     e.g `C-x C-h` or `C-x 4 C-h` or `C-c C-h`
 
     C-x is for built-in emacs commands
+
     C-c is for customized (major and minor mode) commands
 ** Remember these!
-*** Key bindings
+*** Default Key bindings
 
     Some bindings I'm practicing remembering.
 
@@ -106,13 +107,21 @@ customize settings in [[file:init.el][init.el]].
     | C-s then C-w then M-w | select and copy               |
     |-----------------------+-------------------------------|
 
-    |-------------+--------------------------------------------|
-    | Key Binding | Description                                |
-    |-------------+--------------------------------------------|
-    | H-h         | Hide a code block (my definition)          |
-    | H-s         | Show a code block (my definition)          |
-    | H-t         | Toggle hiding a code block (my definition) |
-    |-------------+--------------------------------------------|
+*** Key Bindings to my functions or customized
+
+    Definitions for these appear later in this file
+
+    |-------------+---------------------------------|
+    | Key Binding | Description                     |
+    |-------------+---------------------------------|
+    | H-h         | Hide a code block               |
+    | H-s         | Show a code block               |
+    | H-t         | Toggle hiding a code block      |
+    |-------------+---------------------------------|
+    | M-s o       | occur-dwim                      |
+    |-------------+---------------------------------|
+    | H-o         | 'browse-url-of-buffer (builtin) |
+    |-------------+---------------------------------|
 
 *** Mode specific
 **** hs-minor-mode
@@ -157,13 +166,18 @@ customize settings in [[file:init.el][init.el]].
 
      [[http://orgmode.org/manual/Easy-Templates.html][Easy Templates]]
 
+     #+BEGIN_QUOTE
      <s         then <TAB> to get a source block     
      <q         then <TAB> to get a quote
+     #+END_QUOTE
 
 **** yas-mode
-     A variable can also have a default value which is specified
-     like this: ${1:object}.
+
+     A variable can also have a default value which is specified like
+     this: ${1:object}.
+
      see: http://blog.refu.co/?p=1355
+
 *** M-x commands
 
    |--------------------------------+--------------------|
@@ -410,9 +424,11 @@ boxes around the mode line.
   (setq monokai-use-variable-pitch nil))
 #+end_src
 
-*** Convenient theme functions
+*** DISABLED Convenient theme functions
 
-#+begin_src emacs-lisp
+    nabbed these from Daniel Mai, but haven't tested them yet
+
+#+begin_src emacs-lisp :tangle no
 (defun switch-theme (theme)
   "Disables any currently active themes and loads THEME."
   ;; This interactive call is taken from `load-theme'
@@ -836,8 +852,6 @@ hold out for now :tangle
                                  ))
     #+END_SRC
 
-*** Reference
-    - [[http://orgmode.org/manual/Easy-templates.html#Easy-templates][Easy templates]]
 *** Todo
 
     #+BEGIN_SRC emacs-lisp
