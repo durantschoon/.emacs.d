@@ -11,6 +11,7 @@ While I'm debugging, I'll have emacs automatically open these files:
     (linum-mode 1)
     (find-file "/Users/durantschoon/EMACS_BACKUP/.emacs")
     (linum-mode 1)
+    (find-file "/Users/durantschoon/Documents/tech_computer/emacs_notes.org")
     (split-window-right)
     (find-file "/Users/durantschoon/.emacs.d/config.org")
     (toggle-truncate-lines t)
@@ -56,11 +57,13 @@ customize settings in [[file:init.el][init.el]].
 
 *** Prefixes
     You can see all commands that begin with a prefix by using C-h afterward,
-    e.g `C-x C-h` or `C-c C-h`
+    e.g `C-x C-h` or `C-x 4 C-h` or `C-c C-h`
 
     C-x is for built-in emacs commands
     C-c is for customized (major and minor mode) commands
 ** Remember these!
+
+   Some bindings I'm practicing remembering
 
    |-------------+---------------------------------|
    | Key Binding | Description                     |
@@ -69,7 +72,6 @@ customize settings in [[file:init.el][init.el]].
    |-------------+---------------------------------|
    | C-x C-1     | decrease font of buffer         |
    |-------------+---------------------------------|
-
 
    To select `org-mode-hook` with your mouse, click on the '-'
    otherwise click on "org" to select only that part.
@@ -89,6 +91,8 @@ Sources for this section include [[https://github.com/magnars/.emacs.d/blob/mast
   ;; Remember
   ;; C-x n n
   ;;   Narrow down to between point and mark (narrow-to-region).
+  ;;   This can really freak you out, don't enable it unless you
+  ;;   practice getting out of it.
   ;; C-x n w
   ;;   Widen to make the entire buffer accessible again (widen).
   (put 'dired-find-alternate-file 'disabled nil)
@@ -441,6 +445,14 @@ boxes around the mode line.
      (add-hook 'ag-mode-hook (lambda () (toggle-truncate-lines)))
    #+end_src
 
+** C# (don't judge)
+
+   #+begin_src emacs-lisp
+     (use-package csharp-mode
+       :defer t
+       :ensure t)
+   #+end_src
+
 ** Coffee-mode
 
    #+begin_src emacs-lisp
@@ -527,6 +539,34 @@ boxes around the mode line.
      (add-hook 'grep-mode-hook
                '(lambda ()
                   (toggle-truncate-lines t)))
+   #+END_SRC
+** Hide-Show 
+   for hs-minor-mode
+
+   Glbally hyper h/t will hide/toggle, enabling hs-minor-mode if necessary.
+
+   So you can just move to a code block and H-h to hide it or H-t to toggle. 
+
+   #+BEGIN_SRC emacs-lisp
+     (global-set-key (kbd "H-h") 'enable-hs-and-hide-block)
+     (global-set-key (kbd "H-s") (kbd "C-c @ C-s")) ; show block
+     (global-set-key (kbd "H-t") 'enable-hs-and-toggle-hiding)
+
+     (defun enable-hs-and-hide-block ()
+       "Enable hs-minor-mode if it isn't on and hide the source block"
+       (interactive)
+       (unless (bound-and-true-p hs-minor-mode)
+           (hs-minor-mode 1)
+           (message "hs-minor-mode enabled"))
+       (hs-hide-block))
+
+     (defun enable-hs-and-toggle-hiding ()
+       "Enable hs-minor-mode if it isn't on and toggle-hiding"
+       (interactive)
+       (unless (bound-and-true-p hs-minor-mode)
+           (hs-minor-mode 1)
+           (message "hs-minor-mode enabled"))
+       (hs-toggle-hiding))
    #+END_SRC
 ** HTML
 
@@ -714,8 +754,6 @@ hold out for now :tangle
 
 ** Python
 
-   Integrates with IPython.
-
    #+begin_src emacs-lisp
      (use-package python-mode
        :defer t
@@ -847,17 +885,22 @@ hold out for now :tangle
 
    STOPPED_HERE
 
-   - upload to github and ensure sharing works
+   - Integrate my yasnippets from work
+     Decide how to make them part of the repo
+   - Upload to github and ensure sharing works
+     - Remove the "While I'm debugging" section
+     - Add "cheetsheet" reminders to this file
+       see file:~/Documents/tech_computer/emacs_notes.org
 
-     - Do I have my yasnippets from work? Are they part of the repo?
+       where to put notes like:
 
-   - confirm :config takes one thing afterward so I need (progn ...)
-     ask_daniel
+       - yasnippet 
+         A variable can also have a default value which is specified
+         like this: ${1:object}.
+         see: http://blog.refu.co/?p=1355
 
    - Get pylint configured with flycheck to ignore the warnings I don't want
      set up with version control to share with work
-
-   - See: "What to explore next"
 
 ** What to explore next
 
@@ -865,11 +908,12 @@ hold out for now :tangle
 
    - Resolve all tabs issues:
 
-     Need to think about this. Are modes are smart and set the tab
-     indent to the one detected in a file? So I only want to force the
-     value to 2 in some cases?
+     Decision is to set all my tabs to 2 by default, but maybe I
+     should have yasnippets so I can set the tab to say 4
 
-     <!-- mode: web; web-mode-markup-indent-offset: 2; -->
+     <!-- mode: web; web-mode-markup-indent-offset: $0; -->
+
+     See [[Tabs]]
 
    - Does md-link-to-org work? the reverse org-to-md-link?
 
@@ -882,11 +926,9 @@ hold out for now :tangle
 
      + install for sure next
        + projectile
-       + multiple-cursors
-         Is this still needed?
-         We'll also need to ~(require 'multiple-cusors)~ because of [[https://github.com/magnars/multiple-cursors.el/issues/105][an autoload issue]].
        + skewer-mode
        + https://github.com/winterTTr/ace-jump-mode
+       + [[https://github.com/vermiculus/sx.el/][StackExchange integration]]
        + http://doc.norang.ca/org-mode.html#Capture
 
      + install sometime
@@ -902,6 +944,14 @@ hold out for now :tangle
        + mo-git-blame
        + [[https://github.com/magnars/dash.el][Magnar's dash]] (some library I had required it once and there was
          a minor problem)
+
+   - OMG insane [[https://www.emacswiki.org/emacs/WebKit][WebKit in Emacs]]
+
+     [[https://www.reddit.com/r/emacs/comments/4srze9/watching_youtube_inside_emacs_25/][Watching youtube inside Emacs 25!]]
+
+   - Jupyter
+
+     - [[https://github.com/gregsexton/ob-ipython][org-babel integration]] might be better than [[https://github.com/millejoh/emacs-ipython-notebook][EIN -- Emacs IPython Notebook]]
 
    - put this with recentf?
 
@@ -935,6 +985,14 @@ hold out for now :tangle
      theme: https://github.com/sjrmanning/darkokai
 
      org and capture
+
+   - Practice newly learned modes
+     + multiple-cursors
+       Also, is this still needed?
+       We'll also need to ~(require 'multiple-cusors)~ because of [[https://github.com/magnars/multiple-cursors.el/issues/105][an autoload issue]].
+
+     + Org-mode skills
+       + changing styles of headlines (ASK_DANIEL)
 
    - Look into babel?
 
@@ -985,7 +1043,9 @@ hold out for now :tangle
        + projectile management
        + running an interpretter, debugging
 
-   - flycheck wigging out in elisp source blocks
+   - source blocks
+
+     flycheck wigging out in elisp (and python) source blocks
 
      Make a yasnippet for these? Someone must have done it.
      Do I really need these just to make flycheck happy when editing
@@ -1037,7 +1097,11 @@ Should I try to run all these with elisp?
 *** Where to put cheetsheet files
 
     - personal cheatsheet
-      -
+      + builtin
+        - M-x shell-command-on-region
+          aka. M-|
+      + mine
+        - C-M-/ 'comint-dynamic-complete-filename
 
 *** Possible to make emacs also install missing programs on OS?
 
