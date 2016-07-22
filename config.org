@@ -1,28 +1,6 @@
 #+TITLE: Emacs Configuration
 #+AUTHOR: Durant Schoon
 
-While I'm debugging, I'll have emacs automatically open these files:
-
-#+BEGIN_SRC emacs-lisp
-  ;; Open these files when in a window (not in the terminal)
-  (when window-system
-    (setq inhibit-startup-message t)        ; Disable startup message
-    (find-file "/Users/durantschoon/EMACS_BACKUP/init_work.el")
-    (linum-mode 1)
-    (find-file "/Users/durantschoon/EMACS_BACKUP/.emacs")
-    (linum-mode 1)
-    (find-file "/Users/durantschoon/Documents/tech_computer/emacs_notes.org")
-    (split-window-right)
-    (find-file "/Users/durantschoon/.emacs.d/config.org")
-    (toggle-truncate-lines t)
-    (setq default-frame-alist
-          '(
-            (width . 177) ; character
-            (height . 58) ; lines
-            ))
-    )
-#+END_SRC
-
 * Introduction
 ** Setup Instructions
 
@@ -62,76 +40,79 @@ customize settings in [[file:init.el][init.el]].
     C-x is for built-in emacs commands
     C-c is for customized (major and minor mode) commands
 ** Remember these!
+*** Key bindings
 
-   Some bindings I'm practicing remembering.
+    Some bindings I'm practicing remembering.
 
-   Checkout http://orgmode.org/manual/Tables.html if you haven't seen them
+    Checkout http://orgmode.org/manual/Tables.html if you haven't seen them
 
-   |-------------+-------------------------------------------|
-   | Key Binding | Description                               |
-   |-------------+-------------------------------------------|
-   | C-/         | undo or expand word                       |
-   |             | does expand word if at the end of a word  |
-   |-------------+-------------------------------------------|
-   | C-h v       | describe-variable                         |
-   |             | put cursor on a variable in an elisp file |
-   |             | default will be the variable              |
-   |-------------+-------------------------------------------|
-   | C-u C-space | cycle through previously set marks        |
-   |-------------+-------------------------------------------|
-   | C-x C-e     | eval last sexp                            |
-   |             | Symbolic EXPression, elisp                |
-   |-------------+-------------------------------------------|
-   | C-x n w     | exit narrow region                        |
-   |-------------+-------------------------------------------|
-   | C-x n w     | exit narrow region                        |
-   |-------------+-------------------------------------------|
-   | C-y         | yank                                      |
-   |             | M-y then cycles through kill ring         |
-   |-------------+-------------------------------------------|
-   | C-S-delete  | delete entire line                        |
-   |-------------+-------------------------------------------|
-   | C-S-down    | select until last non-empty line          |
-   |             | great for code blocks                     |
-   |-------------+-------------------------------------------|
-   | C-M-\       | indent-region                             |
-   |-------------+-------------------------------------------|
-   | C-x ESC ESC | repeat-complex-command                    |
-   |-------------+-------------------------------------------|
-   | C-z         | zap to char                               |
-   |             | remember, you can set a numeric prefix    |
-   |             | `C-u 3 C-z x` to delete up to 3rd x       |
-   |-------------+-------------------------------------------|
-   | C-x z z z   | to repeat 3 times                         |
-   |             | like . in vi                              |
-   |-------------+-------------------------------------------|
-   | C-x 8 <RET> | unicode, eg. snowman ☃                    |
-   |             | enter unicode name,                       |
-   |             | like snowman (has completions)            |
-   |-------------+-------------------------------------------|
-   | C-x =       | what-cursor-position                      |
-   |-------------+-------------------------------------------|
-   | C-x C-=     | like +, increase font of buffer           |
-   |-------------+-------------------------------------------|
-   | C-x C-1     | decrease font of buffer                   |
-   |-------------+-------------------------------------------|
+    |-------------+-------------------------------------------|
+    | Key Binding | Description                               |
+    |-------------+-------------------------------------------|
+    | C-/         | undo or expand word                       |
+    |             | does expand word if at the end of a word  |
+    |-------------+-------------------------------------------|
+    | C-h v       | describe-variable                         |
+    |             | put cursor on a variable in an elisp file |
+    |             | default will be the variable              |
+    |-------------+-------------------------------------------|
+    | C-u C-space | cycle through previously set marks        |
+    |-------------+-------------------------------------------|
+    | C-x C-e     | eval last sexp                            |
+    |             | Symbolic EXPression, elisp                |
+    |-------------+-------------------------------------------|
+    | C-x n w     | exit narrow region                        |
+    |-------------+-------------------------------------------|
+    | C-x n w     | exit narrow region                        |
+    |-------------+-------------------------------------------|
+    | C-y         | yank                                      |
+    |             | M-y then cycles through kill ring         |
+    |-------------+-------------------------------------------|
+    | C-S-delete  | delete entire line                        |
+    |-------------+-------------------------------------------|
+    | C-S-down    | select until last non-empty line          |
+    |             | great for code blocks                     |
+    |-------------+-------------------------------------------|
+    | C-M-\       | indent-region                             |
+    |-------------+-------------------------------------------|
+    | C-x ESC ESC | repeat-complex-command                    |
+    |-------------+-------------------------------------------|
+    | C-z         | zap to char                               |
+    |             | remember, you can set a numeric prefix    |
+    |             | `C-u 3 C-z x` to delete up to 3rd x       |
+    |-------------+-------------------------------------------|
+    | C-x z z z   | to repeat 3 times                         |
+    |             | like . in vi                              |
+    |-------------+-------------------------------------------|
+    | C-x 8 <RET> | unicode, eg. snowman ☃                    |
+    |             | enter unicode name,                       |
+    |             | like snowman (has completions)            |
+    |-------------+-------------------------------------------|
+    | C-x =       | what-cursor-position                      |
+    |-------------+-------------------------------------------|
+    | C-x C-=     | like +, increase font of buffer           |
+    |-------------+-------------------------------------------|
+    | C-x C-1     | decrease font of buffer                   |
+    |-------------+-------------------------------------------|
 
 
-   |-----------------------+-------------------------------|
-   | Pattern               | Description                   |
-   |-----------------------+-------------------------------|
-   | C-s then C-w then C-s | select and search             |
-   |                       | select moving forward by word |
-   |                       | then find the selection       |
-   |-----------------------+-------------------------------|
+    |-----------------------+-------------------------------|
+    | Pattern               | Description                   |
+    |-----------------------+-------------------------------|
+    | C-s then C-w then C-s | select and search             |
+    |                       | select moving forward by word |
+    |                       | then find the selection       |
+    |-----------------------+-------------------------------|
+    | C-s then C-w then M-w | select and copy               |
+    |-----------------------+-------------------------------|
 
-   |-------------+--------------------------------------------|
-   | Key Binding | Description                                |
-   |-------------+--------------------------------------------|
-   | H-h         | Hide a code block (my definition)          |
-   | H-s         | Show a code block (my definition)          |
-   | H-t         | Toggle hiding a code block (my definition) |
-   |-------------+--------------------------------------------|
+    |-------------+--------------------------------------------|
+    | Key Binding | Description                                |
+    |-------------+--------------------------------------------|
+    | H-h         | Hide a code block (my definition)          |
+    | H-s         | Show a code block (my definition)          |
+    | H-t         | Toggle hiding a code block (my definition) |
+    |-------------+--------------------------------------------|
 
 *** Mode specific
 **** hs-minor-mode
@@ -179,6 +160,10 @@ customize settings in [[file:init.el][init.el]].
      <s         then <TAB> to get a source block     
      <q         then <TAB> to get a quote
 
+**** yas-mode
+     A variable can also have a default value which is specified
+     like this: ${1:object}.
+     see: http://blog.refu.co/?p=1355
 *** M-x commands
 
    |--------------------------------+--------------------|
@@ -198,7 +183,7 @@ customize settings in [[file:init.el][init.el]].
 
 *** Clicking
 
-    To select `org-mode-hook` with your mouse, click on the '-'
+    To select "org-mode-hook" with your mouse, click on the '-'
     otherwise click on "org" to select only that part.
 
 * Settings
@@ -989,253 +974,21 @@ hold out for now :tangle
       (fset 'times-last
             (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ([134217788 19 42 32 60 19 67108896 19 62 67108896 tab 11 25 tab 18 42 32 60 18 67108896 5 67108896 25] 0 "%d")) arg)))
 
+      ;; uses the yas snippet to insert to text then adds the date in org-mode
       (fset 'times-new
-            (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ([134217788 19 42 32 84 69 77 80 76 65 84 69 1 67108896 14 14 23 25 25 24 24 67108896 tab 6 6 6 2 11 3 46 return 14 14 5 51 48 19 42 32 60 67108896 16 67108896 backspace backspace backspace backspace 18 42 32 60 67108896 19 105 110 19 67108896 5 67108896] 0 "%d")) arg)))
-
-      (fset 'times-ba
-            [?\C-s ?t ?i ?m ?e ?s ?- ?b ?a ?\C-a ?\C-  ?\C-k ?\C-k ?\C-y ?\C-s ?t ?e ?m ?p ?l ?a ?t ?e ?\C-  ?\C-c ?\C-n ?\C-  ?\C-o ?\C-y ?\C-c ?\C-p tab ?\M-f ?\M-b ?\C-k ?\C-c ?. return])
+         [?\M-< ?\C-s ?* ?  ?< ?\C-  ?\C-a ?\C-o ?t ?i ?m ?e ?s ?- ?n ?e ?w tab ?\C-c ?. return])
     #+END_SRC
 
-*** TODO md-link-to-org (did I get this working?)
-
-    what about link-to-md-org
+*** Convert Markdown links <-> Org-mode links
 
     #+BEGIN_SRC emacs-lisp
+      ;; move to beginning of link before running these
       (fset 'md-link-to-org
             [?\C-s ?\] ?\( ?\C-  ?\M-z ?\) ?\) ?\C-r ?\[ ?\C-  ?\[ ?\[ ?\C-y backspace ?\] ?\C-s ?\) ?\C-  backspace backspace ?\]])
+
+      (fset 'org-link-to-md
+         [?\C-s ?\[ ?\[ ?\C-  ?\C-b ?\C-  ?\C-s ?\] ?\C-  ?\C-u ?\C-  ?\C-w backspace ?\C-s ?\] ?\] ?\C-  backspace ?\( ?\) ?\C-b ?\C-y ?\C-  ?\C-  backspace ?\C-r ?\[ ?\C-  ?\C-d ?\C-s ?\) ?\C- ])
     #+END_SRC
-
-* Personal Notes about how to modify this file next
-** First things I want to do:
-
-   STOPPED_HERE
-
-   - Integrate my yasnippets from work
-     Decide how to make them part of the repo
-   - Upload to github and ensure sharing works
-     - Remove the "While I'm debugging" section
-     - Add "cheetsheet" reminders to this file
-       see file:~/Documents/tech_computer/emacs_notes.org
-
-       where to put notes like:
-
-       - yasnippet 
-         A variable can also have a default value which is specified
-         like this: ${1:object}.
-         see: http://blog.refu.co/?p=1355
-
-   - Get pylint configured with flycheck to ignore the warnings I don't want
-     set up with version control to share with work
-
-** What to explore next
-
-   Turn on one section at a time where applicable
-
-   - Resolve all tabs issues:
-
-     Decision is to set all my tabs to 2 by default, but maybe I
-     should have yasnippets so I can set the tab to say 4
-
-     <!-- mode: web; web-mode-markup-indent-offset: $0; -->
-
-     See [[Tabs]]
-
-   - Does md-link-to-org work? the reverse org-to-md-link?
-
-   - Add code from [[file:/Users/durantschoon/EMACS_BACKUP/init_work.el][work emacs dot files]]
-
-     File done, not do these which I wanted to set up there:
-
-     + install for sure
-       + https://github.com/benma/visual-regexp-steroids.el
-
-     + install for sure next
-       + projectile
-       + skewer-mode
-       + https://github.com/winterTTr/ace-jump-mode
-       + [[https://github.com/vermiculus/sx.el/][StackExchange integration]]
-       + http://doc.norang.ca/org-mode.html#Capture
-
-     + install sometime
-       + org-to-blog
-       + google calendar integration
-
-     + Packages to decide about installing later
-       + [[https://www.gnu.org/software/emacs/manual/html_mono/eshell.html][eshell]]
-
-   - Add code from [[file/Users/durantschoon/EMACS_BACKUP/.emacs][home emacs dot files]]
-
-     + Packages to decide about installing later
-       + mo-git-blame
-       + [[https://github.com/magnars/dash.el][Magnar's dash]] (some library I had required it once and there was
-         a minor problem)
-
-   - OMG insane [[https://www.emacswiki.org/emacs/WebKit][WebKit in Emacs]]
-
-     [[https://www.reddit.com/r/emacs/comments/4srze9/watching_youtube_inside_emacs_25/][Watching youtube inside Emacs 25!]]
-
-   - Jupyter
-
-     - [[https://github.com/gregsexton/ob-ipython][org-babel integration]] might be better than [[https://github.com/millejoh/emacs-ipython-notebook][EIN -- Emacs IPython Notebook]]
-
-   - put this with recentf?
-
-     #+BEGIN_SRC emacs-lisp :tangle no
-       (defun ido-recentf-open ()
-         "Use `ido-completing-read' to \\[find-file] a recent file."
-         (interactive)
-         (if (find-file (ido-completing-read "Find recent file: " recentf-list))
-             (message "Opening file...")
-           (message "Aborting")))
-     #+END_SRC
-
-   - yasnippets
-
-     Daniel's description:
-
-     Yeah, snippets! I start with snippets from [[https://github.com/AndreaCrotti/yasnippet-snippets][Andrea Crotti's collection]]
-     and have also modified them and added my own.
-
-     It takes a few seconds to load and I don't need them immediately when
-     Emacs starts up, so we can defer loading yasnippet until there's some
-     idle time.
-
-     Also, I should have functions that do debugging: printing the
-     value of the variable (symbol?) under the cursor similar to
-     macros in ~/.emacs.d/macros/durants_macros.el
-
-   - Add code from daniel's emacs file
-
-     TODO go through [[https://github.com/danielmai/.emacs.d/blob/master/config.org#org-mode][daniel mai's org configuration]]
-     theme: https://github.com/sjrmanning/darkokai
-
-     org and capture
-
-   - Practice newly learned modes
-     + multiple-cursors
-       Also, is this still needed?
-       We'll also need to ~(require 'multiple-cusors)~ because of [[https://github.com/magnars/multiple-cursors.el/issues/105][an autoload issue]].
-
-     + Org-mode skills
-       + changing styles of headlines (ASK_DANIEL)
-
-   - Look into babel?
-
-     So much to explore ... http://orgmode.org/worg/org-contrib/babel/
-
-     How about evaluating code from various languages?
-
-   - List by feature the things I want to explore next
-     + Sublime-like
-       + multiple cursors
-       + jumping
-       + project navigation
-       + completion:
-         + [[https://www.emacswiki.org/emacs/Icicles_-_Ido_and_IswitchB][Ido and IswitchB]] over icicles
-           "You cannot use Icicles and Ido together"
-
-           #+BEGIN_SRC emacs-lisp :tangle no
-             (require 'ido)
-             (ido-mode t)
-           #+END_SRC
-
-         + vs. Helm (replaces Anything.el)
-           + HelmSwoop – like occur, but /live/
-
-         + vs.? company mode "COMPlete ANYthing"
-           http://company-mode.github.io/
-           (add-hook 'after-init-hook 'global-company-mode)
-
-           example from [[http://www.lunaryorn.com/2015/01/06/my-emacs-configuration-with-use-package.html][LunarYorn]] (note loads during idle)
-           #+BEGIN_SRC emacs-lisp :tangle no
-             (use-package company
-               :ensure t
-               :defer t
-               :idle (global-company-mode))
-           #+END_SRC
-
-   - Test each of these and see if I like them
-     [[https://github.com/magnars/.emacs.d/blob/master/settings/sane-defaults.el][Magnars Sveen's Sane Defaults]]
-
-   - include notes about which the development packages someone should learn
-     in order and why
-
-     + anything-sublime-can-do
-
-     + completions
-     + Programming
-       + consistent tabs
-       + projectile management
-       + running an interpretter, debugging
-
-   - source blocks
-
-     flycheck wigging out in elisp (and python) source blocks
-
-     Make a yasnippet for these? Someone must have done it.
-     Do I really need these just to make flycheck happy when editing
-     in elisp-mode?
-
-     ;;; <name>.el --- <one-line description of the library>
-     ;;; Commentary:
-     ;;; Change Log: (optional)
-     ;;; Code:
-     ;;; <name>.el ends here
-
-   - [[https://github.com/magnars/js2-refactor.el][js2-refactor]] A JavaScript refactoring library for emacs
-
-   - Do I need [[http://stackoverflow.com/questions/1568987/getting-emacs-to-respect-my-default-shell-options][this]] to work with zsh in emacs
-
-   - [[https://github.com/abo-abo/hydra][hydra]]
-     referenced here: http://oremacs.com/2015/01/26/occur-dwim/
-
-   - edit-server
-
-     config [[https://github.com/jwiegley/use-package][example]]:
-
-     #+begin_src emacs-lisp :tangle no
-       (use-package edit-server
-         :if window-system
-         :init
-         (add-hook 'after-init-hook 'server-start t)
-         (add-hook 'after-init-hook 'edit-server-start t))
-     #+end_src
-
-** Need to figure out the best way to do these:
-
-*** Utilities / Clean Recompile
-
-   FIXME
-
-Check if a unix system before running ^gnu ^darwin
-
-Should I try to run all these with elisp?
-
-#+BEGIN_SRC sh :tangle no
-  cd ~/.emacs.d
-  find . -iname 'org.el*'
-  find . -iname 'org.el*' | xargs rm
-
-  ; (byte-recompile-directory (expand-file-name "~/.emacs.d") 0)
-#+END_SRC
-
-*** Where to put cheetsheet files
-
-    - personal cheatsheet
-      + builtin
-        - M-x shell-command-on-region
-          aka. M-|
-      + mine
-        - C-M-/ 'comint-dynamic-complete-filename
-
-*** Possible to make emacs also install missing programs on OS?
-
-    eg. tidy5 on os x for flycheck
-
-    brew update
-    brew install tidy-html5
-
-    Why didn't this link to an executable tidy5?
 
 * Nostalgia
 ** January 1997
