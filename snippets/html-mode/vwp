@@ -1,6 +1,0 @@
-# -*- mode: snippet; require-final-newline: nil -*-
-# name: viewport
-# key: vwp
-# binding: direct-keybinding
-# --
-<meta name="viewport" content="width=device-width, initial-scale=1">

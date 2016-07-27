@@ -531,6 +531,8 @@ boxes around the mode line.
    #+END_SRC
 ** HTML
 
+   See also useful commands [[*html-mode][html-mode]]
+
    #+BEGIN_SRC emacs-lisp
      (defun my-html-mode-hook ()
        (linum-mode 1)
@@ -552,6 +554,9 @@ boxes around the mode line.
    #+end_src
 
 ** Ido
+
+   See also useful commands [[*ido-mode][ido-mode]]
+
    #+begin_src emacs-lisp
      (use-package ido
        :init
@@ -665,6 +670,8 @@ hold out for now :tangle
 ** Org mode
 *** key bindings
 
+    See also useful commands [[*org-mode][org-mode]]
+
     #+begin_src emacs-lisp
       (bind-key "C-c l" 'org-store-link)
       (bind-key "C-c c" 'org-capture)
@@ -738,10 +745,14 @@ hold out for now :tangle
 
 ** Python
 
+   See also useful commands [[*python-mode][python-mode]]
+
    #+begin_src emacs-lisp
      (use-package python-mode
        :defer t
-       :ensure t)
+       :ensure t
+       :config
+       (python-shell-interpreter "ipython"))
    #+end_src
 
 ** Projectile
@@ -825,7 +836,7 @@ hold out for now :tangle
        :config
        (progn
          (setq yas-snippet-dirs (concat user-emacs-directory "snippets"))
-         (yas-global-mode)))
+         (yas-global-mode 1)))
    #+end_src
 
 ** Zsh
@@ -1068,12 +1079,26 @@ hold out for now :tangle
      |---------+-------------------------------------------|
      | C-c C-c | in a new #+TODO line will reload org mode |
      |---------+-------------------------------------------|
+     | C-c l   | org-store-link                            |
+     |---------+-------------------------------------------|
+     | C-c C-l | org-insert-link                           |
+     |---------+-------------------------------------------|
 
      [[http://orgmode.org/manual/Easy-Templates.html][Easy Templates]]
 
      <s         then <TAB> to get a source block     
 
      <q         then <TAB> to get a quote
+
+**** python-mode
+
+     |---------+----------------------------------------------------------|
+     | Command | Description                                              |
+     |---------+----------------------------------------------------------|
+     | C-c C-c | python-shell-switch-to-shell to execute the current file |
+     |---------+----------------------------------------------------------|
+     | C-c C-z | python-shell-switch-to-shell to view the shell buffer    |
+     |---------+----------------------------------------------------------|
 
 **** yas-mode
 
@@ -1082,22 +1107,29 @@ hold out for now :tangle
 
      see: http://blog.refu.co/?p=1355
 
+     |-------------------------+--------------------------------------------|
+     | Command                 | Description                                |
+     |-------------------------+--------------------------------------------|
+     | M-x yas-describe-tables | gives a table representation of all        |
+     |                         | the snippets available in the current mode |
+     |-------------------------+--------------------------------------------|
+
 *** M-x commands
 
-   |--------------------------------+--------------------|
-   | Command                        | Description        |
-   |--------------------------------+--------------------|
-   | M-x customize-variable         |                    |
-   |--------------------------------+--------------------|
-   | M-x customize-face RET default |                    |
-   |--------------------------------+--------------------|
-   | M-x customize-group            | emacs              |
-   |                                | grep               |
-   |--------------------------------+--------------------|
-   | M-x ffap                       | find-file-at-point |
-   |--------------------------------+--------------------|
-   | M-x list-colors-display        |                    |
-   |--------------------------------+--------------------|
+    |--------------------------------+--------------------|
+    | Command                        | Description        |
+    |--------------------------------+--------------------|
+    | M-x customize-variable         |                    |
+    |--------------------------------+--------------------|
+    | M-x customize-face RET default |                    |
+    |--------------------------------+--------------------|
+    | M-x customize-group            | emacs              |
+    |                                | grep               |
+    |--------------------------------+--------------------|
+    | M-x ffap                       | find-file-at-point |
+    |--------------------------------+--------------------|
+    | M-x list-colors-display        |                    |
+    |--------------------------------+--------------------|
 
 *** Clicking
 

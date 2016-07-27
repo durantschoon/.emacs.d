@@ -1,6 +1,0 @@
-# -*- mode: snippet; require-final-newline: nil -*-
-# name: etable
-# key: etable
-# binding: direct-keybinding
-# --
-table>(tr>th*${1:columns})+tr*${2:rows}>td*$1
