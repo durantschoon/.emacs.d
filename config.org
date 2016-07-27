@@ -828,6 +828,22 @@ hold out for now :tangle
        :ensure t)
    #+END_SRC
 ** Yasnippet
+
+   See also useful commands [[*yas-mode][yas-mode]]
+
+   #+BEGIN_SRC sh
+     # to install AndreaCrotti's yasnippets
+     cd ~/.emacs.d
+     mkdir -p yasnippets
+     git clone --recursive https://github.com/capitaomorte/yasnippet snippets
+   #+END_SRC
+
+   #+BEGIN_SRC sh
+     # to update
+     cd ~/.emacs.d/yasnippets
+     git submodule update --init
+   #+END_SRC
+
    #+begin_src emacs-lisp
      (use-package yasnippet
        :ensure t
@@ -835,7 +851,7 @@ hold out for now :tangle
        :diminish yas-minor-mode
        :config
        (progn
-         (setq yas-snippet-dirs (concat user-emacs-directory "snippets"))
+         (setq yas-snippet-dirs (concat user-emacs-directory "yasnippets/snippets"))
          (yas-global-mode 1)))
    #+end_src
 

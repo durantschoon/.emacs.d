@@ -1,6 +1,0 @@
-# -*- mode: snippet; require-final-newline: nil -*-
-# name: debug
-# key: debug
-# binding: direct-keybinding
-# --
-console.log "${0:var} is", $0

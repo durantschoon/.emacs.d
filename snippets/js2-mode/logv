@@ -1,6 +1,0 @@
-# -*- mode: snippet; require-final-newline: nil -*-
-# name: logv
-# key: logv
-# binding: direct-keybinding
-# --
-console.log("$0 is", $0);
