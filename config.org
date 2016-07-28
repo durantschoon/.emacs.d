@@ -199,6 +199,13 @@ at point as the default value for occur.
       (global-set-key [f6] 'toggle-truncate-lines)
     #+END_SRC
 
+*** search
+
+    #+BEGIN_SRC emacs-lisp
+      (global-set-key (kbd "C-s") 'phi-search)
+      (global-set-key (kbd "C-r") 'phi-search-backward)
+    #+END_SRC
+
 *** web development
 
     #+BEGIN_SRC emacs-lisp
@@ -621,9 +628,21 @@ hold out for now :tangle
               ("C-<"         . mc/mark-previous-like-this)
               ("C-c C-<"     . mc/mark-all-like-this)
               ("C-!"         . mc/mark-next-symbol-like-this)
-              ("s-d"         . mc/mark-all-dwim))
-       )
+              ("s-d"         . mc/mark-all-dwim)))
    #+end_src
+
+   
+*** To use:
+
+    If you have
+
+    print "foo", foo
+
+    You can change both foos to bar by:
+    1. Select the first foo in a region (move to 1st f, C-space, M-f)
+    2. C-> (to start multiple-cursors)
+    3. type "bar"
+    4. C-g or <return> to end
 
 ** Octave
 
@@ -692,6 +711,19 @@ hold out for now :tangle
      (add-hook 'package-menu-mode-hook (lambda ()
                                          (toggle-truncate-lines t)))
    #+END_SRC
+** Phi-search and Phi-replace
+
+   works with multiple cursors
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package phi-search
+       :defer t
+       :ensure t
+       :config
+       (require 'phi-replace)
+       (global-set-key (kbd "M-%") 'phi-replace-query))
+   #+END_SRC
+
 ** "Pretty C-l"
 
    Display Control-l characters in a pretty way
