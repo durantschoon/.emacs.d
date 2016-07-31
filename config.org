@@ -1152,3 +1152,17 @@ hold out for now :tangle
     To select "org-mode-hook" with your mouse, click on the '-'
     otherwise click on "org" to select only that part.
 
+* Run Last
+
+  Open file work_init.el or home_init.el depending on which computer
+  I'm on. Since they don't belong in my repo they are listed in my
+  .gitignore file.
+
+  #+BEGIN_SRC emacs-lisp
+    (setq locations '("home" "work"))
+    (dolist (loc locations)
+      (let ((init-file (concat user-emacs-directory (concat loc "_init.el"))))
+        (if (file-exists-p init-file)
+            (message (concat "loading " init-file))
+            (load init-file))))
+  #+END_SRC
