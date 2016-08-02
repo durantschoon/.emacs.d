@@ -11,3 +11,5 @@
 /helm-doc.org
 /url/
 /tramp
+/.mc-lists.el
+/org-clock-save.el
