@@ -1163,6 +1163,7 @@ hold out for now :tangle
     (dolist (loc locations)
       (let ((init-file (concat user-emacs-directory (concat loc "_init.el"))))
         (if (file-exists-p init-file)
-            (message (concat "loading " init-file))
-            (load init-file))))
+            (progn
+              (message (concat "loading " init-file))
+              (load init-file)))))
   #+END_SRC
