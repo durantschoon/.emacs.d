@@ -227,6 +227,7 @@ at point as the default value for occur.
    #+BEGIN_SRC emacs-lisp
      (defun my-prog-mode-hook ()
        (linum-mode 1)
+       (message "Truncating long lines in programming mode...")
        (toggle-truncate-lines t))
      (add-hook 'prog-mode-hook 'my-prog-mode-hook)
    #+END_SRC
@@ -403,7 +404,11 @@ boxes around the mode line.
 ** Ag
 
    #+begin_src emacs-lisp
-     (add-hook 'ag-mode-hook (lambda () (toggle-truncate-lines)))
+     (add-hook 'ag-mode-hook
+               (lambda ()
+                 (progn
+                   (message "Truncating long lines in ag-mode...")
+                   (toggle-truncate-lines t))))
    #+end_src
 
 ** C# (don't judge)
@@ -468,6 +473,21 @@ boxes around the mode line.
          (ediff-buffers (current-buffer) buf1)))
    #+END_SRC
 
+** Exec path from shell
+
+   So emacs can also find executables (like "coffee" for coffee-repl).
+   See [[https://github.com/purcell/exec-path-from-shell][repo  documentation]].
+
+   I should go over all of [[https://github.com/danielmai/.emacs.d/blob/master/config.org#mac-customizations][Daniel's Mac customizations]] and put this in Settings.
+
+   #+begin_src emacs-lisp
+     (use-package exec-path-from-shell
+       :if (memq window-system '(mac ns))
+       :ensure t
+       :init
+       (exec-path-from-shell-initialize))
+   #+end_src   
+
 ** Flycheck
 
    #+begin_src emacs-lisp
@@ -479,8 +499,7 @@ boxes around the mode line.
                "/usr/local/Cellar/tidy-html5/5.2.0/bin/tidy")
          (setq flycheck-javascript-jshint-executable
                "/usr/local/bin/jshint")
-         (global-flycheck-mode))
-       )
+         (global-flycheck-mode)))
    #+end_src
 
 *** Linter setups
@@ -499,7 +518,9 @@ boxes around the mode line.
    #+BEGIN_SRC emacs-lisp
      (add-hook 'grep-mode-hook
                '(lambda ()
-                  (toggle-truncate-lines t)))
+                  (progn
+                    (message "Truncating long lines in grep mode...")
+                    (toggle-truncate-lines t))))
    #+END_SRC
 ** Hide-Show 
    for hs-minor-mode
@@ -537,7 +558,8 @@ boxes around the mode line.
      (defun my-html-mode-hook ()
        (linum-mode 1)
        (column-number-mode 1)
-       (toggle-truncate-lines)
+       (message "Truncating long lines in html mode...")
+       (toggle-truncate-lines t)
        )
      (add-hook 'html-mode-hook 'my-html-mode-hook)
    #+END_SRC
@@ -600,8 +622,6 @@ boxes around the mode line.
 A great interface for git projects. It's much more pleasant to use
 than the git interface on the command line. Use an easy keybinding to
 access magit.
-
-hold out for now :tangle
 
 #+begin_src emacs-lisp
   (use-package magit
@@ -715,8 +735,11 @@ hold out for now :tangle
 ** Package
 
    #+BEGIN_SRC emacs-lisp
-     (add-hook 'package-menu-mode-hook (lambda ()
-                                         (toggle-truncate-lines t)))
+     (add-hook 'package-menu-mode-hook
+               (lambda ()
+                 (progn
+                   (message "Truncating long lines in package menu mode...")
+                   (toggle-truncate-lines t))))
    #+END_SRC
 ** Phi-search and Phi-replace
 
@@ -1080,6 +1103,14 @@ hold out for now :tangle
      | C-c C-v | view in browser |
      |---------+-----------------|
 
+**** flycheck-mode
+
+     |---------+-----------------------|
+     | Command | Description           |
+     |---------+-----------------------|
+     | C-c ! v | flycheck-verify-setup |
+     |---------+-----------------------|
+
 **** ido-mode
 
      |---------+--------------|
@@ -1098,6 +1129,12 @@ hold out for now :tangle
      | C-c l   | org-store-link                            |
      |---------+-------------------------------------------|
      | C-c C-l | org-insert-link                           |
+     |---------+-------------------------------------------|
+     | C-c *   | org-toggle-heading                        |
+     |         | first select a bunch of lines to promote  |
+     |---------+-------------------------------------------|
+     | C-c -   | Cycle bullets (‘-’, ‘+’, ‘*’, ‘1.’, ‘1)’) |
+     |         | C-x z z ... to repeat as usual            |
      |---------+-------------------------------------------|
 
      [[http://orgmode.org/manual/Easy-Templates.html][Easy Templates]]
@@ -1152,6 +1189,14 @@ hold out for now :tangle
     To select "org-mode-hook" with your mouse, click on the '-'
     otherwise click on "org" to select only that part.
 
+* Test
+
+  #+BEGIN_SRC emacs-lisp
+    (defun init ()
+      "Test to quickly load my init file."
+      (interactive)
+      (load (concat user-emacs-directory "init.el")))
+  #+END_SRC
 * Run Last
 
   Open file work_init.el or home_init.el depending on which computer
@@ -1167,3 +1212,4 @@ hold out for now :tangle
               (message (concat "loading " init-file))
               (load init-file)))))
   #+END_SRC
+
