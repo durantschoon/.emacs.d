@@ -473,6 +473,15 @@ boxes around the mode line.
          (ediff-buffers (current-buffer) buf1)))
    #+END_SRC
 
+** Emacs SQL-PSQL (postgress) disbled/LOOKAT
+
+   #+begin_src emacs-lisp :tangle no
+
+     (use-package emacsql-psql
+       :ensure t
+     )
+   #+end_src
+
 ** Exec path from shell
 
    So emacs can also find executables (like "coffee" for coffee-repl).
