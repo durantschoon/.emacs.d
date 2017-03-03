@@ -682,9 +682,15 @@ access magit.
 
    Decide if I still need this (from [[https://www.gnu.org/software/octave/doc/v4.0.0/Using-Octave-Mode.html][Using Octave Mode]]):
 
-   #+BEGIN_SRC emacs-lisp :tangle no
-     (autoload 'octave-mode "octave-mod" nil t)
+   Note there is no final "e" in "octave-mod"
 
+   Also the autoload is disabled because it actually interferes with
+   octave mode which should be set up by default according to [[https://lists.gnu.org/archive/html/help-octave/2015-07/msg00291.html][this]].
+
+   #+BEGIN_SRC emacs-lisp
+     ; (autoload 'octave-mode "octave-mod" nil t)
+
+     ; Do this otherwise objective-c mode is set
      (setq auto-mode-alist
            (cons '("\\.m$" . octave-mode) auto-mode-alist))
 
