@@ -13,6 +13,23 @@
  '(package-selected-packages
    (quote
     (clojure-mode octave-mode yasnippet yaml-mode web-mode use-package smartscan sass-mode python-mode projectile pp-c-l phi-search org-bullets multiple-cursors monokai-theme markdown-mode magit livescript-mode js2-mode ido-vertical-mode flycheck exec-path-from-shell emmet-mode edit-server cyberpunk-theme csharp-mode coffee-mode cl-lib-highlight)))
+ '(safe-local-eval-forms
+   (quote
+    ((add-hook
+      (quote write-file-hooks)
+      (quote time-stamp))
+     (add-hook
+      (quote write-file-functions)
+      (quote time-stamp))
+     (add-hook
+      (quote before-save-hook)
+      (quote time-stamp)
+      nil t)
+     (add-hook
+      (quote before-save-hook)
+      (quote delete-trailing-whitespace)
+      nil t)
+     (turn-off-auto-fill))))
  '(vc-directory-exclusion-list
    (quote
     ("SCCS" "RCS" "CVS" "MCVS" ".svn" ".git" ".hg" ".bzr" "_MTN" "_darcs" "{arch}"))))
