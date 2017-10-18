@@ -8,6 +8,12 @@
    [[https://www.youtube.com/watch?v=dyWn30HMgQg&index=7&list=PLqHVwAuIChUK8GE6eDzCQAgP5cJIByQQ5][here]]. If you're just getting started with emacs, you might want to
    start with the first video in the [[https://www.youtube.com/playlist?list=PLqHVwAuIChUK8GE6eDzCQAgP5cJIByQQ5][playlist]].
 
+   I'll be trying this install on my mac next time:
+
+#+BEGIN_SRC sh
+brew install emacs --with-cocoa --with-gnutls --with-imagemagick@6
+#+END_SRC
+
 ** Personal Information
 
   I'm using `concat` so the bots don't find my entire email address
