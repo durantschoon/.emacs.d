@@ -933,7 +933,9 @@ access magit.
 
    I use [[https://smilesoftware.com/textexpander][TextExpander]] on OS X and [[http://www.16software.com/breevy/][Breevy]] on Windows sharing my
    textexpander settings through Dropbox. Now I can have them in emacs
-   too.
+   too. If you're thinking about the same, note I decided to abandon
+   using non-word characters like semi-colon ";" in my abbreviations
+   to make everything work everywhere. 
 
    #+BEGIN_SRC emacs-lisp
      (use-package textexpander-sync
