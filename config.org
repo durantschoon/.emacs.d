@@ -217,7 +217,6 @@ at point as the default value for occur.
     #+BEGIN_SRC emacs-lisp
       (global-set-key (kbd "H-o") 'browse-url-of-buffer)
     #+END_SRC
-
 ** Mouse
 
    #+BEGIN_SRC emacs-lisp
@@ -819,6 +818,17 @@ access magit.
        (setq jiralib-url "https://udacity.atlassian.net")
        )
    #+end_src
+
+** osx-plist
+
+   For use with [[https://github.com/tedroden/textexpander-sync-el/blob/master/textexpander-sync.el][textexpander-sync-el]]
+   
+#+BEGIN_SRC  emacs-lisp
+     (use-package osx-plist
+       :defer t
+       :ensure t
+       )
+#+END_SRC
 
 ** Package
 
