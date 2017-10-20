@@ -929,6 +929,20 @@ access magit.
        )
    #+end_src
 
+** TextExpander
+
+   I use [[https://smilesoftware.com/textexpander][TextExpander]] on OS X and [[http://www.16software.com/breevy/][Breevy]] on Windows sharing my
+   textexpander settings through Dropbox. Now I can have them in emacs
+   too.
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package textexpander-sync
+       :load-path "~/.emacs.d/site-lisp"
+       :init
+       (setq textexpander-sync-file "~/Dropbox/TextExpander/Settings.textexpander")
+       (setq abbrev-mode t))
+   #+END_SRC
+
 ** Web Mode
 
    #+begin_src emacs-lisp
