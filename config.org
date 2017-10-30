@@ -942,8 +942,18 @@ access magit.
        :load-path "~/.emacs.d/site-lisp"
        :init
        (setq textexpander-sync-file "~/Dropbox/TextExpander/Settings.textexpander")
-       (setq abbrev-mode t))
+       (setq-default abbrev-mode t)) ; setq-default to set this globally
    #+END_SRC
+
+** TODO URL Shortener
+
+   Need bitly-access-token ... see Private Data
+
+   #+begin_src emacs-lisp
+     (use-package url-shortener
+       :defer t
+       :ensure t)
+   #+end_src
 
 ** Web Mode
 
