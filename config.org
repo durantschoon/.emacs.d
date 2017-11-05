@@ -898,6 +898,13 @@ access magit.
            :ensure t)))
    #+end_src
 
+** Rainbow Mode
+
+   #+begin_src emacs-lisp
+     (use-package rainbow-mode
+       :ensure t)
+   #+end_src
+
 ** Recentf
 
    Recentf is a minor mode that builds a list of recently opened
@@ -943,6 +950,15 @@ access magit.
        :init
        (setq textexpander-sync-file "~/Dropbox/TextExpander/Settings.textexpander")
        (setq-default abbrev-mode t)) ; setq-default to set this globally
+   #+END_SRC
+   
+** TLA Mode
+
+   Note to self: I should post my fix 
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package tla-mode
+       :load-path "~/.emacs.d/site-lisp")
    #+END_SRC
 
 ** TODO URL Shortener
