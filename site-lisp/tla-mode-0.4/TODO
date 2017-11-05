@@ -1,0 +1,96 @@
+1. tla-header doesn't check if header already exists. (FIXED)
+
+2. comment-formula comments preceding structure if just *in front* of
+   ==. (FIXED)
+
+3. comment-* must be smart enough to account for correct
+   indentation. (FIXED)
+
+4. Disable menu templates if not allowed by module type. (WISHLIST)
+
+5. automatic padding of menu items to prevent flattered
+   shortcuts. (WISHLIST)
+
+6. Menus are broken in Lucid Emacs.
+
+7. Menu items get flattered in Emacs for NEXTSTEP because of Helvetica.
+   (Have to wait for next release)
+
+8. When inserting keyword templates check if they are already
+   present. (DONE)
+
+9. electric semicolon to match member of tla-keyword-list. (FUTILE)
+
+10. Error handling corrupted. (FIXED)
+
+11. Wrong indentation for few keywords because of nested structure. (FIXED)
+
+12. Indenting structures should be handled by a common routine that
+    looks for the real beginning of a structure even if it is more than
+    a line away. (DONE)
+
+13. tla-deflhs-regexp doesn't match unqualified identifier. (FIXED)
+
+14. Generalize tla-in-formula returning a list with beg and point. (DONE)
+
+15. tla-in-formula still fails when encountering LET assignments
+    within (structs including == and ;). (FIXED)
+
+16. comment-formula must respect module header. (FIXED)
+
+17. TEMPORAL keyword templates must not appear in a CONSTANTS
+    module. (FIXED)
+
+18. Existing tabs prevent proper indentation in some cases. (DONE,
+    see 26)
+
+19. Indentation fails within comment lines of header and below IMPORT
+    line. (FIXED)
+
+20. Indentation of INCLUDE body erroneous. (FIXED)
+
+21. Highlighting would be a highlight, wouldn't it?! (DONE, see 33)
+
+22. When changing the variant, the menu must be updated.
+
+23. Completion for keywords and flavors. (WISHLIST)
+
+24. Missing identifier in front of a == makes tla-in-formula
+    fail. (CORRECT BEHAVIOR)
+
+25. CONSTANT THEOREMS not recognized when commenting formulas. (NOT
+    PART OF tTLA+)
+
+26. Save hook for untabifying. (DONE)
+
+27. Indentation of closing braces doesn't always account for real open
+    brace. (FIXED)
+
+28. Keyword menu must be updated to reflect permissions instead of
+    error signalling.
+
+29. Nested bulleted lorand doesn't account for already *closed* other
+    structures containing lorands. (FIXED)
+
+30. tla-in-formula fails when on a comment line or looking at
+    "END". (FIXED)
+
+31. nested structures don't get properly indented when in INCLUDE
+    body.
+
+32. indentation gets too slow when meeting the last possible
+    condition. (FIXED)
+
+33. No support for font-lock-mode. (DONE)
+
+34. local variable tla-master gets occasionally inserted twice.
+
+35. When locating file during next error, check other extensions as
+    well.
+
+36. Current process buffer won't be returning when running LaTeX on
+    generated spec file.
+
+37. Use correct module type when generating tla-region-file.
+
+38. Separate command lists for specs, buffers and regions. (WISHLIST)

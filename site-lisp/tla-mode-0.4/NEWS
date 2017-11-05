@@ -1,0 +1,204 @@
+TLA+ Mode NEWS -- history of user-visible changes.  8 August 1994
+Copyright (C) 1994 Frank Wegmann
+See the end for copying conditions.
+
+Please send bug reports to tla-mode-bugs@linguistics.ruhr-uni-bochum.de.
+
+Changes in version 0.4.
+
+* Commands on buffers (C-c C-b) and regions (C-c C-r) work.
+When running LaTeX on a spec file the appropriate LateX source
+file will be generated and held in another buffer that has
+the extension ".ltx" instead of standard ".t"
+
+
+Changes in version 0.3.2.
+
+* The error messages from TPP can now be parsed. Use C-c `
+to proceed to next error. Use C-u C-c ` to restart parsing.
+Names of other files involved must currently end in ".t".
+
+
+Changes in version 0.3.1.
+
+* Commenting a region works only if there is at least one line
+which is not already commented.
+
+* Documentation describes already installed other commands and
+recent changes.
+
+* When generating a header template, spaces are now padded up to the
+defined end column for comments which is 75.
+
+* Already present templates can now be inserted. The user only gets a
+warning signalled instead of an error.
+
+* Commands related to the output of a running command can be found in
+a new submenu 'Command Output' which contains the following items:
+  - Kill job (C-c C-k)
+  - Switch to original file (C-c ^)
+  - Recenter output buffer (C-c C-l)
+All of these commands had been already implemented in 0.3.
+
+* Killing a job was implemented using C-c LFD instead of C-c C-k as
+the documentation suggested. It is now C-c C-k.
+
+
+Changes in version 0.3.
+
+* You can now switch to the on-line documentation with the help of
+the shortcut C-c TAB.
+
+* Documentation including the reference card has been updated.  The
+documentation features new chapters on multifile specifications and
+how to run other commands. There is also a short introduction into the
+concept of flavors.
+
+* The interface to other commands is now established. Although no
+transformation of LaTeX files and no tpp error parsing takes place,
+the interface can be used now on the top module of the current
+specification.
+
+* Basic support for fontifying buffer. When entering TLA mode, the
+current buffer will be automatically fontified. You could change this
+behavior by setting the variable `tla-use-font-lock' to nil.
+
+* Handling complete specifications with the help of the top module
+acting as a `master file' is now enabled. The new menu items `Switch to
+Top Module' and `Save Specification' make use of this concept.
+
+* tla-variant-list introduces the concept of different variants of TLA+.
+tla-current-variant holds the currently active variant which is now also
+displayed as the name of the menu. (default is "tTLA+"). However,
+this feature is not fully exploited by now.
+
+* Along with a couple of bug fixes basic indentation routines have
+been rewritten resulting in faster indentation.
+
+* Files are automatically untabified when saving. Therefore the menu
+entry for untabifying current buffer is no longer necessary.
+
+
+Changes in version 0.2.5.
+
+* The shortcut for inserting an untyped header has been changed to
+C-c C-h C-u, since the old shortcut was a mnemonic to a now defunct
+menu entry.
+
+* Inserting keyword templates now also checks for abbreviated templates.
+
+* Current buffer can be untabified by an appropriate menu entry.
+
+* Indentation has been much improved:
+  - Nested structures that are introduced by {, ( or [ are now
+    indented to the corresponding opener.
+  - Nested bulleted lorand within another structure (quantifier,
+    scope etc.) are now indented to the matching rightmost inner lorand.
+  - INCLUDE and PARAMETERS statements are now fully supported,
+    with INCLUDE body statements respecting single WITH statements.
+
+* Outlining now works with two different levels, first level
+representing headings that contain TLA keywords and the second level
+representing symbol definitions.
+
+
+Changes in version 0.2.4.
+
+* New version of reporter.el (2.12) bundled.
+
+* Regexp for LHS of symbol definitions now also matches typed exprs
+  that return something.
+
+* Keyword insertion now obeys the rules.
+
+* Commenting symbol definitions used to be called "Comment Formulas".
+But now it does also work across LET..IN constructs.
+
+* tla-in-formula completely rewritten. It now relies on a recursive
+procedure to get the *real* beginning and end of a symbol definition.
+
+* tla-empty-line now handles indentation of (guess what) empty lines.
+If there is a bulleted con-/disjunction in the line above the empty
+line will be indented to the position of the last lorand. If the line
+above starts with a comment (after possible whitespaces) then that
+position will be used.
+
+* Indenting commented lines now works.
+
+Changes in version 0.2.3.
+
+* Outlining works with symbol definitions (except LET) defined as the
+one and only heading. Toggling the mode is also possible from the
+menu.
+
+* Indenting a line no more bails out because of a failed regexp
+search.  If indentation is wrong then it is also visible from the
+indented line instead of getting an error.
+
+* Fixed indentation bug that didn't align IN with LET.
+
+* Documentation now has proper credits of contained spec code.
+
+Changes in version 0.2.2.
+
+* Minor documentation bug prevented generation of the info file.
+
+Changes in version 0.2.1.
+
+* Documentation updated to cover templates and indentation.
+
+* Previous use of keyword templates now signalled as an error.
+
+* Indenting bulleted con-/disjunctions works now over the whole range
+of a formula, so it aligns correctly to a distant con-/disjunction.
+It also indents correctly within nested expressions.
+
+* Commenting symbol definitions and formulas (tla-comment-formula)
+works much better and only fails within structures that contain LET
+assignments.
+
+Changes in version 0.2 (not released).
+
+* tla-ref.tex added providing a reference card for commands
+that are already implemented.
+
+* tla-indent-line works now quite reasonably.  It understands a wide
+range of TLA+ expressions, although it yet fails at correctly indenting
+comments.
+Indenting is invoked by typing TAB. Use M-i to indent to next tab stop
+position. This has also been checked for Emacs 18.
+
+* "simple" header template renamed in untyped header.
+
+Initial release version 0.1 (private alpha1).
+
+Here is a list of the Lisp packages accompanying tla-mode:
+
+easymenu.el		Define menus in a uniform manner for FSF/Lucid.
+reporter.el		Ease submitting bug reports via e-mail/
+
+* tla-header now works correctly. tla-delete-header has been added.
+Therefore, tla-temporal-module and tla-constants-module are no longer
+needed.
+
+* tla-comment-formula comments the current formula that point is in.
+
+
+----------------------------------------------------------------------
+Copyright information:
+
+Copyright (C) 1994 Frank Wegmann
+
+   Permission is granted to anyone to make or distribute verbatim copies
+   of this document as received, in any medium, provided that the
+   copyright notice and this permission notice are preserved,
+   thus giving the recipient permission to redistribute in turn.
+
+   Permission is granted to distribute modified versions
+   of this document, or of portions of it,
+   under the above conditions, provided also that they
+   carry prominent notices stating who last changed them.
+
+Local variables:
+mode: text
+end:

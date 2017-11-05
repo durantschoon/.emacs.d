@@ -1,0 +1,19 @@
+This directory holds a preliminary alpha release of TLA mode,
+a major mode for GNU Emacs supporting the specification process
+of specifications based on TLA+.
+
+The mode itself and the programs related to it are covered by
+the GNU General Public License. See the file COPYING for details.
+
+Installation is made easier with the help of the Autoconf package.
+Typing './configure' followed by 'make' will usually do it. See
+the file INSTALL for the complete list of options.
+
+Functionality and documentation are subject to change due to the
+alpha nature of the implementation. Standard disclaimers apply.
+
+Please send bug reports and comments to
+
+tla-mode-bugs@linguistics.ruhr-uni-bochum.de
+
+
