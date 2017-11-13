@@ -217,6 +217,20 @@ at point as the default value for occur.
     #+BEGIN_SRC emacs-lisp
       (global-set-key (kbd "H-o") 'browse-url-of-buffer)
     #+END_SRC
+
+*** zap-up-to-char
+    
+    From [[https://www.emacswiki.org/emacs/ZapUpToChar][ZapUpToChar]] (replaces zap-to-char so it doesn't zap the char itself)
+
+    #+BEGIN_SRC emacs-lisp
+      (defadvice zap-to-char (after my-zap-to-char-advice (arg char) activate)
+        "Kill up to the ARG'th occurence of CHAR, and leave CHAR. If
+        you are deleting forward, the CHAR is replaced and the point is
+        put before CHAR"
+        (insert char)
+        (if (< 0 arg) (forward-char -1)))
+    #+END_SRC
+
 ** Mouse
 
    #+BEGIN_SRC emacs-lisp
