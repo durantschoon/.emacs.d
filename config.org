@@ -983,6 +983,27 @@ access magit.
        :ensure t)
    #+end_src
 
+** Visual-regexp
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package visual-regexp
+        :ensure t
+        :init
+        (use-package visual-regexp-steroids :ensure t)
+        :bind (("C-c r" . vr/replace)
+               ("C-c q" . vr/query-replace)
+               ("C-c m" . vr/mc-mark) ; Need multiple cursors
+               ("C-M-r" . vr/isearch-backward)
+               ("C-M-s" . vr/isearch-forward)))
+    #+END_SRC
+
+   Usage reminder
+
+   C-c q -> enter pattern to search for -> enter pattern for
+            replacement
+   C-c m -> enter pattern to search for -> start typing in multiple
+            cursor mode 
+
 ** Web Mode
 
    #+begin_src emacs-lisp
