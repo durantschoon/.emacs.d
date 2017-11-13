@@ -8,8 +8,6 @@
    [[https://www.youtube.com/watch?v=dyWn30HMgQg&index=7&list=PLqHVwAuIChUK8GE6eDzCQAgP5cJIByQQ5][here]]. If you're just getting started with emacs, you might want to
    start with the first video in the [[https://www.youtube.com/playlist?list=PLqHVwAuIChUK8GE6eDzCQAgP5cJIByQQ5][playlist]].
 
-   I'll be trying this install on my mac next time:
-
 #+BEGIN_SRC sh
 brew install emacs --with-cocoa --with-gnutls --with-imagemagick@6
 #+END_SRC
@@ -196,7 +194,7 @@ at point as the default value for occur.
 
         #+END_SRC
 
-*** Function Keys (f1-f4 are defined by emacs f5 on is for user customization)
+*** Function Keys (f1-f4: defined by emacs f5-...: user customization)
 
     #+BEGIN_SRC emacs-lisp
       (global-set-key [f5] 'global-whitespace-mode)
@@ -1146,9 +1144,9 @@ access magit.
     You can see all commands that begin with a prefix by using C-h afterward,
     e.g `C-x C-h` or `C-x 4 C-h` or `C-c C-h`
 
-    C-x is for built-in emacs commands
+    C-x is for built-in emacs commands (mnemonic emaX ?)
 
-    C-c is for customized (major and minor mode) commands
+    C-c is for Customized (major and minor mode) commands
 ** Remember these!
 *** Default Key bindings
 
