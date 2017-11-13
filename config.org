@@ -709,6 +709,8 @@ access magit.
    For some reason I need to require 'cl. Some of the mc libraries
    require 'cl-lib, but that doesn't seem to be enough.
 
+   Refer to the [[https://github.com/magnars/multiple-cursors.el][source]] for examples.
+
    #+begin_src emacs-lisp
      (use-package multiple-cursors
        :ensure t
@@ -722,18 +724,52 @@ access magit.
               ("s-d"         . mc/mark-all-dwim)))
    #+end_src
 
+   "s-d" is super-d (I've bound super to option)
+
+   Special:
+   
+   mc/mark-sgml-tag-pair: Mark the current opening and closing tag.
+                          Also try mc/mark-all-like-this-dwim in a tag
+
+   Mark the region
+   mc/edit-beginnings-of-lines
+
+   mc/insert-numbers: Insert increasing numbers for each cursor, top to bottom.
+                      mv/i-n
+   mc/insert-letters: Insert increasing letters for each cursor, top to bottom.
+                      mv/i-l
 
 *** To use:
 
-    If you have
+**** replacing the same word
 
-    print "foo", foo
+     If you have
 
-    You can change both foos to bar by:
-    1. Select the first foo in a region (move to 1st f, C-space, M-f)
-    2. C-> (to start multiple-cursors)
-    3. type "bar"
-    4. C-g or <return> to end
+     print "foo", foo
+
+     You can change both foos to bar by:
+     1. Select the first foo in a region (move to 1st f, C-space, M-f)
+     2. C-> (to start multiple-cursors)
+     3. type "bar"
+     4. C-g or <return> to end
+
+**** replacing a similar pattern of symbols
+
+     If you have
+
+     foo: one
+     barr: two
+     bazzz: three
+     quux: four
+
+     You can select ": " and mc/mark-all-like-this or s-d for
+     mc/mark-all-dwim, then start typing (you'll need to retype ": "
+     or you can kill and yank it back, first thing if you want to keep
+     it).
+
+     While editing, you can use C-' to hide all non-edited text
+
+     test: this is extra text, not to be modified
 
 ** Octave
 
