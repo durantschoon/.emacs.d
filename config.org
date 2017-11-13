@@ -204,6 +204,7 @@ at point as the default value for occur.
 *** search
 
     Testing this. I'm not convinced I like everything about it.
+    phi-search works with multiple cursors.
 
     #+BEGIN_SRC emacs-lisp
       (global-set-key (kbd "C-s") 'phi-search)
@@ -887,7 +888,7 @@ access magit.
                    (message "Truncating long lines in package menu mode...")
                    (toggle-truncate-lines t))))
    #+END_SRC
-** Phi-search and Phi-replace
+** Phi-search, Phi-replace, Phi-search-mc
 
    works with multiple cursors
 
@@ -898,6 +899,14 @@ access magit.
        :config
        (require 'phi-replace)
        (global-set-key (kbd "M-%") 'phi-replace-query))
+   #+END_SRC
+
+   Not sure how this works yet: 
+
+   #+BEGIN_SRC emacs-lisp 
+     (use-package phi-search-mc
+       :defer t
+       :ensure t)
    #+END_SRC
 
 ** "Pretty C-l"
