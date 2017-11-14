@@ -1067,6 +1067,30 @@ access magit.
    C-c m -> enter pattern to search for -> start typing in multiple
             cursor mode 
 
+   Note: expressions are in python
+
+   Multiplying all numbers of at least two digits by 3:
+
+   C-c r
+   (\d{2,})
+   C-c C-c (expression mode)
+   int(\1)*3
+   
+   1 20 3
+   50 60 70
+   80 90 100
+
+   Capitalize the first letter of the string after "mc/"
+
+   C-c r
+   mc/(.)
+   C-c C-c (expression mode)
+   "mc/" + str(\1).upper()
+
+   mc/mark-sgml-tag-pair: Mark the current opening and closing tag.
+   mc/insert-numbers: Insert increasing numbers for each cursor, top to bottom.
+   mc/insert-letters: Insert increasing letters for each cursor, top to bottom.
+
 ** Web Mode
 
    #+begin_src emacs-lisp
