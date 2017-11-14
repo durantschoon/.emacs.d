@@ -430,6 +430,19 @@ boxes around the mode line.
          (setq edit-server-new-frame nil)))
    #+end_src
 
+** Private
+
+   Load private data, for example, I have a google api key set as
+   goo-api-key for url shortening.
+
+   #+BEGIN_SRC emacs-lisp
+     (let ((private-data-file "~/Dropbox/emacs/private.el"))
+       (if (file-exists-p private-data-file)
+           (progn
+             (message (concat "loading " private-data-file))
+             (load private-data-file))))
+   #+END_SRC
+
 * Modes (Alphabetical)
 ** Ag
 
@@ -1018,15 +1031,20 @@ access magit.
        :load-path "~/.emacs.d/site-lisp")
    #+END_SRC
 
-** TODO URL Shortener
+** URL Shortener
 
-   Need bitly-access-token ... see Private Data
+   Need google-access-token ... see private-data-file
 
    #+begin_src emacs-lisp
      (use-package url-shortener
        :defer t
        :ensure t)
    #+end_src
+
+   Use:
+
+   M-x goo-url-shorten
+   M-x goo-url-expand
 
 ** Visual-regexp
 
