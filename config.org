@@ -416,9 +416,9 @@ boxes around the mode line.
 
 ** "Edit With Emacs" [[https://chrome.google.com/webstore/detail/edit-with-emacs/ljobjlafonikaiipfkggjbhkghgicgoh?hl=en][Chrome plugin]]
 
-   Following Daniel here to use Emacs to edit posts on Discourse,
-   which has a post editor that overrides normal Emacs key bindings
-   with other functions. As such, ~markdown-mode~ is used.
+   Following Daniel Mai again here to use Emacs to edit posts on
+   Discourse, which has a post editor that overrides normal Emacs key
+   bindings with other functions. As such, ~markdown-mode~ is used.
 
    #+begin_src emacs-lisp
      (use-package edit-server
