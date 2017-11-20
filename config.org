@@ -741,11 +741,11 @@ access magit.
    "s-d" is super-d (I've bound super to option)
 
    Special:
-   
+
    mc/mark-sgml-tag-pair: Mark the current opening and closing tag.
                           Also try mc/mark-all-like-this-dwim in a tag
 
-   Mark the region
+   Mark the region, then
    mc/edit-beginnings-of-lines
 
    mc/insert-numbers: Insert increasing numbers for each cursor, top to bottom.
@@ -884,7 +884,7 @@ access magit.
 ** osx-plist
 
    For use with [[https://github.com/tedroden/textexpander-sync-el/blob/master/textexpander-sync.el][textexpander-sync-el]]
-   
+
 #+BEGIN_SRC  emacs-lisp
      (use-package osx-plist
        :defer t
@@ -1062,10 +1062,8 @@ access magit.
 
    Usage reminder
 
-   C-c q -> enter pattern to search for -> enter pattern for
-            replacement
-   C-c m -> enter pattern to search for -> start typing in multiple
-            cursor mode 
+   C-c q -> enter pattern to search for -> enter pattern for query replacement
+   C-c m -> enter pattern to search for -> start typing in multiple cursor mode
 
    Note: expressions are in python
 
