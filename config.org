@@ -864,7 +864,9 @@ access magit.
       ln -si ~/Dropbox/work/org ~/
     #+END_SRC
 
-    (setq org-default-notes-file (concat org-directory "/captured_notes.org"))
+    #+BEGIN_SRC emacs-lisp
+      (setq org-default-notes-file (concat org-directory "/captured_notes.org"))
+    #+END_SRC
 
 *** Org-bullets
     #+BEGIN_SRC emacs-lisp
