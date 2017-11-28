@@ -835,7 +835,7 @@ access magit.
       ln -si ~/Dropbox/work/org ~/
     #+END_SRC
 
-    (setq org-default-notes-file (concat org-directory "/notes.org"))
+    (setq org-default-notes-file (concat org-directory "/captured_notes.org"))
 
 *** Org-bullets
     #+BEGIN_SRC emacs-lisp
@@ -1051,7 +1051,8 @@ access magit.
     #+BEGIN_SRC emacs-lisp
       (use-package visual-regexp
         :ensure t
-        :init
+        :init  
+        (use-package pcre2el :ensure t)
         (use-package visual-regexp-steroids :ensure t)
         :bind (("C-c r" . vr/replace)
                ("C-c q" . vr/query-replace)
