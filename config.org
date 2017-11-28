@@ -278,30 +278,30 @@ boxes around the mode line.
   (setq monokai-use-variable-pitch nil))
 #+end_src
 
-*** DISABLED Convenient theme functions
+*** Convenient theme functions
 
-    nabbed these from Daniel Mai, but haven't tested them yet
+    I nabbed these from [[https://github.com/danielmai/.emacs.d/blob/master/config.org#convenient-theme-functions][Daniel Mai]]. They're great!
 
-#+begin_src emacs-lisp :tangle no
-(defun switch-theme (theme)
-  "Disables any currently active themes and loads THEME."
-  ;; This interactive call is taken from `load-theme'
-  (interactive
-   (list
-    (intern (completing-read "Load custom theme: "
-                             (mapc 'symbol-name
-                                   (custom-available-themes))))))
-  (let ((enabled-themes custom-enabled-themes))
-    (mapc #'disable-theme custom-enabled-themes)
-    (load-theme theme t)))
+#+begin_src emacs-lisp :tangle
+  (defun switch-theme (theme)
+    "Disables any currently active themes and loads THEME."
+    ;; This interactive call is taken from `load-theme'
+    (interactive
+     (list
+      (intern (completing-read "Load custom theme: "
+                               (mapc 'symbol-name
+                                     (custom-available-themes))))))
+    (let ((enabled-themes custom-enabled-themes))
+      (mapc #'disable-theme custom-enabled-themes)
+      (load-theme theme t)))
 
-(defun disable-active-themes ()
-  "Disables any currently active themes listed in `custom-enabled-themes'."
-  (interactive)
-  (mapc #'disable-theme custom-enabled-themes))
+  (defun disable-active-themes ()
+    "Disables any currently active themes listed in `custom-enabled-themes'."
+    (interactive)
+    (mapc #'disable-theme custom-enabled-themes))
 
-(bind-key "s-<f12>" 'switch-theme)
-(bind-key "s-<f11>" 'disable-active-themes)
+  (bind-key "s-<f12>" 'switch-theme)
+  (bind-key "s-<f11>" 'disable-active-themes)
 #+end_src
 
 ** Tabs
@@ -601,6 +601,35 @@ boxes around the mode line.
                     (message "Truncating long lines in grep mode...")
                     (toggle-truncate-lines t))))
    #+END_SRC
+** Helm
+
+   More code borrowed from [[https://github.com/danielmai/.emacs.d/blob/master/config.org#helm][Daniel Mai]].
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package helm
+       :ensure t
+       :diminish helm-mode
+       :init (progn
+               (require 'helm-config)
+               (use-package helm-projectile
+                 :ensure t
+                 :commands helm-projectile
+                 :bind ("C-c p h" . helm-projectile))
+               (use-package helm-ag :defer 10  :ensure t)
+               (setq helm-locate-command "mdfind -interpret -name %s %s"
+                     helm-ff-newfile-prompt-p nil
+                     helm-M-x-fuzzy-match t)
+               (helm-mode)
+               (use-package helm-swoop
+                 :ensure t
+                 :bind ("H-w" . helm-swoop)))
+       :bind (("C-c h" . helm-command-prefix)
+              ("C-x b" . helm-mini)
+              ("C-`" . helm-resume)
+              ("M-x" . helm-M-x)
+              ("C-x C-f" . helm-find-files)))
+   #+END_SRC
+
 ** Hide-Show
    for hs-minor-mode
 
@@ -741,11 +770,11 @@ access magit.
    "s-d" is super-d (I've bound super to option)
 
    Special:
-   
+
    mc/mark-sgml-tag-pair: Mark the current opening and closing tag.
                           Also try mc/mark-all-like-this-dwim in a tag
 
-   Mark the region
+   Mark the region, then
    mc/edit-beginnings-of-lines
 
    mc/insert-numbers: Insert increasing numbers for each cursor, top to bottom.
@@ -884,7 +913,7 @@ access magit.
 ** osx-plist
 
    For use with [[https://github.com/tedroden/textexpander-sync-el/blob/master/textexpander-sync.el][textexpander-sync-el]]
-   
+
 #+BEGIN_SRC  emacs-lisp
      (use-package osx-plist
        :defer t
@@ -1063,10 +1092,8 @@ access magit.
 
    Usage reminder
 
-   C-c q -> enter pattern to search for -> enter pattern for
-            replacement
-   C-c m -> enter pattern to search for -> start typing in multiple
-            cursor mode 
+   C-c q -> enter pattern to search for -> enter pattern for query replacement
+   C-c m -> enter pattern to search for -> start typing in multiple cursor mode
 
    Note: expressions are in python
 
