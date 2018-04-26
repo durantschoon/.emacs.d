@@ -264,7 +264,7 @@ at point as the default value for occur.
    :END:
 *** Testing Hasklig
     
-#+BEGIN_SRC emacs-lisp :tangle no
+#+BEGIN_SRC emacs-lisp 
   (when (window-system)
     (set-default-font "Hasklig"))
 #+END_SRC
@@ -406,6 +406,9 @@ The color themes work quite well, except they don’t know about the
 org-mode source code blocks, so we need to set up a couple functions
 that we can use to set them.
 #+END_QUOTE
+
+My note: I needed to manually create this directory to avoid an error
+on startup: ~/.emacs.d/elpa/color-theme-20070910.1007/themes
 
 #+BEGIN_SRC emacs-lisp
   (use-package color-theme
