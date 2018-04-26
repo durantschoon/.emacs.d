@@ -46,17 +46,33 @@
   "Grab TextExpander snippets " 
   (interactive)
   (let ((plist (osx-plist-parse-file textexpander-sync-file)))
+    (let ((snippet (gethash "snippetsTE2" plist)))
+      (mapc (lambda (s)
+              ; (message "DEBUG: type of s is %s" (type-of s))      
+              ; (message "Importing %s" (gethash "abbreviation" s))
+              (setq abbrev (gethash "abbreviation" s))
+              (setq expand (gethash "plainText" s))
+              ; (message "DEBUG: before")
+                                        ; One problem is that any call to this results in an error
+                                        ; so
+                                        ; (define-abbrev global-abbrev-table "test2xx" "text expansion")
+                                        ; causes this error
+                                        ; eval: Wrong type argument: number-or-marker-p, nil
+                                        ; and yet the entry is added to the table because the following works
+                                        ; (abbrev-insert (abbrev-symbol "test2xx" global-abbrev-table))
+                                        ; but in the fuction this error causes failure
+                                        ; this is probably unsafe, but it makes things work for now
+              (ignore-errors
+                (define-abbrev global-abbrev-table abbrev expand))
+                                        ; could use with-demoted-errors instead of ignore-errors but
+                                        ; the type errors aren't useful
 
-	(let ((snippet (gethash "snippetsTE2" plist)))
-	  (mapc (lambda (s)
-			  (message "Importing %s" (gethash "abbreviation" s))
-			  (setq abbrev (gethash "abbreviation" s))
-			  (setq expand (gethash "plainText" s))
-			  (define-abbrev global-abbrev-table abbrev expand)
-			  )
-			snippet)
-	  )
-	)
+              ; (define-abbrev global-abbrev-table abbrev expand)
+              ; (message "DEBUG: after")
+              )
+            snippet)
+      )
+    )
   )
 
 (provide 'textexpander-sync)
