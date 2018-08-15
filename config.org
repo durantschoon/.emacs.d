@@ -262,10 +262,10 @@ at point as the default value for occur.
    :PROPERTIES: 
    :Visibility: CHILDREN
    :END:
-*** Testing Hasklig
+*** Testing Hasklig but only on Mac 
     
 #+BEGIN_SRC emacs-lisp 
-  (when (window-system)
+  (when (eq system-type 'darwin)
     (set-default-font "Hasklig"))
 #+END_SRC
 
