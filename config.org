@@ -266,13 +266,7 @@ at point as the default value for occur.
     
 #+BEGIN_SRC emacs-lisp 
   (when (eq system-type 'darwin)
-    (set-default-font "Hasklig"))
-#+END_SRC
-
-execture to test:
-
-#+BEGIN_SRC emacs-lisp :tangle no
-   (make-frame '((font . "Hasklig")))
+    (set-frame-font "Hasklig"))
 #+END_SRC
 
 *** Test Fira Code
@@ -284,7 +278,7 @@ execture to test:
    DEBUG: The following code works setting the default font to fira
    code, however when I type C-' in a source block emacs hangs :(
 
-#+BEGIN_SRC emacs-lisp :tangle no
+#+BEGIN_SRC emacs-lisp
   (when (window-system)
     (set-default-font "Fira Code"))
   (let ((alist '((33 . ".\\(?:\\(?:==\\|!!\\)\\|[!=]\\)")
