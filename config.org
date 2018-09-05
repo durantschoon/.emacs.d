@@ -1412,6 +1412,15 @@ access magit.
        )
    #+end_src
 
+** Solidity
+
+#+BEGIN_SRC emacs-lisp
+  (use-package solidity-mode
+    :defer t
+    :ensure t
+    )
+#+END_SRC
+
 ** TextExpander
 
    I use [[https://smilesoftware.com/textexpander][TextExpander]] on OS X and [[http://www.16software.com/breevy/][Breevy]] on Windows sharing my
