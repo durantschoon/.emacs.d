@@ -1303,10 +1303,8 @@ access magit.
    For use with [[https://github.com/tedroden/textexpander-sync-el/blob/master/textexpander-sync.el][textexpander-sync-el]]
 
 #+BEGIN_SRC  emacs-lisp
-     (use-package osx-plist
-       :defer t
-       :ensure t
-       )
+  (use-package osx-plist
+    :no-require)
 #+END_SRC
 
 ** Package
@@ -1447,6 +1445,7 @@ access magit.
 
    #+BEGIN_SRC emacs-lisp
      (use-package textexpander-sync
+       :no-require
        :load-path "~/.emacs.d/site-lisp"
        :init
        (setq textexpander-sync-file "~/Dropbox/TextExpander/Settings.textexpander")
@@ -1459,6 +1458,7 @@ access magit.
 
    #+BEGIN_SRC emacs-lisp
      (use-package tla-mode
+       :no-require
        :load-path "~/.emacs.d/site-lisp")
    #+END_SRC
 
