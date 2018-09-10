@@ -11,7 +11,9 @@
    This is how I installed emacs on my mac with homebrew:
 
 #+BEGIN_SRC sh
-brew install emacs --with-cocoa --with-gnutls --with-imagemagick@6
+brew install emacs --with-cocoa --with-gnutls --with-rsvg --with-imagemagick
+# "brew linkapps emacs" no longer works
+sudo ln -s /usr/local/Cellar/emacs/26.1_1/Emacs.app /Applications 
 #+END_SRC
 
    Then to upgrade
@@ -262,14 +264,14 @@ at point as the default value for occur.
    :PROPERTIES: 
    :Visibility: CHILDREN
    :END:
-*** Testing Hasklig but only on Mac 
+*** OFF - Testing Hasklig but only on Mac 
     
-#+BEGIN_SRC emacs-lisp 
+#+BEGIN_SRC emacs-lisp :tangle no
   (when (eq system-type 'darwin)
     (set-frame-font "Hasklig"))
 #+END_SRC
 
-*** Test Fira Code
+*** OFF - Test Fira Code
 
    The [[https://github.com/tonsky/FiraCode][Fira Code]] font has ==> cool ligatures <== ! I followed these
    [[https://github.com/tonsky/FiraCode/wiki/Setting-up-Emacs][instructions]] including the imporant recommendation to comment out
@@ -278,7 +280,7 @@ at point as the default value for occur.
    DEBUG: The following code works setting the default font to fira
    code, however when I type C-' in a source block emacs hangs :(
 
-**** First test
+**** OFF - First test
 
 #+BEGIN_SRC emacs-lisp :tangle no
   (when (window-system)
@@ -318,11 +320,11 @@ at point as the default value for occur.
         (setq auto-composition-mode nil)))
 #+END_SRC
 
-**** Second test
+**** OFF - Second test
 
 From updated [page](https://github.com/tonsky/FiraCode/wiki/Emacs-instructions)
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :tangle no
   ;;; Fira code
   ;; This works when using emacs --daemon + emacsclient
   (add-hook 'after-make-frame-functions (lambda (frame) (set-fontset-font t '(#Xe100 . #Xe16f) "Fira Code Symbol")))
@@ -480,8 +482,7 @@ build.cmd
 
 #+BEGIN_SRC emacs-lisp
   (defvar ha/fixed-font-family
-    (cond ((x-list-fonts "Hasklig")               "Hasklig")
-          ((x-list-fonts "Source Code Pro")       "Source Code Pro")
+    (cond ((x-list-fonts "Source Code Pro")       "Source Code Pro")
           ((x-list-fonts "Anonymous Pro")         "Anonymous Pro")
           ((x-list-fonts "M+ 1mn")                "M+ 1mn"))
     "My fixed width font based on what is installed, `nil' if not defined.")
@@ -771,7 +772,7 @@ boxes around the mode line.
         (haskell . t)
         (python . t)
         (ruby . t)
-        (sh . t)
+        (shell . t)
         ))
      ;;   (coq . t)
      ;;   (cpp . t) ; C++
@@ -1418,7 +1419,12 @@ access magit.
   (use-package solidity-mode
     :defer t
     :ensure t
-    )
+    :config
+    (progn
+      (linum-mode 1)
+      (setq solidity-comment-style 'slash)
+      (define-key map (kbd "C-c C-g") 'solidity-estimate-gas-at-point)
+      ))
 #+END_SRC
 
 ** TextExpander
