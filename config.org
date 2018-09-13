@@ -26,7 +26,7 @@ sudo ln -s /usr/local/Cellar/emacs/26.1_1/Emacs.app /Applications
    Then to upgrade
 
 #+BEGIN_SRC sh
-brew upgrade emacs --with-cocoa --with-gnutls --with-imagemagick@6
+brew upgrade emacs --with-cocoa --with-gnutls --with-imagemagick
 #+END_SRC
 
 ** Personal Information
