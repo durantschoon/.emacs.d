@@ -5,8 +5,15 @@
 ** Setup Instructions
 
    This file was created with boilerplate files described in the video
-   [[https://www.youtube.com/watch?v=dyWn30HMgQg&index=7&list=PLqHVwAuIChUK8GE6eDzCQAgP5cJIByQQ5][here]]. If you're just getting started with emacs, you might want to
-   start with the first video in the [[https://www.youtube.com/playlist?list=PLqHVwAuIChUK8GE6eDzCQAgP5cJIByQQ5][playlist]].
+   [[https://www.youtube.com/watch?v=aweXk-MHaG8&list=PLvu0mAXg6ynG7GgSZVxWePuY-Q5mSqha9][here]]. If you're just getting started with emacs, you might want to
+   start with some videos I made with my friend Daniel Mai.
+   Unfortunately we lost our original playlists, but we've uploaded
+   what we'd saved as these three playlists (we plan to add video
+   descriptions again soon):
+
+   - [[https://www.youtube.com/playlist?list=PLvu0mAXg6ynFaxemV3w9YcDm1wo46w1Z7][Installation]]
+   - [[https://www.youtube.com/playlist?list=PLvu0mAXg6ynG7GgSZVxWePuY-Q5mSqha9][Configuration]]
+   - [[https://www.youtube.com/playlist?list=PLvu0mAXg6ynFOQrdYy4sf7e3lRpM2kiUd][Modes]]
 
    This is how I installed emacs on my mac with homebrew:
 
@@ -691,7 +698,7 @@ boxes around the mode line.
    the other values.
 
    #+BEGIN_SRC emacs-lisp
-     (setq tab-width 2)                      ; or any other preferred value
+     (setq-default tab-width 2)                      ; or any other preferred value
      (let ((tab-variables `(c-basic-offset
                             py-indent-offset
                             sgml-basic-offset
