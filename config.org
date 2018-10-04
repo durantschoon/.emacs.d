@@ -1515,7 +1515,7 @@ access magit.
     (progn
       (linum-mode 1)
       (setq solidity-comment-style 'slash)
-      (define-key map (kbd "C-c C-g") 'solidity-estimate-gas-at-point)
+      (define-key solidity-mode-map (kbd "C-c C-g") 'solidity-estimate-gas-at-point)
       ))
 #+END_SRC
 
