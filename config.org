@@ -49,6 +49,38 @@ customize settings in [[file:init.el][init.el]].
 (load custom-file)
 #+end_src
 
+* Approach
+
+You don't need to read this section. It's mostly me thinking outloud
+about how to solve certain problems with my emacs configuration.
+
+** Solving: Use emacs from multiple machines (solves private files).
+*** Current Solution: Use dropbox
+
+I define a list of elisp files I keep on dropbox which I do not want
+in my git repository, e.g. private.el. Remember to git ignore them!
+(with 'i' in magit with the cursor on the file name under Unstaged
+changes). 
+
+I used to load directly from dropbox, but this will copy over the file
+the first time I run emacs on a new machine assuming dropbox is set up
+first.
+
+#+BEGIN_SRC emacs-lisp
+  (progn
+    (let ((private-emacs-files '("private.el"))
+          (private-emacs-from-dir "~/Dropbox/emacs/")
+          (private-emacs-to-dir user-emacs-directory))
+      (dolist (filename private-emacs-files)
+        (let ((copy-from (concat private-emacs-from-dir filename))
+              (copy-to (concat private-emacs-to-dir filename)))
+          (if (and (file-exists-p copy-from)
+               (not (file-exists-p copy-to)))
+              (progn
+                (message (concat "copying " copy-from " to " copy-to))
+                (copy-file copy-from copy-to)))))))
+#+END_SRC
+
 * Settings
 ** Sane defaults
 
@@ -828,8 +860,12 @@ boxes around the mode line.
    Load private data, for example, I have a google api key set as
    goo-api-key for url shortening.
 
+   TODO: Maybe I should set a list of files above under "Use dropbox"
+   and load each one of them. Dangerous if anyone ever has access to
+   that directory but they should not.
+
    #+BEGIN_SRC emacs-lisp
-     (let ((private-data-file "~/Dropbox/emacs/private.el"))
+     (let ((private-data-file (concat user-emacs-directory "private.el")))
        (if (file-exists-p private-data-file)
            (progn
              (message (concat "loading " private-data-file))
