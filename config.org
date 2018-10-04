@@ -709,6 +709,7 @@ boxes around the mode line.
                             js-indent-level
                             js2-indent-level
                             coffee-tab-width
+                            json-reformat:indent-width
                             )))
        (dolist (tab-var tab-variables)
          (defvaralias tab-var 'tab-width)))
@@ -739,7 +740,6 @@ boxes around the mode line.
 
    #+BEGIN_SRC emacs-lisp
      (add-to-list 'auto-mode-alist '("\\.aliases\\'" . sh-mode))
-     (add-to-list 'auto-mode-alist '("\\.json\\'" . js2-mode)) ; did I duplicate this here from js2-mode below on purpose?
    #+END_SRC
 
 ** Whitespace
@@ -967,10 +967,19 @@ boxes around the mode line.
        :ensure t
        :config
        (progn
-         (setq flycheck-html-tidy-executable
-               "/usr/local/Cellar/tidy-html5/5.2.0/bin/tidy")
-         (setq flycheck-javascript-jshint-executable
-               "/usr/local/bin/jshint")
+         (setq-default flycheck-html-tidy-executable
+                       "/usr/local/Cellar/tidy-html5/5.2.0/bin/tidy")
+         (setq-default flycheck-javascript-jshint-executable
+                       "/usr/local/bin/jshint")
+         (setq-default flycheck-disabled-checkers
+                       (append flycheck-disabled-checkers
+                               '(javascript-jshint)))
+         (setq-default flycheck-temp-prefix ".flycheck")
+         (setq-default flycheck-disabled-checkers
+                       (append flycheck-disabled-checkers
+                               '(json-jsonlist)))
+
+         (flycheck-add-mode 'javascript-eslint 'web-mode)
          (global-flycheck-mode)))
    #+end_src
 
@@ -981,9 +990,35 @@ boxes around the mode line.
     #+begin_src sh
       pip install pylint
       brew install tidy-html5
-      npm install -g jshint
+      # npm install -g jshint # now using eslint
       npm install -g csslint
     #+end_src
+
+    eslint setup from this [[http://codewinds.com/blog/2015-04-02-emacs-flycheck-eslint-jsx.html][blogpost]] including this emacs-lisp code
+
+#+BEGIN_SRC emacs-lisp
+  ;; use local eslint from node_modules before global
+  ;; http://emacs.stackexchange.com/questions/21205/flycheck-with-file-relative-eslint-executable
+  (defun my/use-eslint-from-node-modules ()
+    (let* ((root (locate-dominating-file
+                  (or (buffer-file-name) default-directory)
+                  "node_modules"))
+           (eslint (and root
+                        (expand-file-name "node_modules/eslint/bin/eslint.js"
+                                          root))))
+      (when (and eslint (file-executable-p eslint))
+        (setq-local flycheck-javascript-eslint-executable eslint))))
+
+  (add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)
+
+  ;; for better jsx syntax-highlighting in web-mode
+  ;; - courtesy of Patrick @halbtuerke
+  (defadvice web-mode-highlight-part (around tweak-jsx activate)
+    (if (equal web-mode-content-type "jsx")
+      (let ((web-mode-enable-part-face nil))
+        ad-do-it)
+      ad-do-it))
+#+END_SRC
 
 ** Grep
 
@@ -1100,10 +1135,16 @@ boxes around the mode line.
             :config
             (progn
               (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
-              (add-to-list 'auto-mode-alist '("\\.json\\'" . js2-mode))
               (add-to-list 'interpreter-mode-alist '("node" . js2-mode))
               (setq js2-basic-offset 2))
             )
+   #+end_src
+** JSON
+   #+begin_src emacs-lisp
+     (use-package json-mode
+       :config
+       (add-to-list 'auto-mode-alist '("\\.json\\'" . json-mode))
+       )
    #+end_src
 ** Smartscan
 
@@ -1537,6 +1578,7 @@ access magit.
        :config
        (progn
          (local-set-key "\C-cv" 'browse-url-of-file)
+         (add-to-list 'auto-mode-alist '("\\.jsx$" . web-mode))
          (add-hook 'html-mode-hook 'web-mode)) ;; enable web mode in html
        )
    #+end_src
