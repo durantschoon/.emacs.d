@@ -1639,27 +1639,22 @@ access magit.
    See also useful commands [[*yas-mode][yas-mode]]
 
    #+BEGIN_SRC sh
-     # to install AndreaCrotti's yasnippets
-     cd ~/.emacs.d
-     mkdir -p yasnippets
-     git clone --recursive https://github.com/capitaomorte/yasnippet snippets
+mkdir ~/.emacs.d/yasnippets
+cd ~/.emacs.d/yasnippets
+git clone https://github.com/dominikh/yasnippet-go.git
    #+END_SRC
 
-   #+BEGIN_SRC sh
-     # to update
-     cd ~/.emacs.d/yasnippets
-     git submodule update --init
-   #+END_SRC
+   Do NOT use `:defer t` for yasnippet. It took me a long time to
+   figure out why I always had to set global mode and reload manually
+   (hint, it's becase I had defer on). Maybe this should have been
+   obvious. 
 
    #+begin_src emacs-lisp
      (use-package yasnippet
        :ensure t
-       :defer t
-       :diminish yas-minor-mode
+       :diminish yas-global-mode
        :config
-       (progn
-         (setq yas-snippet-dirs (concat user-emacs-directory "yasnippets/snippets"))
-         (yas-global-mode 1)))
+       (yas-global-mode 1))
    #+end_src
 
 ** Zsh
