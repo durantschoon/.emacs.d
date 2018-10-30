@@ -1641,7 +1641,8 @@ access magit.
    #+BEGIN_SRC sh
 mkdir ~/.emacs.d/yasnippets
 cd ~/.emacs.d/yasnippets
-git clone https://github.com/dominikh/yasnippet-go.git
+# if go were not included, I could do this...
+# git clone https://github.com/dominikh/yasnippet-go.git
    #+END_SRC
 
    Do NOT use `:defer t` for yasnippet. It took me a long time to
@@ -1656,7 +1657,7 @@ git clone https://github.com/dominikh/yasnippet-go.git
        :config
        (yas-global-mode 1))
    #+end_src
-
+** 
 ** Zsh
 
    #+BEGIN_SRC emacs-lisp
