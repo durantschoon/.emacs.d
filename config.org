@@ -1056,6 +1056,14 @@ boxes around the mode line.
       ad-do-it))
 #+END_SRC
 
+** Golang
+
+   #+begin_src emacs-lisp
+     (use-package go-mode
+       :defer t
+       :ensure t)
+   #+end_src
+
 ** Grep
 
    #+BEGIN_SRC emacs-lisp
@@ -1065,6 +1073,7 @@ boxes around the mode line.
                     (message "Truncating long lines in grep mode...")
                     (toggle-truncate-lines t))))
    #+END_SRC
+
 ** Helm
 
    More code borrowed from [[https://github.com/danielmai/.emacs.d/blob/master/config.org#helm][Daniel Mai]].

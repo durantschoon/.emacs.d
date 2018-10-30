@@ -19,7 +19,7 @@
  '(line-number-mode nil)
  '(package-selected-packages
    (quote
-    (solidity-mode pcre2el color-theme-sanityinc-tomorrow color-theme helm-swoop helm-ag ag helm-projectile helm visual-regexp-steroids visual-regexp url-shortener phi-search-mc rainbow-mode osx-plist org-jira clojure-mode octave-mode yasnippet yaml-mode web-mode use-package smartscan sass-mode python-mode projectile pp-c-l phi-search org-bullets multiple-cursors monokai-theme markdown-mode magit livescript-mode js2-mode ido-vertical-mode flycheck exec-path-from-shell emmet-mode edit-server cyberpunk-theme csharp-mode coffee-mode cl-lib-highlight)))
+    (go-mode solidity-mode pcre2el color-theme-sanityinc-tomorrow color-theme helm-swoop helm-ag ag helm-projectile helm visual-regexp-steroids visual-regexp url-shortener phi-search-mc rainbow-mode osx-plist org-jira clojure-mode octave-mode yasnippet yaml-mode web-mode use-package smartscan sass-mode python-mode projectile pp-c-l phi-search org-bullets multiple-cursors monokai-theme markdown-mode magit livescript-mode js2-mode ido-vertical-mode flycheck exec-path-from-shell emmet-mode edit-server cyberpunk-theme csharp-mode coffee-mode cl-lib-highlight)))
  '(safe-local-eval-forms
    (quote
     ((add-hook
