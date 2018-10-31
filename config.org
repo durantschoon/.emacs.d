@@ -1244,7 +1244,7 @@ boxes around the mode line.
    #+begin_src emacs-lisp
      (use-package smartscan
        :ensure t
-       :config (global-smartscan-mode 1)
+       :config (add-hook 'prog-mode-hook 'smartscan-mode)
        :bind (("M-n" . smartscan-symbol-go-forward)
               ("M-p" . smartscan-symbol-go-backward)
               ("M-'" . smartscan-symbol-replace) ; overrides abbrev-prefix-mark
