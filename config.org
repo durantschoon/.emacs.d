@@ -911,13 +911,22 @@ boxes around the mode line.
 #+end_src
 * Modes (Alphabetical)
 ** Ag
-
    #+begin_src emacs-lisp
      (add-hook 'ag-mode-hook
                (lambda ()
                  (progn
                    (message "Truncating long lines in ag-mode...")
                    (toggle-truncate-lines t))))
+   #+end_src
+** Autopair
+
+   #+begin_src emacs-lisp
+     (use-package autopair
+       :defer t
+       :ensure t
+       :config
+       (autopair-global-mode) ;; to enable in all buffers
+     )
    #+end_src
 
 ** C# (don't judge)
