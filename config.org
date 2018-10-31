@@ -179,11 +179,15 @@ Sources for this section include [[https://github.com/magnars/.emacs.d/blob/mast
 
     #+BEGIN_SRC emacs-lisp
       (when (eq system-type 'darwin)          ; mac specific settings
+        ;; ---------- REMAP KEYS ----------
         ;; (setq mac-option-modifier 'alt)    ; not needed, I think
         (setq mac-command-modifier 'meta)
         (setq mac-option-modifier 'super)     ; make opt key do Super
         (setq mac-control-modifier 'control)  ; make Control key do Control
         (setq ns-function-modifier 'hyper)    ; make Fn key do Hyper
+        ;; ---------- SCROLLING ----------    ; for trackpads
+        (global-set-key [wheel-right] 'scroll-left)
+        (global-set-key [wheel-left] 'scroll-right)
         )
       (global-set-key [kp-delete] 'delete-char) ;; sets fn-delete to be right-delete
     #+END_SRC
