@@ -781,6 +781,24 @@ boxes around the mode line.
      (setq whitespace-action '(auto-cleanup))
    #+END_SRC
 
+** Fix fancy prompt fonts (oh-my-zsh agnoster) in emacs shell (on Darwin at least)
+
+   I was testing VS Code (which I occasionally consider switching to
+   from emacs, but I keep coming back) and I found this [[https://medium.com/@hippojs.guo/vs-code-fix-fonts-in-terminal-761cc821ef41][blog post]] when
+   trying to fix the terminal font. I was excited to see it also fixed
+   my shell prompt (M-x shell) in emacs too!
+
+   Rough instructions from blog:
+
+   In OS X terminal preferences
+
+      - cmd-,
+      - Profiles
+      - <YOURNAME>(Default) 
+      - Font: "Meslo LG M DZ Regular for Powerline 14 pt."
+
+   Your font name may vary...
+
 ** Zooming DISABLED (does weird things on mac)
 
    #+BEGIN_SRC emacs-lisp :tangle no
