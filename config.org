@@ -1673,7 +1673,9 @@ cd ~/.emacs.d/yasnippets
        :ensure t
        :diminish yas-global-mode
        :config
-       (yas-global-mode 1))
+       (yas-global-mode 1)
+       (setq-default yas-snippet-dirs (append yas-snippet-dirs
+                                              '("~/.emacs.d/snippets"))))
    #+end_src
 ** 
 ** Zsh
