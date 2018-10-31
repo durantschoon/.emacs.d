@@ -274,10 +274,16 @@ at point as the default value for occur.
       (global-set-key (kbd "C-r") 'phi-search-backward)
     #+END_SRC
 
+*** web
+
+    #+BEGIN_SRC emacs-lisp
+      (global-set-key (kbd "C-c o") 'browse-url-at-point) ; like "o"pen
+    #+END_SRC
+
 *** web development
 
     #+BEGIN_SRC emacs-lisp
-      (global-set-key (kbd "H-o") 'browse-url-of-buffer)
+      (global-set-key (kbd "H-o") 'browse-url-of-buffer) ; like "o"pen
     #+END_SRC
 
 *** zap-up-to-char
