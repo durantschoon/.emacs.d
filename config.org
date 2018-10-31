@@ -890,6 +890,13 @@ boxes around the mode line.
              (load private-data-file))))
    #+END_SRC
 
+** Emacsclient
+
+#+begin_src emacs-lisp
+(use-package server
+  :config
+  (server-start))
+#+end_src
 * Modes (Alphabetical)
 ** Ag
 
