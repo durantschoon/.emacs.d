@@ -757,6 +757,26 @@ boxes around the mode line.
          (defvaralias tab-var 'tab-width)))
    #+END_SRC
 
+*** Internal tabs
+
+To use this: (self-note: recall I have super "s" bound to Alt on Darwin)
+
+#+BEGIN_SRC emacs-lisp
+  (global-set-key (kbd "s-i") 'indent-relative)
+#+END_SRC
+
+Suppose I have code like below and I want to indent the first t with
+the nil above. 
+
+#+BEGIN_SRC emacs-lisp :tangle no
+  (setq helm-locate-command                   "mdfind -interpret -name %s %s"
+        helm-ff-newfile-prompt-p              nil
+        helm-M-x-fuzzy-match t
+        helm-ff-file-name-history-use-recentf t)
+#+END_SRC
+
+I would place my cursor on that first t and type s-i to do it.
+
 ** Toolbar off
 
 #+BEGIN_SRC emacs-lisp
