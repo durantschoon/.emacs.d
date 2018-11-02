@@ -813,6 +813,10 @@ boxes around the mode line.
 
 ** Zooming DISABLED (does weird things on mac)
 
+   Just use these to in/de-crease font sizes
+   C-x C-= (like plus) 
+   C-x C-- (like minus) 
+
    #+BEGIN_SRC emacs-lisp :tangle no
      ;; Zoom in and out
      ;; from: http://blog.vivekhaldar.com/post/4809065853/dotemacs-extract-interactively-change-font-size
