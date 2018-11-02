@@ -1107,7 +1107,9 @@ boxes around the mode line.
    #+begin_src emacs-lisp
      (use-package go-mode
        :defer t
-       :ensure t)
+       :ensure t
+       :config
+       (add-hook 'before-save-hook #'gofmt-before-save))
    #+end_src
 
 ** Grep
@@ -1705,7 +1707,6 @@ cd ~/.emacs.d/yasnippets
        (setq-default yas-snippet-dirs (append yas-snippet-dirs
                                               '("~/.emacs.d/snippets"))))
    #+end_src
-** 
 ** Zsh
 
    #+BEGIN_SRC emacs-lisp
