@@ -1143,7 +1143,7 @@ boxes around the mode line.
                (helm-mode)
                (use-package helm-swoop
                  :ensure t
-                 :bind ("H-w" . helm-swoop)))
+                 :bind ("M-s s" . helm-swoop)))
        :bind (("C-c h" . helm-command-prefix)
               ("C-x b" . helm-mini)
               ("C-`" . helm-resume)
