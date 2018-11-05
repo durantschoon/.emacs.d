@@ -1170,6 +1170,34 @@ be able to find it.
        (add-hook 'before-save-hook #'gofmt-before-save))
    #+end_src
 
+** OFF Gore
+
+   A simple comint-based mode for gore (command-line evaluator for
+   golang code). See the [[https://github.com/sriram-srinivasan/gore][repo]]
+
+   Interesting, but not quite usable. This is quite slow on my
+   system and din't use company-go out of the box. I'm going to
+   disable this. 
+
+   #+begin_src emacs-lisp :tangle no
+     (use-package gore-mode
+       :defer t
+       :ensure t
+       (setq gore-bin-path "~/Programming/go/bin/gore")
+     )
+   #+end_src
+
+   To try it, use C-return send each line in a buffer running
+   gore-mode.
+
+#+BEGIN_SRC go :tango no
+println(200*300, math.Log10(1000))
+#+END_SRC
+
+#+BEGIN_SRC go :tango no
+p 200*300, math.Log10(1000)
+#+END_SRC
+
 ** Grep
 
    #+BEGIN_SRC emacs-lisp
