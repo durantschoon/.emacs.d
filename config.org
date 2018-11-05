@@ -979,6 +979,40 @@ I would place my cursor on that first t and type s-i to do it.
    #+BEGIN_SRC emacs-lisp
      (add-hook 'css-mode-hook (lambda () (rainbow-mode t)))
    #+END_SRC
+** Company mode
+
+   Auto completion, perhaps a better or more currently maintained
+   package compared to [[https://www.emacswiki.org/emacs/AutoComplete][AutoComplete]], but research the blogosphere to
+   make your own decisions. I had never used either and I'm starting
+   with company mode. 
+
+#+BEGIN_SRC emacs-lisp
+  (use-package company
+    :ensure t
+    :config
+    (add-hook 'after-init-hook 'global-company-mode)  
+    (setq company-tooltip-limit 20)                      ; bigger popup window
+    (setq company-idle-delay .3)                         ; decrease delay before autocompletion popup shows
+    (setq company-echo-delay 0)                          ; remove annoying blinking
+    (setq company-begin-commands '(self-insert-command)) ; start autocompletion only after typing
+    (setq company-minimum-prefix-length 3)
+    (define-key company-active-map (kbd "C-n") #'company-select-next)
+    (define-key company-active-map (kbd "C-p") #'company-select-previous))
+#+END_SRC
+
+For file completion with golang you will need ~gocode~. See [[https://github.com/mdempsky/gocode][mdempysky's
+repo]] for instructions. Under emacs, it lists usage with autocomplete,
+but once you install it on your system correctly, company mode should
+be able to find it.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package company-go
+    :ensure t
+    :config
+    (add-hook 'go-mode-hook (lambda ()
+                              (set (make-local-variable 'company-backends) '(company-go))
+                              (company-mode))))
+#+END_SRC
 
 ** Clojure mode
 
