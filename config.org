@@ -1161,17 +1161,23 @@ I would place my cursor on that first t and type s-i to do it.
                  :commands helm-projectile
                  :bind ("C-c p h" . helm-projectile))
                (use-package helm-ag :defer 10  :ensure t)
-               (setq helm-locate-command "mdfind -interpret -name %s %s"
-                     helm-ff-newfile-prompt-p nil
-                     helm-M-x-fuzzy-match t)
+               (setq helm-locate-command                   "mdfind -interpret -name %s %s"
+                     helm-ff-newfile-prompt-p              nil
+                     helm-M-x-fuzzy-match                  t
+                     helm-ff-file-name-history-use-recentf t)
                (helm-mode)
+               ;; use <tab> to select files instead of <return>
+               ;; If you need it, C-i will do what <return> used to do
+               (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
                (use-package helm-swoop
                  :ensure t
                  :bind ("M-s s" . helm-swoop)))
        :bind (("C-c h" . helm-command-prefix)
               ("C-x b" . helm-mini)
+              ("C-x r b" . helm-bookmarks)
               ("C-`" . helm-resume)
               ("M-x" . helm-M-x)
+              ("M-y" . helm-show-kill-ring)
               ("C-x C-f" . helm-find-files)))
    #+END_SRC
 
