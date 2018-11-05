@@ -1182,7 +1182,16 @@ be able to find it.
 
 ** Helm
 
-   More code borrowed from [[https://github.com/danielmai/.emacs.d/blob/master/config.org#helm][Daniel Mai]].
+   More code from [[https://github.com/danielmai/.emacs.d/blob/master/config.org#helm][Daniel Mai]] (which I've now customized). Helm looks
+   to me like one of the biggest boosts in emacs productivity since I
+   took a break from using it. I would think every emacs user would
+   eventually want to use it. Though it does have a learning curve.
+   You should consider the [[https://tuhdo.github.io/helm-intro.html][tutorial]]. I've mostly started with videos
+   on youtube to get started.
+
+   From my limited investigations, I believe that Helm (with
+   Helm-swoop) does everything you'd want from Ivy, Swiper, and
+   Counsel. 
 
    #+BEGIN_SRC emacs-lisp
      (use-package helm
