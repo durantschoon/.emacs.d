@@ -813,23 +813,33 @@ I would place my cursor on that first t and type s-i to do it.
      (setq whitespace-action '(auto-cleanup))
    #+END_SRC
 
-** Fix fancy prompt fonts (oh-my-zsh agnoster) in emacs shell (on Darwin at least)
+** Shell
 
-   I was testing VS Code (which I occasionally consider switching to
-   from emacs, but I keep coming back) and I found this [[https://medium.com/@hippojs.guo/vs-code-fix-fonts-in-terminal-761cc821ef41][blog post]] when
-   trying to fix the terminal font. I was excited to see it also fixed
-   my shell prompt (M-x shell) in emacs too!
+*** Fix fancy prompt fonts (oh-my-zsh agnoster) in emacs shell (on Darwin at least)
 
-   Rough instructions from blog:
+    I was testing VS Code (which I occasionally consider switching to
+    from emacs, but I keep coming back) and I found this [[https://medium.com/@hippojs.guo/vs-code-fix-fonts-in-terminal-761cc821ef41][blog post]] when
+    trying to fix the terminal font. I was excited to see it also fixed
+    my shell prompt (M-x shell) in emacs too!
 
-   In OS X terminal preferences
+    Rough instructions from blog:
 
-      - cmd-,
-      - Profiles
-      - <YOURNAME>(Default) 
-      - Font: "Meslo LG M DZ Regular for Powerline 14 pt."
+    In OS X terminal preferences
 
-   Your font name may vary...
+       - cmd-,
+       - Profiles
+       - <YOURNAME>(Default) 
+       - Font: "Meslo LG M DZ Regular for Powerline 14 pt."
+
+    Your font name may vary...
+
+*** Turn off comint highlighting in shell mode
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'shell-mode-hook
+      (lambda ()
+        (face-remap-set-base 'comint-highlight-prompt :inherit nil)))
+#+END_SRC
 
 ** Zooming DISABLED (does weird things on mac)
 
