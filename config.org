@@ -814,7 +814,6 @@ I would place my cursor on that first t and type s-i to do it.
    #+END_SRC
 
 ** Shell
-
 *** Fix fancy prompt fonts (oh-my-zsh agnoster) in emacs shell (on Darwin at least)
 
     I was testing VS Code (which I occasionally consider switching to
@@ -2110,12 +2109,16 @@ cd ~/.emacs.d/yasnippets
 
      see: http://blog.refu.co/?p=1355
 
-     |-------------------------+--------------------------------------------|
-     | Command                 | Description                                |
-     |-------------------------+--------------------------------------------|
-     | M-x yas-describe-tables | gives a table representation of all        |
-     |                         | the snippets available in the current mode |
-     |-------------------------+--------------------------------------------|
+     |-------------------------+----------------------------------------------|
+     | Command                 | Description                                  |
+     |-------------------------+----------------------------------------------|
+     | M-x yas-describe-tables | gives a table representation of all          |
+     |                         | the snippets available in the current mode   |
+     |                         | Use helm to find this with "M-x yas tab"     |
+     |-------------------------+----------------------------------------------|
+     | M-x yas-new-snippet     | Use helm to find this with "M-x yas new"     |
+     | C-c & C-n               | it's easier than rememebering the bound keys |
+     |-------------------------+----------------------------------------------|
 
 *** M-x commands
 
