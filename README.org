@@ -1,6 +1,13 @@
 #+TITLE: Durant's Emacs Configuration
 #+AUTHOR: Durant Schoon
 
-The configuration depends on Org mode. [[file:init.el][init.el]] sets up a few initial GUI settings, bootstraps [[https://github.com/jwiegley/use-package][use-package]], and loads [[file:config.org][config.org]], which is where the majority of the configuration magic happens.
+The configuration depends on Org mode. [[file:init.el][init.el]] sets up a few initial
+GUI settings, bootstraps [[https://github.com/jwiegley/use-package][use-package]], and loads [[file:config.org][config.org]], which is
+where the majority of the configuration magic happens.
 
-Gratitude to Daniel Mai for showing me his awesome set up and making some Emacs tutorials with me: [[https://www.youtube.com/channel/UCGM8KgUXqsS4d8-4rgWRWKg/playlists][Emacculate Playlists]]
+Gratitude to Daniel Mai for showing me his awesome set up and making
+some Emacs tutorials with me. Update: we had originally made playlists
+under the YouTube account Emacculate but we lost it and had to
+recreate it. Here are the playlists we salvaged under a new name:
+[[Still Emacsing]] which we hope to update with something close to our
+original video descriptions.
