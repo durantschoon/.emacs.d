@@ -9,5 +9,5 @@ Gratitude to Daniel Mai for showing me his awesome set up and making
 some Emacs tutorials with me. Update: we had originally made playlists
 under the YouTube account Emacculate but we lost it and had to
 recreate it. Here are the playlists we salvaged under a new name:
-[[Still Emacsing]] which we hope to update with something close to our
+[[https://www.youtube.com/channel/UCWyjsLu0O5LOL6zbrUhDYfw/playlists?shelf_id=0&sort=dd&view=1][Still Emacsing]] which we hope to update with something close to our
 original video descriptions.
