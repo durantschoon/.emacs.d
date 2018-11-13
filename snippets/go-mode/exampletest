@@ -6,7 +6,11 @@ package main
 
 import "fmt"
 
+// IMPORTANT: file must end in _test.go for "go test"
+
 func Example${1:FunctionName}() {
 	fmt.Println($1(${2:Args}))
 	// Output: ${3:PrintedOutput}
+  // (or use this)
+	// Unordered output: 
 }
