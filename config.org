@@ -218,25 +218,23 @@ at point as the default value for occur.
 *** frames (really windows) and windows (really panes)
 
     #+BEGIN_SRC emacs-lisp
-            ;;; windowsandframes.el
-            ;;; Commentary:
-            ;;; Code:
-
-            ;;; Windows (known as 'frames' in emacs)
-
-            ;;; Code:
       (when (eq system-type 'darwin)          ; mac specific settings
         (global-set-key "\M-`" 'other-frame)  ; act like other mac programs
         )
 
-            ;;; Panes/Frames (known as 'windows' in emacs)
-
-      ;; clearly my intuition for up and down are reversed
       (global-set-key [(meta down)] 'scroll-other-window)    ; C-M-v
       (global-set-key [(meta up)] 'scroll-other-window-down) ; C-M-S-v
 
       (global-set-key (kbd "C-x 4 o") 'switch-to-buffer-other-window-return)
       (global-set-key (kbd "C-x 4 k") 'kill-buffer-other-window)
+
+      (defun win-swap ()
+        "Swap windows using buffer-move.el."
+        (interactive)
+        (if (null (windmove-find-other-window 'right))
+            (buf-move-left) (buf-move-right)))
+
+      (global-set-key (kbd "C-c s") 'win-swap)
 
       (defun switch-to-buffer-other-window-return ()
         "Like `switch-to-buffer-other-window`, but return to original buffer."
@@ -991,6 +989,12 @@ I would place my cursor on that first t and type s-i to do it.
        (autopair-global-mode) ;; to enable in all buffers
      )
    #+end_src
+** Buffer move
+
+#+BEGIN_SRC emacs-lisp
+  (use-package buffer-move
+    :ensure t)
+#+END_SRC
 
 ** C# (don't judge)
 
