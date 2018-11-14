@@ -993,7 +993,13 @@ I would place my cursor on that first t and type s-i to do it.
 
 #+BEGIN_SRC emacs-lisp
   (use-package buffer-move
-    :ensure t)
+    :ensure t
+    :config
+    (global-set-key (kbd "<C-s-up>")     'buf-move-up) ; Control-super-up
+    (global-set-key (kbd "<C-s-down>")   'buf-move-down)
+    (global-set-key (kbd "<C-s-left>")   'buf-move-left)
+    (global-set-key (kbd "<C-s-right>")  'buf-move-right)
+    )
 #+END_SRC
 
 ** C# (don't judge)
