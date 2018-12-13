@@ -2,5 +2,5 @@
 # name: fmt.Println(...)
 # key: pl
 # --
-fmt.Println("${1:%s} is", ${2:args})
+fmt.Println("${1:varname} is", ${2:value})
 $0

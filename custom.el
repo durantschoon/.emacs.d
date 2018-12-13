@@ -45,6 +45,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(go-guru-hl-identifier-face ((t (:inherit highlight :background "OrangeRed1"))))
  '(mode-line ((t (:background "blue4" :foreground "gray90"))))
  '(mode-line-buffer-id ((t (:foreground "gold1" :weight ultra-bold))))
  '(mode-line-inactive ((t (:background "#404045" :foreground "gray60"))))
