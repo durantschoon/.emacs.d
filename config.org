@@ -809,18 +809,6 @@ I would place my cursor on that first t and type s-i to do it.
   (tool-bar-mode -1)
 #+END_SRC
 
-** Newlines
-
-   from: http://stackoverflow.com/questions/730751/hiding-m-in-emacs
-
-#+BEGIN_SRC emacs-lisp
-(defun remove-dos-eol ()
-  "Do not show ^M in files containing mixed UNIX and DOS line endings."
-  (interactive)
-  (setq buffer-display-table (make-display-table))
-  (aset buffer-display-table ?\^M []))
-#+END_SRC
-
 ** Automatically setting modes
 
    Most modes seem to recoginze the right file names when loading, but
@@ -832,12 +820,42 @@ I would place my cursor on that first t and type s-i to do it.
      (add-to-list 'auto-mode-alist '("\\.mm$" . xml-mode))
    #+END_SRC
 
-** Whitespace
+** Manipulating Text
+*** Newlines
 
-   #+BEGIN_SRC emacs-lisp
-     ;; automatically clean up bad whitespace
-     (setq whitespace-action '(auto-cleanup))
-   #+END_SRC
+    from: http://stackoverflow.com/questions/730751/hiding-m-in-emacs
+
+ #+BEGIN_SRC emacs-lisp
+ (defun remove-dos-eol ()
+   "Do not show ^M in files containing mixed UNIX and DOS line endings."
+   (interactive)
+   (setq buffer-display-table (make-display-table))
+   (aset buffer-display-table ?\^M []))
+ #+END_SRC
+
+*** Whitespace
+
+    #+BEGIN_SRC emacs-lisp
+      ;; automatically clean up bad whitespace
+      (setq whitespace-action '(auto-cleanup))
+    #+END_SRC
+
+*** Unfill region
+
+    from [[https://www.emacswiki.org/emacs/UnfillRegion][UnfillRegion]]
+
+#+BEGIN_SRC emacs-lisp
+  (defun unfill-region (beg end)
+    "Unfill the region, joining text paragraphs into a single
+      logical line.  This is useful, e.g., for use with
+      `visual-line-mode'."
+    (interactive "*r")
+    (let ((fill-column (point-max)))
+      (fill-region beg end)))
+
+  ;; Handy key definition
+  (define-key global-map "\C-\M-Q" 'unfill-region)
+#+END_SRC
 
 ** Shell
 *** Fix fancy prompt fonts (oh-my-zsh agnoster) in emacs shell (on Darwin at least)
