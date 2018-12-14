@@ -951,7 +951,7 @@ I would place my cursor on that first t and type s-i to do it.
 
    TODO: Maybe I should set a list of files above under "Use dropbox"
    and load each one of them. Dangerous if anyone ever has access to
-   that directory but they should not.
+   that directory but that should not.
 
    #+BEGIN_SRC emacs-lisp
      (let ((private-data-file (concat user-emacs-directory "private.el")))
