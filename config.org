@@ -1152,6 +1152,16 @@ be able to find it.
      )
    #+end_src
 
+** Emojify
+
+#+BEGIN_SRC emacs-lisp
+  (use-package emojify-mode
+    :ensure t
+    :config
+    (add-hook 'after-init-hook #'global-emojify-mode)
+  )
+#+END_SRC
+
 ** Exec path from shell
 
    So emacs can also find executables (like "coffee" for coffee-repl).
