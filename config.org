@@ -1217,7 +1217,7 @@ be able to find it.
     Install the HTML5/CSS/JavaScript linters.
 
     #+begin_src sh
-      pip install pylint
+      pip3 install pylint
       brew install tidy-html5
       # npm install -g jshint # now using eslint
       npm install -g csslint
