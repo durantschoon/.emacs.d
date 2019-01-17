@@ -995,6 +995,18 @@ I would place my cursor on that first t and type s-i to do it.
                    (message "Truncating long lines in ag-mode...")
                    (toggle-truncate-lines t))))
    #+end_src
+** Anaconda (for python development)
+
+#+BEGIN_SRC emacs-lisp
+  (use-package anaconda-mode
+    :ensure t
+    :config
+    (add-hook 'python-mode-hook 'anaconda-mode)
+    (add-hook 'python-mode-hook 'anaconda-eldoc-mode)
+    (setq anaconda-mode-localhost-address "localhost") ; for Darwin (Mac OS)
+    )
+#+END_SRC
+
 ** Autopair
 
    Match parentheses, braces etc. automatically (apparently
