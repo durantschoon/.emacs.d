@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: pprint_import
+# key: ppi
+# --
+import pprint
+pp = pprint.PrettyPrinter(indent=4)

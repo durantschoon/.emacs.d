@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: print_debug
+# key: prd
+# --
+print(f"debug: ${1:var}={$1}")

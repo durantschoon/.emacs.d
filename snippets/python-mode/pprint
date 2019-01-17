@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: pprint
+# key: ppr
+# --
+pp.pprint(${var})
