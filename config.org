@@ -1435,22 +1435,6 @@ p 200*300, math.Log10(1000)
        )
    #+end_src
 
-** Ido
-
-   See also useful commands [[*ido-mode][ido-mode]]
-
-   #+begin_src emacs-lisp
-     (use-package ido
-       :init
-       (setq ido-enable-flex-matching t)
-       (setq ido-everywhere t)
-       (ido-mode t)
-       (use-package ido-vertical-mode
-         :ensure t
-         :defer t
-         :init (ido-vertical-mode 1)
-         (setq ido-vertical-define-keys 'C-n-and-C-p-only)))
-   #+end_src
 ** JS2
    #+begin_src emacs-lisp
           (use-package js2-mode
