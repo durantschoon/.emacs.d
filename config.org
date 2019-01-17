@@ -1938,6 +1938,14 @@ cd ~/.emacs.d/yasnippets
        (setq-default yas-snippet-dirs (append yas-snippet-dirs
                                               '("~/.emacs.d/snippets"))))
    #+end_src
+*** yasnippet-snippets
+
+   #+begin_src emacs-lisp
+     (use-package yasnippet-snippets
+       :ensure t
+       )
+   #+end_src
+
 ** Zsh
 
    #+BEGIN_SRC emacs-lisp
