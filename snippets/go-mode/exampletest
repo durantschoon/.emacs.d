@@ -8,7 +8,7 @@ import "fmt"
 
 // IMPORTANT: file must end in _test.go for "go test"
 
-func Example${1:FunctionName}() {
+func Example${1:$$(my/capitalize-first-char yas-text)}() {
 	fmt.Println($1(${2:Args}))
 	// Output: ${3:PrintedOutput}
   // (or use this)
