@@ -1506,6 +1506,7 @@ access magit.
               ("C-<"         . mc/mark-previous-like-this)
               ("C-c C-<"     . mc/mark-all-like-this)
               ("C-!"         . mc/mark-next-symbol-like-this)
+              ("s-r"         . mc/mark-all-in-region)
               ("s-d"         . mc/mark-all-dwim)))
    #+end_src
 
@@ -1530,13 +1531,21 @@ access magit.
 
      If you have
 
-     print "foo", foo
+     print "foo", foo, a third time foo
+     here is foo on the next line
+     and on line 3, here is foo too
 
-     You can change both foos to bar by:
+     You can change foo in the first line and the next foo to bar:
      1. Select the first foo in a region (move to 1st f, C-space, M-f)
      2. C-> (to start multiple-cursors)
      3. type "bar"
      4. C-g or <return> to end
+
+     You can change foo in the first two lines only:
+     1. select the firs two lines only
+     2. s-r (for mc/mark-all-in-region)
+     3. type bar
+     4. return
 
 **** replacing a similar pattern of symbols
 
