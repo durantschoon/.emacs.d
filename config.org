@@ -345,6 +345,31 @@ at point as the default value for occur.
      (add-hook 'prog-mode-hook 'my-prog-mode-hook)
    #+END_SRC
 
+*** Using ctags
+
+    ctags creates a tags file (TAGS) from your source code so you can jump to
+    a program definition.
+
+    Remember these (from [[https://www.emacswiki.org/emacs/EmacsTags][EmacsWiki]]):
+
+#+BEGIN_QUOTE
+M-. (‘find-tag’) – find a tag, that is, use the Tags file to look up a definition. If there are multiple tags in the project with the same name, use `C-u M-.’ to go to the next match.
+M-* ‘M-*’ (‘pop-tag-mark’) – jump back
+#+END_QUOTE
+
+    I started using [[https://github.com/universal-ctags/ctags][Universal ctags]]. Universal ctags replaces
+    exuberent ctags I believe. So you can just run 
+
+#+BEGIN_SRC sh
+tags -eR
+#+END_SRC
+
+    in directory with your files
+
+    If you're using projectile for managing project directories, see
+    [[https://projectile.readthedocs.io/en/latest/configuration/#regenerate-tags][Regenerate tags]]. I see there is a command
+    `projectile-regenerate-tags`.
+
 ** IN_PROGRESS Fonts
    :PROPERTIES: 
    :Visibility: CHILDREN
@@ -1373,13 +1398,31 @@ p 200*300, math.Log10(1000)
    #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-    (use-package helm-company
-      :ensure t
-      :init
-      (eval-after-load 'company
+  (use-package helm-company
+    :ensure t
+    :init
+    (eval-after-load 'company
       '(progn
          (define-key company-mode-map (kbd "C-:") 'helm-company)
          (define-key company-active-map (kbd "C-:") 'helm-company))))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (use-package helm-etags-plus
+    :ensure t
+    ;; :bind (("M-." . helm-etags-plus-select)
+    ;;        ("M-*" . helm-etags-plus-history) ;;list all visited tags
+    ;;        ("M-," . helm-etags-plus-history-go-back) ;;go back directly
+    ;;        ("M-/" . helm-etags-plus-history-go-forward)) ;;go forward directly
+    :init
+    (eval-after-load 'anaconda ;; note this is not 'anaconda-mode
+      (global-set-key "\M-." 'helm-etags-plus-select)) ;; specifically fix anaconda mode
+    :config
+    (global-set-key "\M-." 'helm-etags-plus-select)
+    (global-set-key "\M-*" 'helm-etags-plus-history) ;;list all visited tags
+    (global-set-key "\M-," 'helm-etags-plus-history-go-back) ;;go back directly
+    (global-set-key "\M-/" 'helm-etags-plus-history-go-forward) ;;go forward directly
+    )
 #+END_SRC
 
 ** Hide-Show
@@ -1747,6 +1790,15 @@ access magit.
            :commands ag
            :ensure t)))
    #+end_src
+
+*** tip: ignoring files
+
+If you want projectile to ignore files you can create a .projectile
+file in your project directory and ignore the "old/" directory with:
+
+-/old
+
+the minus '-' is for exclude and '+' would be for include
 
 ** Rainbow Mode
 
