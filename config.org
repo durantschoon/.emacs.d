@@ -368,7 +368,8 @@ tags -eR
 
     If you're using projectile for managing project directories, see
     [[https://projectile.readthedocs.io/en/latest/configuration/#regenerate-tags][Regenerate tags]]. I see there is a command
-    `projectile-regenerate-tags`.
+    `projectile-regenerate-tags`. And it looks like I need to find out
+    more about [[https://github.com/leoliu/ggtags][ggtags]].
 
 ** IN_PROGRESS Fonts
    :PROPERTIES: 
@@ -1410,10 +1411,6 @@ p 200*300, math.Log10(1000)
 #+BEGIN_SRC emacs-lisp
   (use-package helm-etags-plus
     :ensure t
-    ;; :bind (("M-." . helm-etags-plus-select)
-    ;;        ("M-*" . helm-etags-plus-history) ;;list all visited tags
-    ;;        ("M-," . helm-etags-plus-history-go-back) ;;go back directly
-    ;;        ("M-/" . helm-etags-plus-history-go-forward)) ;;go forward directly
     :init
     (eval-after-load 'anaconda ;; note this is not 'anaconda-mode
       (global-set-key "\M-." 'helm-etags-plus-select)) ;; specifically fix anaconda mode
@@ -1421,7 +1418,8 @@ p 200*300, math.Log10(1000)
     (global-set-key "\M-." 'helm-etags-plus-select)
     (global-set-key "\M-*" 'helm-etags-plus-history) ;;list all visited tags
     (global-set-key "\M-," 'helm-etags-plus-history-go-back) ;;go back directly
-    (global-set-key "\M-/" 'helm-etags-plus-history-go-forward) ;;go forward directly
+    ;; I prefer keeping M-/ for dabbrev-expand
+    ;; (global-set-key "\M-/" 'helm-etags-plus-history-go-forward) ;;go forward directly
     )
 #+END_SRC
 
