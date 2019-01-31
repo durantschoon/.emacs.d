@@ -1377,7 +1377,8 @@ p 200*300, math.Log10(1000)
                (use-package helm-projectile
                  :ensure t
                  :commands helm-projectile
-                 :bind ("C-c p h" . helm-projectile))
+                 :bind ("C-c p h" . helm-projectile)
+                 :config (helm-projectile-on))
                (use-package helm-ag :defer 10  :ensure t)
                (setq helm-locate-command                   "mdfind -interpret -name %s %s"
                      helm-ff-newfile-prompt-p              nil
