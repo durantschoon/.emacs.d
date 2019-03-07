@@ -1866,7 +1866,6 @@ the minus '-' is for exclude and '+' would be for include
 
    #+BEGIN_SRC emacs-lisp
      (use-package textexpander-sync
-       :no-require
        :load-path "~/.emacs.d/site-lisp"
        :init
        (setq textexpander-sync-file "~/Dropbox/TextExpander/Settings.textexpander")
