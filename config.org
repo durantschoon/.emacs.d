@@ -1021,10 +1021,7 @@ I would place my cursor on that first t and type s-i to do it.
 ** Ag
    #+begin_src emacs-lisp
      (add-hook 'ag-mode-hook
-               (lambda ()
-                 (progn
-                   (message "Truncating long lines in ag-mode...")
-                   (toggle-truncate-lines t))))
+               (lambda () (toggle-truncate-lines t)))
    #+end_src
 ** Anaconda (for python development)
 
@@ -1150,6 +1147,14 @@ be able to find it.
       ;; (add-hook 'clojure-mode-hook #'smartparens-strict-mode)
       ))
 #+END_SRC
+
+** Dired
+
+   #+BEGIN_SRC emacs-lisp
+     (defun durant/dired-truncate-lines ()
+           (toggle-truncate-lines t))
+     (add-hook 'dired-mode-hook #'durant/dired-truncate-lines)
+   #+END_SRC
 
 ** Emmet
 
