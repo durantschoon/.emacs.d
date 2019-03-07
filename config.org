@@ -1780,19 +1780,48 @@ access magit.
    #+END_QUOTE
 
   http://batsov.com/projectile/
+  https://docs.projectile.mx/en/latest/
 
    #+begin_src emacs-lisp
      (use-package projectile
        :ensure t
+       ; :pin melpa-stable
        :diminish projectile-mode
        :commands projectile-mode
        :config
-       (progn
-         (projectile-global-mode t)
-         (setq projectile-enable-caching t)
-         (use-package ag
-           :commands ag
-           :ensure t)))
+       (projectile-mode +1)
+       ;; "s-p" was ns-print-buffer
+       (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+       (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+       (projectile-global-mode t)
+       (setq-default projectile-project-search-path '("~/Programming/PROJECTS/"))
+       (setq-default projectile-require-project-root nil)
+       (setq-default projectile-enable-caching t)
+       (setq-default projectile-globally-ignored-directories
+             (append '(
+                       ".git"
+                       ".svn"
+                       "out"
+                       "repl"
+                       "target"
+                       "venv"
+                       "__pycache__"
+                       )
+                     projectile-globally-ignored-directories))
+       (setq-default projectile-globally-ignored-file-suffixes
+             (append '(
+                       ".DS_Store"
+                       ".gz"
+                       ".pyc"
+                       ".jar"
+                       ".tar.gz"
+                       ".tgz"
+                       ".zip"
+                       )
+                     projectile-globally-ignored-file-suffixes))b
+       (use-package ag
+         :commands ag
+         :ensure t))
    #+end_src
 
 *** tip: ignoring files
