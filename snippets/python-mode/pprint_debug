@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: pretty print debug
+# key: ppd
+# --
+print(f"debug: ${1:var}")
+pp.pprint({$1})
