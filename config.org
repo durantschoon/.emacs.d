@@ -1432,7 +1432,7 @@ p 200*300, math.Log10(1000)
 ** Hide-Show
    for hs-minor-mode
 
-   Glbally hyper h/t will hide/toggle, enabling hs-minor-mode if necessary.
+   Globally hyper h/t will hide/toggle, enabling hs-minor-mode if necessary.
 
    So you can just move to a code block and H-h to hide it or H-t to toggle.
 
