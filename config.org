@@ -225,6 +225,10 @@ at point as the default value for occur.
       (global-set-key [(meta down)] 'scroll-other-window)    ; C-M-v
       (global-set-key [(meta up)] 'scroll-other-window-down) ; C-M-S-v
 
+      ; was just f11, bad on Darwin
+      ; similar to M-<f10> which is toggle-frame-maximized
+      (global-set-key (kbd "M-<f11>") 'toggle-frame-fullscreen) 
+
       (global-set-key (kbd "C-x 4 o") 'switch-to-buffer-other-window-return)
       (global-set-key (kbd "C-x 4 k") 'kill-buffer-other-window)
 
