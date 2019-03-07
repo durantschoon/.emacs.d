@@ -1195,9 +1195,9 @@ be able to find it.
      )
    #+end_src
 
-** Emojify
+** TODO Emojify disabled - currently causes error at start up
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :tangle no
   (use-package emojify-mode
     :ensure t
     :config
