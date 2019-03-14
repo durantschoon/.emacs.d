@@ -1107,7 +1107,9 @@ I would place my cursor on that first t and type s-i to do it.
     (setq company-begin-commands '(self-insert-command)) ; start autocompletion only after typing
     (setq company-minimum-prefix-length 3)
     (define-key company-active-map (kbd "C-n") #'company-select-next)
-    (define-key company-active-map (kbd "C-p") #'company-select-previous))
+    (define-key company-active-map (kbd "C-p") #'company-select-previous)
+    (eval-after-load "company"
+      '(add-to-list 'company-backends 'company-anaconda)))
 #+END_SRC
 
 For file completion with golang you will need ~gocode~. See [[https://github.com/mdempsky/gocode][mdempysky's
