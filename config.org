@@ -1913,7 +1913,8 @@ the minus '-' is for exclude and '+' would be for include
    
 ** TLA Mode
 
-   Note to self: I should post my fix 
+   Note to self: I should post my fix. 
+   Note to self: Not loading this it seems, eg. :no-require
 
    #+BEGIN_SRC emacs-lisp
      (use-package tla-mode
