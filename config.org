@@ -1019,6 +1019,9 @@ I would place my cursor on that first t and type s-i to do it.
 #+end_src
 * Modes (Alphabetical)
 ** Ag
+
+   Note I use helm-ag (see helm section below).
+
    #+begin_src emacs-lisp
      (add-hook 'ag-mode-hook
                (lambda () (toggle-truncate-lines t)))
