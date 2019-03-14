@@ -1823,11 +1823,16 @@ access magit.
                        ".tgz"
                        ".zip"
                        )
-                     projectile-globally-ignored-file-suffixes))b
+                     projectile-globally-ignored-file-suffixes))
        (use-package ag
          :commands ag
-         :ensure t))
-   #+end_src
+         :ensure t)
+       (use-package projectile-speedbar
+         :ensure t
+         ; :bind ("M-<f2>" . projectile-speedbar-open-current-buffer-in-tree)
+         :bind ("M-<f2>" . sr-speedbar-toggle)
+         ))
+#+END_SRC
 
 *** tip: ignoring files
 
