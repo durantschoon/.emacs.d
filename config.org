@@ -1236,22 +1236,39 @@ be able to find it.
      (use-package flycheck
        :ensure t
        :config
-       (progn
-         (setq-default flycheck-html-tidy-executable
-                       "/usr/local/Cellar/tidy-html5/5.2.0/bin/tidy")
-         (setq-default flycheck-javascript-jshint-executable
-                       "/usr/local/bin/jshint")
-         (setq-default flycheck-disabled-checkers
-                       (append flycheck-disabled-checkers
-                               '(javascript-jshint)))
-         (setq-default flycheck-temp-prefix ".flycheck")
-         (setq-default flycheck-disabled-checkers
-                       (append flycheck-disabled-checkers
-                               '(json-jsonlist)))
+       (setq-default flycheck-html-tidy-executable
+                     "/usr/local/Cellar/tidy-html5/5.2.0/bin/tidy")
+       (setq-default flycheck-javascript-jshint-executable
+                     "/usr/local/bin/jshint")
+       (setq-default flycheck-disabled-checkers
+                     (append flycheck-disabled-checkers
+                             '(javascript-jshint)))
+       (setq-default flycheck-temp-prefix ".flycheck")
+       (setq-default flycheck-disabled-checkers
+                     (append flycheck-disabled-checkers
+                             '(json-jsonlist)))
 
-         (flycheck-add-mode 'javascript-eslint 'web-mode)
-         (global-flycheck-mode)))
+       (flycheck-add-mode 'javascript-eslint 'web-mode)
+       (global-flycheck-mode))
    #+end_src
+
+   Instead of attempting something like this:
+
+#+BEGIN_SRC emacs-lisp :tangle no
+       :config
+       ;; (add-hook 'python-mode-hook
+       ;;           (lambda ()
+       ;;             (setq flycheck-python-pylint-executable
+       ;;                   (concat
+       ;;                    (locate-file "pylint" exec-path exec-suffixes 1)
+       ;;                    " --load-plugins=pylint_flask"))))
+#+END_SRC
+
+   I just added this line:
+
+ignored-modules=flask_sqlalchemy 
+
+   to my ~/.pylintrc
 
 *** Linter setups
 
@@ -1259,6 +1276,7 @@ be able to find it.
 
     #+begin_src sh
       pip3 install pylint
+      pip3 install pylint-flask
       brew install tidy-html5
       # npm install -g jshint # now using eslint
       npm install -g csslint
