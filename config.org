@@ -1469,6 +1469,11 @@ p 200*300, math.Log10(1000)
      (global-set-key (kbd "H-s") (kbd "C-c @ C-s")) ; show block
      (global-set-key (kbd "H-t") 'enable-hs-and-toggle-hiding)
 
+     ;; "C-c C-f" to mimic code folding in web-mode
+     (eval-after-load "python"
+       (eval-after-load "hs-minor"
+         (define-key python-mode-map (kbd "C-c C-f") 'enable-hs-and-toggle-hiding)))
+
      (defun enable-hs-and-hide-block ()
        "Enable hs-minor-mode if it isn't on and hide the source block"
        (interactive)
