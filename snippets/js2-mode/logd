@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: logd
+# key: logd
+# --
+console.log('${1:variable} is', $1)
