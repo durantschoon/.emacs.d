@@ -1728,6 +1728,24 @@ access magit.
       (setq org-hide-emphasis-markers t)
     #+END_SRC
 
+*** Org files and apps
+
+Try animated gifs with code from [[https://emacs.stackexchange.com/questions/35931/open-org-mode-link-of-gif-image-and-display-inside-of-emacs-buffer-with-command][here]].
+
+#+BEGIN_SRC emacs-lisp
+  (setq org-file-apps
+        '(;; Web Pages
+          ("\\.gif\\'" . (lambda (file link)
+                           (let ((my-image (create-image file))
+                                 (tmpbuf (get-buffer-create "*gif")))
+                             (switch-to-buffer tmpbuf)
+                             (erase-buffer)
+                             (insert-image my-image)
+                             (image-animate my-image nil t))))
+          (auto-mode . emacs)
+          ))
+#+END_SRC
+
 *** Hooks
 
     The clocking expressions are for [[http://orgmode.org/manual/Clocking-work-time.html][clocking work time]].
