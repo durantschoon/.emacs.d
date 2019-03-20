@@ -329,6 +329,23 @@ at point as the default value for occur.
         (if (< 0 arg) (forward-char -1)))
     #+END_SRC
 
+** Frames (otherwise known as windows) and Windows (otherwise known as panes)
+*** New frames open maximized
+
+#+BEGIN_SRC emacs-lisp
+  (defun maximize-frame (frame)
+    "Maximize frame"
+    (interactive)
+    (with-selected-frame frame
+      (let ((fullscreen (frame-parameter nil 'fullscreen)))
+        (cond
+         ((memq fullscreen '(fullscreen fullboth))
+          (set-frame-parameter nil 'fullscreen-restore 'maximized))
+         (t
+          (set-frame-parameter nil 'fullscreen 'maximized))))))
+  (add-hook 'after-make-frame-functions #'maximize-frame)
+#+END_SRC
+
 ** Mouse
 
    #+BEGIN_SRC emacs-lisp
