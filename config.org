@@ -1521,17 +1521,6 @@ p 200*300, math.Log10(1000)
      (add-hook 'html-mode-hook 'my-html-mode-hook)
    #+END_SRC
 
-** Livescript
-
-   #+begin_src emacs-lisp
-     (use-package livescript-mode
-       :defer t
-       :ensure t
-       :config
-       (add-hook 'livescript-after-compile-hook 'sourcemap-goto-corresponding-point)
-       )
-   #+end_src
-
 ** JS2
    #+begin_src emacs-lisp
      (use-package js2-mode
@@ -1551,18 +1540,15 @@ p 200*300, math.Log10(1000)
        (add-to-list 'auto-mode-alist '("\\.json$" . json-mode))
        )
    #+end_src
-** Smartscan
-
-   Quickly move to previous and next symbol under the cursor (or replace)
+** Livescript
 
    #+begin_src emacs-lisp
-     (use-package smartscan
+     (use-package livescript-mode
+       :defer t
        :ensure t
-       :config (add-hook 'prog-mode-hook 'smartscan-mode)
-       :bind (("M-n" . smartscan-symbol-go-forward)
-              ("M-p" . smartscan-symbol-go-backward)
-              ("M-'" . smartscan-symbol-replace) ; overrides abbrev-prefix-mark
-              ))
+       :config
+       (add-hook 'livescript-after-compile-hook 'sourcemap-goto-corresponding-point)
+       )
    #+end_src
 
 ** Magit
@@ -1942,6 +1928,20 @@ the minus '-' is for exclude and '+' would be for include
          (linum-mode 1)
          (rainbow-mode t))
        )
+   #+end_src
+
+** Smartscan
+
+   Quickly move to previous and next symbol under the cursor (or replace)
+
+   #+begin_src emacs-lisp
+     (use-package smartscan
+       :ensure t
+       :config (add-hook 'prog-mode-hook 'smartscan-mode)
+       :bind (("M-n" . smartscan-symbol-go-forward)
+              ("M-p" . smartscan-symbol-go-backward)
+              ("M-'" . smartscan-symbol-replace) ; overrides abbrev-prefix-mark
+              ))
    #+end_src
 
 ** Solidity
