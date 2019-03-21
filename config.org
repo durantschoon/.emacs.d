@@ -1520,11 +1520,68 @@ p 200*300, math.Log10(1000)
        )
      (add-hook 'html-mode-hook 'my-html-mode-hook)
    #+END_SRC
+** Indium (for Javascript development)
+
+   Additional [[https://indium.readthedocs.io/en/latest/installation.html][setup from the documentation]]:
+
+#+BEGIN_SRC sh
+npm install -g indium
+#+END_SRC
+
+Note that when this launches I have to run C-c C-z immediately to get
+the \*JS REPL\* buffer. I added a hook to try to do this automatically
+(with indium-switch-to-repl-buffer), but it doesn't seem to work.
+
+#+BEGIN_SRC emacs-lisp
+    (use-package indium
+      :ensure t
+      :config
+      (add-hook 'js-mode-hook #'indium-interaction-mode)
+      (add-hook 'indium-repl-mode-hook #'indium-switch-to-repl-buffer)
+      )
+#+END_SRC
+
+See the official [[https://indium.readthedocs.io/en/latest/installation.html][installation instructions]].
+
+Example file: ~.indium.json~ which goes in the root of your JS project
+(currently only "chrome" or "node" are supported).
+
+#+BEGIN_SRC json
+{
+  "configurations": [
+    {
+      "name": "Web project",
+      "type": "chrome"
+    }
+  ]
+}
+#+END_SRC
+
+When I want to run on a particular file MY_FILE.js I can use this
+setup:
+
+The inspect-brk will break on the first line to allow you to debug.
+The "h"elp key is useful. Jump to a line in your code and type "h" and
+the program will until you get "h"ere. For example, if you're in a
+loop, "h" will cycle once more through the loop until you're "h"ere
+again. 
+
+#+BEGIN_SRC json
+  {
+    "configurations": [
+      {
+        "name": "Debug a single file",
+        "type": "node",
+        "command": "node MY_FILE.js",
+        "inspect-brk": true
+      }
+    ]
+  }
+#+END_SRC
 
 ** JS2
    #+begin_src emacs-lisp
      (use-package js2-mode
-       :defer t
        :ensure t
        :config
        (progn
@@ -1533,6 +1590,7 @@ p 200*300, math.Log10(1000)
          (setq-default js2-strict-missing-semi-warning nil)
          (setq-default js2-basic-offset 2)))
    #+end_src
+
 ** JSON
    #+begin_src emacs-lisp
      (use-package json-mode
