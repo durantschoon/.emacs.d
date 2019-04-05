@@ -2,6 +2,12 @@
 # name: leetf
 # key: leetf
 # --
+/* use deep-equal to compare resulting arrays
+   https://www.npmjs.com/package/deep-equal
+*/
+
+var deepEqual = require('../util/node_modules/deep-equal')
+
 function ${1:testFunction}(${2:args}) {
   // return VALUE
 }
@@ -19,10 +25,25 @@ for (let i = 0; i < examples.length; i++) {
   console.log(\`$1(\${input}) ?= \${expected}\`);
   output = $1(input)
   try {
-    console.assert(output === expected);
+    console.assert(deepEqual(output,expected));        
   } catch (e) {
     console.log('<!> FAIL: Exected', expected, 'but got', output);
     continue
   }
   console.log(\`SUCCESS: Solution matched \${expected}.\`);
 }
+
+/* Set these contents as your .indium.json file
+
+{
+  "configurations": [
+    {
+      "name": "LeetCode practice problem",
+      "type": "node",
+      "command": "node $1.js",
+      "inspect-brk": true
+    }
+  ]
+}
+
+*/
