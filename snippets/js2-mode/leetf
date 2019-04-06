@@ -30,7 +30,7 @@ for (let i = 0; i < examples.length; i++) {
     console.log('<!> FAIL: Exected', expected, 'but got', output);
     continue
   }
-  console.log(\`SUCCESS: Solution matched \${expected}.\`);
+  console.log('SUCCESS: Solution matched', expected);
 }
 
 /* Set these contents as your .indium.json file
