@@ -19,8 +19,14 @@ class Solution:
 def main():
     Example = namedtuple("Example", ['input_', 'expected'])
 
-    examples = [Example(input_=XXX, expected=YYY),
-                Example(input_=ZZZ, expected=AAA)
+    input1 = 'X'
+    expected1 = 'Y'
+
+    input2 = 'Z'
+    expected2 = 'W'
+
+    examples = [Example(input_=input1, expected=expected1),
+                Example(input_=input2, expected=expected2)
                 ]
 
     example_count = 1
