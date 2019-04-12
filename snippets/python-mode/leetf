@@ -36,7 +36,15 @@ def main():
         print(f"Testing $1 with:")
         pp.pprint(example.input_)
         solution = Solution().$1(example.input_)
-        assert solution == example.expected
+        try:
+            assert solution == example.expected
+        except Exception:
+            print()
+            print("<!> Solution did not match")
+            print(f"--> solution={solution}")
+            print(f"--> expected={example.expected}")
+            print()
+            raise Exception
         print(f"Solution matched {example.expected}.")
 
         example_count += 1
