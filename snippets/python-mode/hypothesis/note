@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: note
+# key: note
+# --
+note(f"${1:var} is {$1}")

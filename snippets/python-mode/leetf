@@ -19,11 +19,11 @@ class Solution:
 def main():
     Example = namedtuple("Example", ['input_', 'expected'])
 
-    input1 = 'X'
-    expected1 = 'Y'
+    input1 = 1
+    expected1 = 1
 
-    input2 = 'Z'
-    expected2 = 'W'
+    input2 = 2
+    expected2 = 2
 
     examples = [Example(input_=input1, expected=expected1),
                 Example(input_=input2, expected=expected2)
