@@ -165,6 +165,14 @@ Sources for this section include [[https://github.com/magnars/.emacs.d/blob/mast
         (normal-top-level-add-subdirs-to-load-path))
     #+END_SRC
 
+*** install use-package-chords first so other modes can use them
+
+#+BEGIN_SRC emacs-lisp
+  (use-package use-package-chords
+    :ensure t
+    :config (key-chord-mode 1))
+#+END_SRC
+
 ** Global Key Bindings (Alphabetical by description)
 *** Completion
 
@@ -2089,14 +2097,6 @@ the minus '-' is for exclude and '+' would be for include
 
    M-x goo-url-shorten
    M-x goo-url-expand
-
-** Use package chords
-
-#+BEGIN_SRC emacs-lisp
-  (use-package use-package-chords
-    :ensure t
-    :config (key-chord-mode 1))
-#+END_SRC
 
 ** Visual-regexp
 
