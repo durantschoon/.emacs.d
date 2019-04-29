@@ -1083,7 +1083,8 @@ I would place my cursor on that first t and type s-i to do it.
   (use-package avy
     :chords (("jj" . avy-goto-char)   ; type the character rapidly
              ("jk" . avy-goto-char-2) ; type the first 2 characters rapidly
-             ("jl" . avy-goto-line)   ; 
+             ("jl" . avy-goto-line)   
+             ("jw" . avy-goto-word-1) ; type 1st char for beginnings of words
              ))
 #+END_SRC
 
