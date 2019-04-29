@@ -204,13 +204,13 @@ Sources for this section include [[https://github.com/magnars/.emacs.d/blob/mast
       (global-set-key [kp-delete] 'delete-char) ;; sets fn-delete to be right-delete
     #+END_SRC
 
-*** occur-dwim
+*** occur-dwim DEPRECATED I now use the awesome helm-swoop
 
 The following function for ~occur-dwim~ is taken from [[https://github.com/abo-abo][Oleh Krehel]] from
 [[http://oremacs.com/2015/01/26/occur-dwim/][his blog post at "(or emacs"]]. It takes the current region or the symbol
 at point as the default value for occur.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (defun occur-dwim ()
     "Call `occur' with a sane default."
     (interactive)
@@ -239,7 +239,7 @@ at point as the default value for occur.
 
       ; was just f11, bad on Darwin
       ; similar to M-<f10> which is toggle-frame-maximized
-      (global-set-key (kbd "M-<f11>") 'toggle-frame-fullscreen) 
+      (global-set-key (kbd "M-<f11>") 'toggle-frame-fullscreen)
 
       (global-set-key (kbd "C-x 4 o") 'switch-to-buffer-other-window-return)
       (global-set-key (kbd "C-x 4 k") 'kill-buffer-other-window)
@@ -2422,8 +2422,6 @@ from [[https://emacs.stackexchange.com/questions/12613/convert-the-first-charact
     | H-h         | Hide a code block               |
     | H-s         | Show a code block               |
     | H-t         | Toggle hiding a code block      |
-    |-------------+---------------------------------|
-    | M-s o       | occur-dwim                      |
     |-------------+---------------------------------|
     | H-o         | 'browse-url-of-buffer (builtin) |
     |-------------+---------------------------------|
