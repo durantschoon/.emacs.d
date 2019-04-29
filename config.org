@@ -931,37 +931,6 @@ I would place my cursor on that first t and type s-i to do it.
         (face-remap-set-base 'comint-highlight-prompt :inherit nil)))
 #+END_SRC
 
-** Zooming DISABLED (does weird things on mac)
-
-   Just use these to in/de-crease font sizes
-   C-x C-= (like plus) 
-   C-x C-- (like minus) 
-
-   #+BEGIN_SRC emacs-lisp :tangle no
-     ;; Zoom in and out
-     ;; from: http://blog.vivekhaldar.com/post/4809065853/dotemacs-extract-interactively-change-font-size
-
-     (defun zoom-in ()
-       "Increase font size by 10 points."
-       (interactive)
-       (set-face-attribute 'default nil
-                           :height
-                           (+ (face-attribute 'default :height)
-                              10)))
-
-     (defun zoom-out ()
-       "Decrease font size by 10 points."
-       (interactive)
-       (set-face-attribute 'default nil
-                           :height
-                           (- (face-attribute 'default :height)
-                              10)))
-
-     ;; change font size, interactively
-     (global-set-key (kbd "C-.") 'zoom-in)
-     (global-set-key (kbd "C-,") 'zoom-out) ; overrides org-cycle-agenda-files
-   #+END_SRC
-
 ** Babel
 
    [[http://orgmode.org/worg/org-contrib/babel][Babel]] is Org-mode's ability to execute source code within Org-mode documents.
