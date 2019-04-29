@@ -170,7 +170,11 @@ Sources for this section include [[https://github.com/magnars/.emacs.d/blob/mast
 #+BEGIN_SRC emacs-lisp
   (use-package use-package-chords
     :ensure t
-    :config (key-chord-mode 1))
+    :config
+    (key-chord-mode 1)
+    (key-chord-define-global "hh" 'win-swap-horizontal)
+    (key-chord-define-global "vv" 'win-swap-vertical)
+    (key-chord-define-global "ww" 'toggle-window-split))
 #+END_SRC
 
 ** Global Key Bindings (Alphabetical by description)
@@ -240,13 +244,23 @@ at point as the default value for occur.
       (global-set-key (kbd "C-x 4 o") 'switch-to-buffer-other-window-return)
       (global-set-key (kbd "C-x 4 k") 'kill-buffer-other-window)
 
-      (defun win-swap ()
-        "Swap windows using buffer-move.el."
+      (require 'windmove)
+
+      (defun win-swap-horizontal ()
+        "Swap windows left/right using buffer-move.el"
         (interactive)
         (if (null (windmove-find-other-window 'right))
             (buf-move-left) (buf-move-right)))
 
-      (global-set-key (kbd "C-c s") 'win-swap)
+      (global-set-key (kbd "C-c h") 'win-swap-horizontal)
+
+      (defun win-swap-vertical ()
+        "Swap windows up/down using buffer-move.el"
+        (interactive)
+        (if (null (windmove-find-other-window 'above))
+            (buf-move-down) (buf-move-up)))
+
+      (global-set-key (kbd "C-c v") 'win-swap-vertical)
 
       (defun switch-to-buffer-other-window-return ()
         "Like `switch-to-buffer-other-window`, but return to original buffer."
@@ -1104,12 +1118,10 @@ I would place my cursor on that first t and type s-i to do it.
 #+BEGIN_SRC emacs-lisp
   (use-package buffer-move
     :ensure t
-    :config
-    (global-set-key (kbd "<C-s-up>")     'buf-move-up) ; Control-super-up
-    (global-set-key (kbd "<C-s-down>")   'buf-move-down)
-    (global-set-key (kbd "<C-s-left>")   'buf-move-left)
-    (global-set-key (kbd "<C-s-right>")  'buf-move-right)
-    )
+    :bind (("<C-s-up>"    . buf-move-up) ; Control-super-up
+           ("<C-s-down>"  . buf-move-down)
+           ("<C-s-left>"  . buf-move-left)
+           ("<C-s-right>" . buf-move-right)))
 #+END_SRC
 
 ** C# (don't judge)
