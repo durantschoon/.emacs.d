@@ -1070,9 +1070,9 @@ I would place my cursor on that first t and type s-i to do it.
 #+BEGIN_SRC emacs-lisp
   (use-package anaconda-mode
     :ensure t
+    :hook ((python-mode . anaconda-mode)
+           (python-mode . anaconda-eldoc-mode))
     :config
-    (add-hook 'python-mode-hook 'anaconda-mode)
-    (add-hook 'python-mode-hook 'anaconda-eldoc-mode)
     (setq anaconda-mode-localhost-address "localhost") ; for Darwin (Mac OS)
     )
 #+END_SRC
@@ -1158,19 +1158,25 @@ I would place my cursor on that first t and type s-i to do it.
    with company mode. 
 
 #+BEGIN_SRC emacs-lisp
-  (use-package company
-    :ensure t
-    :config
-    (add-hook 'after-init-hook 'global-company-mode)  
-    (setq company-tooltip-limit 20)                      ; bigger popup window
-    (setq company-idle-delay .3)                         ; decrease delay before autocompletion popup shows
-    (setq company-echo-delay 0)                          ; remove annoying blinking
-    (setq company-begin-commands '(self-insert-command)) ; start autocompletion only after typing
-    (setq company-minimum-prefix-length 3)
-    (define-key company-active-map (kbd "C-n") #'company-select-next)
-    (define-key company-active-map (kbd "C-p") #'company-select-previous)
-    (eval-after-load "company"
-      '(add-to-list 'company-backends 'company-anaconda)))
+  (use-package company-anaconda
+    :ensure t)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+    (use-package company
+      :ensure t
+      :requires company-anaconda
+      :config
+      (add-hook 'after-init-hook 'global-company-mode)  
+      (setq company-tooltip-limit 20)                      ; bigger popup window
+      (setq company-idle-delay .3)                         ; decrease delay before autocompletion popup shows
+      (setq company-echo-delay 0)                          ; remove annoying blinking
+      (setq company-begin-commands '(self-insert-command)) ; start autocompletion only after typing
+      (setq company-minimum-prefix-length 3)
+      (define-key company-active-map (kbd "C-n") #'company-select-next)
+      (define-key company-active-map (kbd "C-p") #'company-select-previous)
+      (eval-after-load "company"
+        '(add-to-list 'company-backends 'company-anaconda)))
 #+END_SRC
 
 For file completion with golang you will need ~gocode~. See [[https://github.com/mdempsky/gocode][mdempysky's
