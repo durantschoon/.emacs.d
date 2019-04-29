@@ -1195,7 +1195,7 @@ be able to find it.
        )
    #+end_src
 
-** Ediff
+** Ediff (related)
 
    #+BEGIN_SRC emacs-lisp
      (setq ediff-split-window-function 'split-window-horizontally)
@@ -1246,6 +1246,14 @@ be able to find it.
        :init
        (exec-path-from-shell-initialize))
    #+end_src
+
+** Expand Region
+
+#+BEGIN_SRC emacs-lisp
+  (use-package expand-region
+    :ensure t
+    :bind ("C-=" . er/expand-region))
+#+END_SRC
 
 ** Flycheck
 
