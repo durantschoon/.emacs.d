@@ -1067,6 +1067,30 @@ I would place my cursor on that first t and type s-i to do it.
        (autopair-global-mode) ;; to enable in all buffers
      )
    #+end_src
+** Avy (newer version of ace-jump-mode)
+
+   Try chords with avy.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package avy
+    :bind ("C-:" . avy-goto-char)  
+    :chords (("jj" . avy-goto-char)   ; type the character rapidly
+             ("jk" . avy-goto-char-2) ; type the first 2 characters rapidly
+             ("jl" . avy-goto-line)   ; 
+             ))
+#+END_SRC
+
+   Just for my notes, if I don't like this, I can try the suggested
+   bindings with this:
+
+#+BEGIN_SRC emacs-lisp :tangle no
+  (use-package avy
+    :bind (("C-:" . avy-goto-char)
+           ("C-'" . avy-goto-char-2)
+           ("M-g f" . avy-goto-line)
+           ))
+#+END_SRC
+
 ** Buffer move
 
 #+BEGIN_SRC emacs-lisp
@@ -2065,6 +2089,14 @@ the minus '-' is for exclude and '+' would be for include
 
    M-x goo-url-shorten
    M-x goo-url-expand
+
+** Use package chords
+
+#+BEGIN_SRC emacs-lisp
+  (use-package use-package-chords
+    :ensure t
+    :config (key-chord-mode 1))
+#+END_SRC
 
 ** Visual-regexp
 
