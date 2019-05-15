@@ -1061,6 +1061,7 @@ M-x all-the-icons-install-fonts
 
 #+BEGIN_SRC emacs-lisp
   (use-package avy
+    :ensure t  
     :chords (("jj" . avy-goto-char)   ; type the character rapidly
              ("jk" . avy-goto-char-2) ; type the first 2 characters rapidly
              ("jl" . avy-goto-line)   
