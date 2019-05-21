@@ -677,11 +677,9 @@ My note: I needed to manually create this directory to avoid an error
 on startup: ~/.emacs.d/elpa/color-theme-20070910.1007/themes
 
 #+BEGIN_SRC emacs-lisp
-  (use-package color-theme
+  (use-package color-theme-modern
     :ensure t
-    :init (require 'color-theme)
-    :config (use-package color-theme-sanityinc-tomorrow
-              :ensure t))
+    :config (use-package color-theme-sanityinc-tomorrow :ensure t))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -1029,7 +1027,9 @@ M-x all-the-icons-install-fonts
 
    #+begin_src emacs-lisp
      (add-hook 'ag-mode-hook
-               (lambda () (toggle-truncate-lines t)))
+               (lambda () (progn
+                            (message "Truncating long lines in ag mode...")
+                            (toggle-truncate-lines t))))
    #+end_src
 ** Anaconda (for python development)
 
@@ -1289,6 +1289,7 @@ be able to find it.
        (setq-default flycheck-disabled-checkers
                      (append flycheck-disabled-checkers
                              '(json-jsonlist)))
+       (setq-default flycheck-checker 'python-flake8)
 
        (flycheck-add-mode 'javascript-eslint 'web-mode)
        (global-flycheck-mode))
@@ -1619,6 +1620,7 @@ again.
 ** JSON
    #+begin_src emacs-lisp
      (use-package json-mode
+       :ensure t
        :config
        (add-to-list 'auto-mode-alist '("\\.json$" . json-mode))
        )
@@ -1931,7 +1933,6 @@ Try animated gifs with code from [[https://emacs.stackexchange.com/questions/359
        (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
        (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
        (projectile-global-mode t)
-       (setq-default projectile-project-search-path '("~/Programming/PROJECTS/"))
        (setq-default projectile-require-project-root nil)
        (setq-default projectile-enable-caching t)
        (setq-default projectile-globally-ignored-directories
@@ -1963,6 +1964,10 @@ Try animated gifs with code from [[https://emacs.stackexchange.com/questions/359
          :ensure t
          ; :bind ("M-<f2>" . projectile-speedbar-open-current-buffer-in-tree)
          :bind ("M-<f2>" . sr-speedbar-toggle)
+         :config
+         (setq speedbar-show-unknown-files t)
+         (setq speedbar-directory-unshown-regexp "^\\(CVS\\|RCS\\|SCCS\\|\\.\\.*$\\)\\'")
+         (setq speedbar-show-all t)
          ))
 #+END_SRC
 
