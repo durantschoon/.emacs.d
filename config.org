@@ -316,7 +316,7 @@ Sources for this section include [[https://github.com/magnars/.emacs.d/blob/mast
     #+END_SRC
 
 *** zap-up-to-char
-    
+
     From [[https://www.emacswiki.org/emacs/ZapUpToChar][ZapUpToChar]] (replaces zap-to-char so it doesn't zap the char itself)
 
     #+BEGIN_SRC emacs-lisp
@@ -361,9 +361,12 @@ Sources for this section include [[https://github.com/magnars/.emacs.d/blob/mast
      (defun my-prog-mode-hook ()
        (linum-mode 1)
        (message "Truncating long lines in programming mode...")
-       (toggle-truncate-lines t))
+       (toggle-truncate-lines t)
+       (add-to-list 'write-file-functions 'delete-trailing-whitespace))
      (add-hook 'prog-mode-hook 'my-prog-mode-hook)
    #+END_SRC
+
+
 
 *** Using ctags
 
@@ -630,6 +633,13 @@ build.cmd
 #+END_SRC
 
 ** IN_PROGRESS Themes
+*** Colors
+
+    Need this to suppress an error on darwin?
+
+#+BEGIN_SRC emacs-lisp
+(customize-set-variable 'solarized-termcolors 256)
+#+END_SRC
 *** Convenient theme functions
 
     I nabbed these from [[https://github.com/danielmai/.emacs.d/blob/master/config.org#convenient-theme-functions][Daniel Mai]]. They're great!
@@ -809,10 +819,11 @@ boxes around the mode line.
    add it to the list below. Then changing `tab-width` will change all
    the other values.
 
+   Note: exclude py-indent-offset and keep default of 4
+
    #+BEGIN_SRC emacs-lisp
      (setq-default tab-width 2)                      ; or any other preferred value
      (let ((tab-variables `(c-basic-offset
-                            py-indent-offset
                             sgml-basic-offset
                             css-indent-offset
                             web-mode-code-indent-offset
@@ -1280,11 +1291,6 @@ be able to find it.
        :config
        (setq-default flycheck-html-tidy-executable
                      "/usr/local/Cellar/tidy-html5/5.2.0/bin/tidy")
-       (setq-default flycheck-javascript-jshint-executable
-                     "/usr/local/bin/jshint")
-       (setq-default flycheck-disabled-checkers
-                     (append flycheck-disabled-checkers
-                             '(javascript-jshint)))
        (setq-default flycheck-temp-prefix ".flycheck")
        (setq-default flycheck-disabled-checkers
                      (append flycheck-disabled-checkers
@@ -1292,6 +1298,12 @@ be able to find it.
        (setq-default flycheck-checker 'python-flake8)
 
        (flycheck-add-mode 'javascript-eslint 'web-mode)
+       (flycheck-add-mode 'javascript-eslint 'js2-mode)
+       (flycheck-add-mode 'javascript-eslint 'js2-jsx-mode)
+       ;; Since we're using eslint
+       ;; Turn off js2 mode errors & warnings (we lean on eslint/standard)
+       (setq-default js2-mode-show-parse-errors nil)
+       (setq-default js2-mode-show-strict-warnings nil)
        (global-flycheck-mode))
    #+end_src
 
@@ -1321,7 +1333,6 @@ ignored-modules=flask_sqlalchemy
       pip3 install pylint
       pip3 install pylint-flask
       brew install tidy-html5
-      # npm install -g jshint # now using eslint
       npm install -g csslint
     #+end_src
 
@@ -1612,7 +1623,8 @@ again.
        :config
        (progn
          (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
-         (add-to-list 'interpreter-mode-alist '("node" . js2-mode))
+         (add-to-list 'auto-mode-alist '("\\.jsx?\\'" . js2-jsx-mode))
+         (add-to-list 'interpreter-mode-alist '("node" . js2-jsx-mode))
          (setq-default js2-strict-missing-semi-warning nil)
          (setq-default js2-basic-offset 2)))
    #+end_src
@@ -1965,9 +1977,9 @@ Try animated gifs with code from [[https://emacs.stackexchange.com/questions/359
          ; :bind ("M-<f2>" . projectile-speedbar-open-current-buffer-in-tree)
          :bind ("M-<f2>" . sr-speedbar-toggle)
          :config
-         (setq speedbar-show-unknown-files t)
-         (setq speedbar-directory-unshown-regexp "^\\(CVS\\|RCS\\|SCCS\\|\\.\\.*$\\)\\'")
-         (setq speedbar-show-all t)
+         (setq-default speedbar-show-unknown-files t)
+         (setq-default speedbar-directory-unshown-regexp "^\\(CVS\\|RCS\\|SCCS\\|\\.\\.*$\\)\\'")
+         (setq-default speedbar-show-all t)
          ))
 #+END_SRC
 
