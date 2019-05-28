@@ -603,6 +603,34 @@ From updated [page](https://github.com/tonsky/FiraCode/wiki/Emacs-instructions)
   # brew cask install font-hasklig-nerd-font
 #+END_SRC
 
+     My notes about loading the fonts used by Howard Abrams:
+
+     - Darwin: "Source Code Pro" from [[https://github.com/adobe-fonts/source-code-pro][link]]
+
+Use homebrew
+
+#+BEGIN_SRC shell
+brew tap homebrew/cask-fonts && brew cask install font-source-code-pro
+#+END_SRC
+
+If this returns a value, you're good:
+
+#+BEGIN_SRC emacs-lisp
+(x-list-fonts "Source Code Pro")
+#+END_SRC
+
+     - Darwin: "Source Sans Pro" from [[https://fonts.google.com/specimen/Source+Sans+Pro?selection.family=Source+Sans+Pro][link]]
+
+Download from google fonts.
+Shift select all the .ttf files.
+Cmd-o to open (and install each
+
+Test with:
+
+#+BEGIN_SRC emacs-lisp
+(x-list-fonts "Source Sans Pro")
+#+END_SRC
+
 **** TODO windows
 
 see: https://github.com/i-tu/Hasklig
@@ -622,11 +650,11 @@ build.cmd
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-(defvar ha/variable-font-tuple
-  (cond ((x-list-fonts "Source Sans Pro") '(:font "Source Sans Pro"))
-        ((x-list-fonts "Lucida Grande")   '(:font "Lucida Grande"))
-        ((x-list-fonts "Verdana")         '(:font "Verdana"))
-        ((x-family-fonts "Sans Serif")    '(:family "Sans Serif"))
+(defvar ha/variable-font-family
+  (cond ((x-list-fonts "Source Sans Pro") "Source Sans Pro")
+        ((x-list-fonts "Lucida Grande")   "Lucida Grande")
+        ((x-list-fonts "Verdana")         "Verdana")
+        ((x-family-fonts "Sans Serif")    "Sans Serif")
         (nil (warn "Cannot find a Sans Serif Font.  Install Source Sans Pro.")))
   "My variable width font available to org-mode files and whatnot.")
 #+END_SRC
@@ -730,7 +758,7 @@ on startup: ~/.emacs.d/elpa/color-theme-20070910.1007/themes
     (funcall org-block-style)
 
     (let* ((ha/fixed-font-tuple (list :font ha/fixed-font-family))
-           ; (ha/varible-font-tuple (list :font ha/variable-font-family))
+           (ha/variable-font-tuple (list :font ha/variable-font-family))
            (base-font-color     (face-foreground 'default nil 'default))
            (background-color    (face-background 'default nil 'default))
            (primary-color       (face-foreground 'mode-line nil))
