@@ -10,6 +10,7 @@
    (quote
     ("06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" default)))
  '(fci-rule-color "#383838")
+ '(fill-column 80)
  '(go-guru-scope "...")
  '(grep-find-ignored-directories
    (quote
@@ -38,6 +39,7 @@
       (quote delete-trailing-whitespace)
       nil t)
      (turn-off-auto-fill))))
+ '(solarized-termcolors 256 t)
  '(vc-directory-exclusion-list
    (quote
     ("SCCS" "RCS" "CVS" "MCVS" ".svn" ".git" ".hg" ".bzr" "_MTN" "_darcs" "{arch}"))))
