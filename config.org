@@ -20,7 +20,7 @@
 #+BEGIN_SRC sh
 brew install emacs --with-cocoa --with-gnutls --with-rsvg --with-imagemagick
 # "brew linkapps emacs" no longer works
-sudo ln -s /usr/local/Cellar/emacs/26.1_1/Emacs.app /Applications 
+sudo ln -s /usr/local/Cellar/emacs/26.1_1/Emacs.app /Applications
 #+END_SRC
 
    Then to upgrade
@@ -60,7 +60,7 @@ about how to solve certain problems with my emacs configuration.
 I define a list of elisp files I keep on dropbox which I do not want
 in my git repository, e.g. private.el. Remember to git ignore them!
 (with 'i' in magit with the cursor on the file name under Unstaged
-changes). 
+changes).
 
 I used to load directly from dropbox, but this will copy over the file
 the first time I run emacs on a new machine assuming dropbox is set up
@@ -156,7 +156,7 @@ Sources for this section include [[https://github.com/magnars/.emacs.d/blob/mast
                '("marmalade" . "http://marmalade-repo.org/packages/") t)
 #+END_SRC
 
-*** manually add elpa dir 
+*** manually add elpa dir
 
     I don't think I need this
 
@@ -381,7 +381,7 @@ M-* ‘M-*’ (‘pop-tag-mark’) – jump back
 #+END_QUOTE
 
     I started using [[https://github.com/universal-ctags/ctags][Universal ctags]]. Universal ctags replaces
-    exuberent ctags I believe. So you can just run 
+    exuberent ctags I believe. So you can just run
 
 #+BEGIN_SRC sh
 tags -eR
@@ -395,11 +395,11 @@ tags -eR
     more about [[https://github.com/leoliu/ggtags][ggtags]].
 
 ** IN_PROGRESS Fonts
-   :PROPERTIES: 
+   :PROPERTIES:
    :Visibility: CHILDREN
    :END:
-*** OFF - Testing Hasklig but only on Mac 
-    
+*** OFF - Testing Hasklig but only on Mac
+
 #+BEGIN_SRC emacs-lisp :tangle no
   (when (eq system-type 'darwin)
     (set-frame-font "Hasklig"))
@@ -594,7 +594,6 @@ From updated [page](https://github.com/tonsky/FiraCode/wiki/Emacs-instructions)
 #+END_SRC
 
 *** Tests for Howard Abrams "ha/" org-mode configuration
-
 **** darwin
 
 #+BEGIN_SRC sh
@@ -666,14 +665,14 @@ build.cmd
   (bind-key "s-<f11>" 'disable-active-themes)
 #+end_src
 
-*** IN_PROGRESS Howard Abrams 
-    :PROPERTIES: 
+*** IN_PROGRESS Howard Abrams
+    :PROPERTIES:
     :Visibility: CHILDREN
-    :END:      
+    :END:
 
     After watching Howard Abrams video [[https://www.youtube.com/watch?v=RhYNu6i_uY4][Introduction to EShell]], I was
     really impressed with his color scheme. So I checked out his emacs
-    config for his [[https://github.com/howardabrams/dot-files/blob/master/emacs-client.org#color-theme][Color Theme]]. 
+    config for his [[https://github.com/howardabrams/dot-files/blob/master/emacs-client.org#color-theme][Color Theme]].
 
     His note:
 
@@ -847,7 +846,7 @@ To use this: (self-note: recall I have super "s" bound to Alt on Darwin)
 #+END_SRC
 
 Suppose I have code like below and I want to indent the first t with
-the nil above. 
+the nil above.
 
 #+BEGIN_SRC emacs-lisp :tangle no
   (setq helm-locate-command                   "mdfind -interpret -name %s %s"
@@ -933,6 +932,26 @@ M-x all-the-icons-install-fonts
   (define-key global-map "\C-\M-Q" 'unfill-region)
 #+END_SRC
 
+** Files
+
+*** Copy file name of current buffer to clipboard
+
+lifted from [[https://stackoverflow.com/questions/2416655/file-path-to-clipboard-in-emacs][Stack Overflow]]
+
+#+BEGIN_SRC emacs-lisp
+  (defun my-put-file-name-on-clipboard ()
+    "Put the current file name on the clipboard"
+    (interactive)
+    (let ((filename (if (equal major-mode 'dired-mode)
+                        default-directory
+                      (buffer-file-name))))
+      (when filename
+        (with-temp-buffer
+          (insert filename)
+          (clipboard-kill-region (point-min) (point-max)))
+        (message filename))))
+#+END_SRC
+
 ** Shell
 *** Fix fancy prompt fonts (oh-my-zsh agnoster) in emacs shell (on Darwin at least)
 
@@ -947,7 +966,7 @@ M-x all-the-icons-install-fonts
 
        - cmd-,
        - Profiles
-       - <YOURNAME>(Default) 
+       - <YOURNAME>(Default)
        - Font: "Meslo LG M DZ Regular for Powerline 14 pt."
 
     Your font name may vary...
@@ -1037,10 +1056,15 @@ M-x all-the-icons-install-fonts
    Note I use helm-ag (see helm section below).
 
    #+begin_src emacs-lisp
-     (add-hook 'ag-mode-hook
-               (lambda () (progn
-                            (message "Truncating long lines in ag mode...")
-                            (toggle-truncate-lines t))))
+     (use-package ag
+       :commands ag
+       :ensure t
+       :config
+       (add-hook 'ag-mode-hook
+                 (lambda () (progn
+                              (message "Truncating long lines in ag mode...")
+                              (toggle-truncate-lines t)))))
+
    #+end_src
 ** Anaconda (for python development)
 
@@ -1072,10 +1096,10 @@ M-x all-the-icons-install-fonts
 
 #+BEGIN_SRC emacs-lisp
   (use-package avy
-    :ensure t  
+    :ensure t
     :chords (("jj" . avy-goto-char)   ; type the character rapidly
              ("jk" . avy-goto-char-2) ; type the first 2 characters rapidly
-             ("jl" . avy-goto-line)   
+             ("jl" . avy-goto-line)
              ("jw" . avy-goto-word-1) ; type 1st char for beginnings of words
              ))
 #+END_SRC
@@ -1085,7 +1109,7 @@ M-x all-the-icons-install-fonts
 
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package avy
-    :bind (("C-:" . avy-goto-char)    ; conflicts with helm-company 
+    :bind (("C-:" . avy-goto-char)    ; conflicts with helm-company
            ("C-'" . avy-goto-char-2)
            ("M-g f" . avy-goto-line)
            ))
@@ -1133,7 +1157,7 @@ M-x all-the-icons-install-fonts
    Auto completion, perhaps a better or more currently maintained
    package compared to [[https://www.emacswiki.org/emacs/AutoComplete][AutoComplete]], but research the blogosphere to
    make your own decisions. I had never used either and I'm starting
-   with company mode. 
+   with company mode.
 
 #+BEGIN_SRC emacs-lisp
   (use-package company-anaconda
@@ -1145,7 +1169,7 @@ M-x all-the-icons-install-fonts
       :ensure t
       :requires company-anaconda
       :config
-      (add-hook 'after-init-hook 'global-company-mode)  
+      (add-hook 'after-init-hook 'global-company-mode)
       (setq company-tooltip-limit 20)                      ; bigger popup window
       (setq company-idle-delay .3)                         ; decrease delay before autocompletion popup shows
       (setq company-echo-delay 0)                          ; remove annoying blinking
@@ -1174,18 +1198,18 @@ be able to find it.
 ** Clojure mode
 
    Debugging this. Running clojure-mode still causes this error for
-   me: 
+   me:
 
    load-with-code-conversion: Symbol's value as variable is void: <!DOCTYPE
 
-#+BEGIN_SRC emacs-lisp :tangle no 
+#+BEGIN_SRC emacs-lisp :tangle no
   (use-package clojure-mode
     :ensure t
     :mode (("\\.clj$" . clojure-mode))
     )
 #+END_SRC
 
-#+BEGIN_SRC emacs-lisp :tangle no 
+#+BEGIN_SRC emacs-lisp :tangle no
   (use-package clojure-mode
     :ensure t
     :mode (("\\.clj$" . clojure-mode))
@@ -1295,7 +1319,8 @@ be able to find it.
        (setq-default flycheck-disabled-checkers
                      (append flycheck-disabled-checkers
                              '(json-jsonlist)))
-       (setq-default flycheck-checker 'python-flake8)
+       (add-to-list 'flycheck-checkers 'python-flake8)
+       (add-to-list 'flycheck-checkers 'javascript-eslint)
 
        (flycheck-add-mode 'javascript-eslint 'web-mode)
        (flycheck-add-mode 'javascript-eslint 'js2-mode)
@@ -1321,7 +1346,7 @@ be able to find it.
 
    I just added this line:
 
-ignored-modules=flask_sqlalchemy 
+ignored-modules=flask_sqlalchemy
 
    to my ~/.pylintrc
 
@@ -1410,7 +1435,7 @@ use-package above
 
    Interesting, but not quite usable. This is quite slow on my
    system and din't use company-go out of the box. I'm going to
-   disable this. 
+   disable this.
 
    #+begin_src emacs-lisp :tangle no
      (use-package gore-mode
@@ -1452,7 +1477,7 @@ p 200*300, math.Log10(1000)
 
    From my limited investigations, I believe that Helm (with
    Helm-swoop) does everything you'd want from Ivy, Swiper, and
-   Counsel. 
+   Counsel.
 
    #+BEGIN_SRC emacs-lisp
      (use-package helm
@@ -1601,7 +1626,7 @@ The inspect-brk will break on the first line to allow you to debug.
 The "h"elp key is useful. Jump to a line in your code and type "h" and
 the program will until you get "h"ere. For example, if you're in a
 loop, "h" will cycle once more through the loop until you're "h"ere
-again. 
+again.
 
 #+BEGIN_SRC json
   {
@@ -1892,9 +1917,9 @@ Try animated gifs with code from [[https://emacs.stackexchange.com/questions/359
        (global-set-key (kbd "M-%") 'phi-replace-query))
    #+END_SRC
 
-   Not sure how this works yet: 
+   Not sure how this works yet:
 
-   #+BEGIN_SRC emacs-lisp 
+   #+BEGIN_SRC emacs-lisp
      (use-package phi-search-mc
        :defer t
        :ensure t)
@@ -1948,39 +1973,37 @@ Try animated gifs with code from [[https://emacs.stackexchange.com/questions/359
        (setq-default projectile-require-project-root nil)
        (setq-default projectile-enable-caching t)
        (setq-default projectile-globally-ignored-directories
-             (append '(
-                       ".git"
-                       ".svn"
-                       "out"
-                       "repl"
-                       "target"
-                       "venv"
-                       "__pycache__"
-                       )
-                     projectile-globally-ignored-directories))
+                     (append '(
+                               ".git"
+                               ".svn"
+                               "out"
+                               "repl"
+                               "target"
+                               "venv"
+                               "__pycache__"
+                               )
+                             projectile-globally-ignored-directories))
        (setq-default projectile-globally-ignored-file-suffixes
-             (append '(
-                       ".DS_Store"
-                       ".gz"
-                       ".pyc"
-                       ".jar"
-                       ".tar.gz"
-                       ".tgz"
-                       ".zip"
-                       )
-                     projectile-globally-ignored-file-suffixes))
-       (use-package ag
-         :commands ag
-         :ensure t)
-       (use-package projectile-speedbar
-         :ensure t
-         ; :bind ("M-<f2>" . projectile-speedbar-open-current-buffer-in-tree)
-         :bind ("M-<f2>" . sr-speedbar-toggle)
-         :config
-         (setq-default speedbar-show-unknown-files t)
-         (setq-default speedbar-directory-unshown-regexp "^\\(CVS\\|RCS\\|SCCS\\|\\.\\.*$\\)\\'")
-         (setq-default speedbar-show-all t)
-         ))
+                     (append '(
+                               ".DS_Store"
+                               ".gz"
+                               ".pyc"
+                               ".jar"
+                               ".tar.gz"
+                               ".tgz"
+                               ".zip"
+                               )
+                             projectile-globally-ignored-file-suffixes))
+       (projectile-mode +1))
+
+     (use-package projectile-speedbar
+       :ensure t
+       ;; :bind ("M-<f2>" . projectile-speedbar-open-current-buffer-in-tree)
+       :bind ("M-<f2>" . sr-speedbar-toggle)
+       :config
+       (setq-default speedbar-show-unknown-files t)
+       (setq-default speedbar-directory-unshown-regexp "^\\(CVS\\|RCS\\|SCCS\\|\\.\\.*$\\)\\'")
+       (setq-default speedbar-show-all t))
 #+END_SRC
 
 *** tip: ignoring files
@@ -2064,7 +2087,7 @@ the minus '-' is for exclude and '+' would be for include
    textexpander settings through Dropbox. Now I can have them in emacs
    too. If you're thinking about the same, note I decided to abandon
    using non-word characters like semi-colon ";" in my abbreviations
-   to make everything work everywhere. 
+   to make everything work everywhere.
 
    #+BEGIN_SRC emacs-lisp
      (use-package textexpander-sync
@@ -2073,10 +2096,10 @@ the minus '-' is for exclude and '+' would be for include
        (setq textexpander-sync-file "~/Dropbox/TextExpander/Settings.textexpander")
        (setq-default abbrev-mode t)) ; setq-default to set this globally
    #+END_SRC
-   
+
 ** TLA Mode
 
-   Note to self: I should post my fix. 
+   Note to self: I should post my fix.
    Note to self: Not loading this it seems, eg. :no-require
 
    #+BEGIN_SRC emacs-lisp
@@ -2105,7 +2128,7 @@ the minus '-' is for exclude and '+' would be for include
     #+BEGIN_SRC emacs-lisp
       (use-package visual-regexp
         :ensure t
-        :init  
+        :init
         (use-package pcre2el :ensure t)
         (use-package visual-regexp-steroids :ensure t)
         :bind (("C-c r" . vr/replace)
@@ -2128,7 +2151,7 @@ the minus '-' is for exclude and '+' would be for include
    (\d{2,})
    C-c C-c (expression mode)
    int(\1)*3
-   
+
    1 20 3
    50 60 70
    80 90 100
@@ -2178,7 +2201,7 @@ cd ~/.emacs.d/yasnippets
    Do NOT use `:defer t` for yasnippet. It took me a long time to
    figure out why I always had to set global mode and reload manually
    (hint, it's becase I had defer on). Maybe this should have been
-   obvious. 
+   obvious.
 
    #+begin_src emacs-lisp
      (use-package yasnippet
@@ -2237,7 +2260,7 @@ cd ~/.emacs.d/yasnippets
 
 ** for yasnippet
 
-from [[https://emacs.stackexchange.com/questions/12613/convert-the-first-character-to-uppercase-capital-letter-using-yasnippet][Kaushal Modi 2015]] used in ~/.emacs.d/snippets/go-mode/exampletest 
+from [[https://emacs.stackexchange.com/questions/12613/convert-the-first-character-to-uppercase-capital-letter-using-yasnippet][Kaushal Modi 2015]] used in ~/.emacs.d/snippets/go-mode/exampletest
 
 #+BEGIN_SRC emacs-lisp
 (defun my/capitalize-first-char (&optional string)
@@ -2540,7 +2563,7 @@ from [[https://emacs.stackexchange.com/questions/12613/convert-the-first-charact
   .gitignore file.
 
   I use these files to open default files and set the initial window
-  size. 
+  size.
 
   #+BEGIN_SRC emacs-lisp
     (setq locations '("home" "work"))
