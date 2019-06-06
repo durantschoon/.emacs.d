@@ -2077,7 +2077,7 @@ the minus '-' is for exclude and '+' would be for include
        :config
        (add-to-list 'auto-mode-alist '("\\.jsx?\\'" . rjsx-mode))
        (add-to-list 'interpreter-mode-alist '("node" . rjsx-mode))
-       )
+       (add-to-list 'auto-mode-alist '("components\\/.*\\.js\\'" . rjsx-mode)))
    #+end_src
 
 ** Sass
