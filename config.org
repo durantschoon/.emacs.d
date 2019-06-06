@@ -1676,8 +1676,6 @@ again.
        :config
        (progn
          (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
-         (add-to-list 'auto-mode-alist '("\\.jsx?\\'" . js2-jsx-mode))
-         (add-to-list 'interpreter-mode-alist '("node" . js2-jsx-mode))
          (setq-default js2-strict-missing-semi-warning nil)
          (setq-default js2-basic-offset 2)))
    #+end_src
@@ -2031,6 +2029,9 @@ Try animated gifs with code from [[https://emacs.stackexchange.com/questions/359
        :config
        (setq-default speedbar-show-unknown-files t)
        (setq-default speedbar-directory-unshown-regexp "^\\(CVS\\|RCS\\|SCCS\\|\\.\\.*$\\)\\'")
+       (speedbar-add-supported-extension ".js")
+       (add-to-list 'speedbar-fetch-etags-parse-list
+                    '("\\.js" . speedbar-parse-c-or-c++tag))
        (setq-default speedbar-show-all t))
 #+END_SRC
 
@@ -2066,6 +2067,17 @@ the minus '-' is for exclude and '+' would be for include
        (progn
          (recentf-mode t)
          (setq recentf-max-saved-items 200)))
+   #+end_src
+
+** RJSX major mode for editing JSX files
+
+   #+begin_src emacs-lisp
+     (use-package rjsx-mode
+       :ensure t
+       :config
+       (add-to-list 'auto-mode-alist '("\\.jsx?\\'" . rjsx-mode))
+       (add-to-list 'interpreter-mode-alist '("node" . rjsx-mode))
+       )
    #+end_src
 
 ** Sass

@@ -2,4 +2,4 @@
 # name: logd
 # key: logd
 # --
-console.log('${1:variable} is', $1)
+console.log('${1:variable} is', $1);

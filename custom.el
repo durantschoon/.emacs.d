@@ -19,9 +19,16 @@
    (quote
     (".#*" "*.o" "*~" "*.bin" "*.lbin" "*.so" "*.a" "*.ln" "*.elc" "*.lof" "*.glo" "*.idx" "*.fmt" "*.tfm" "*.class" "*.fas" "*.lib" "*.mem" "*.x86f" "*.fasl" "*.ufsl" "*.fsl" "*.lo" "*.la" "*.gmo" "*.mo" "*.toc" "*.aux" "*.cp" "*.fn" "*.ky" "*.pg" "*.tp" "*.vr" "*.cps" "*.fns" "*.kys" "*.pgs" "*.tps" "*.vrs" "*.pyc" "*.pyo" "*.sassc" "*.png" "*.xcf" "*.sqlite*" "*.jar")))
  '(line-number-mode nil)
+ '(org-tag-faces
+   (quote
+    (("github" . "SpringGreen3")
+     ("jira" . "SpringGreen3")
+     ("python" . "SpringGreen3")
+     ("javascript" . "SpringGreen3"))))
+ '(org-tags-column 0)
  '(package-selected-packages
    (quote
-    (color-theme-modern doom-modeline all-the-icons company-anaconda avy use-package-chords expand-region indium indium-mode projectile-speedbar helm-etags-plus yasnippet-snippets json-mode anaconda-mode emojify emojify-mode buffer-move go-guru helm-company gore-mode company-go company company-mode autopair go-mode solidity-mode pcre2el color-theme-sanityinc-tomorrow color-theme helm-swoop helm-ag ag helm-projectile helm visual-regexp-steroids visual-regexp url-shortener phi-search-mc rainbow-mode osx-plist org-jira clojure-mode octave-mode yasnippet yaml-mode web-mode use-package smartscan sass-mode python-mode projectile pp-c-l phi-search org-bullets multiple-cursors monokai-theme markdown-mode magit livescript-mode js2-mode ido-vertical-mode flycheck exec-path-from-shell emmet-mode edit-server cyberpunk-theme csharp-mode coffee-mode cl-lib-highlight)))
+    (rjsx-mode color-theme-modern doom-modeline all-the-icons company-anaconda avy use-package-chords expand-region indium indium-mode projectile-speedbar helm-etags-plus yasnippet-snippets json-mode anaconda-mode emojify emojify-mode buffer-move go-guru helm-company gore-mode company-go company company-mode autopair go-mode solidity-mode pcre2el color-theme-sanityinc-tomorrow color-theme helm-swoop helm-ag ag helm-projectile helm visual-regexp-steroids visual-regexp url-shortener phi-search-mc rainbow-mode osx-plist org-jira clojure-mode octave-mode yasnippet yaml-mode web-mode use-package smartscan sass-mode python-mode projectile pp-c-l phi-search org-bullets multiple-cursors monokai-theme markdown-mode magit livescript-mode js2-mode ido-vertical-mode flycheck exec-path-from-shell emmet-mode edit-server cyberpunk-theme csharp-mode coffee-mode cl-lib-highlight)))
  '(safe-local-eval-forms
    (quote
     ((add-hook
