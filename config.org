@@ -366,8 +366,6 @@ Sources for this section include [[https://github.com/magnars/.emacs.d/blob/mast
      (add-hook 'prog-mode-hook 'my-prog-mode-hook)
    #+END_SRC
 
-
-
 *** Using ctags
 
     ctags creates a tags file (TAGS) from your source code so you can jump to
@@ -858,6 +856,7 @@ boxes around the mode line.
                             web-mode-code-indent-offset
                             js-indent-level
                             js2-indent-level
+                            js2-basic-offset
                             coffee-tab-width
                             json-reformat:indent-width
                             )))
@@ -1302,7 +1301,7 @@ be able to find it.
      )
    #+end_src
 
-** TODO Emojify disabled - currently causes error at start up
+** Emojify disabled - currently causes error at start up
 
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package emojify-mode
@@ -1352,7 +1351,7 @@ be able to find it.
 
        (flycheck-add-mode 'javascript-eslint 'web-mode)
        (flycheck-add-mode 'javascript-eslint 'js2-mode)
-       (flycheck-add-mode 'javascript-eslint 'js2-jsx-mode)
+       (flycheck-add-mode 'javascript-eslint 'rjsx-mode) ; replaces 'js2-jsx-mode
        ;; Since we're using eslint
        ;; Turn off js2 mode errors & warnings (we lean on eslint/standard)
        (setq-default js2-mode-show-parse-errors nil)
@@ -1408,13 +1407,13 @@ ignored-modules=flask_sqlalchemy
 
   ;; for better jsx syntax-highlighting in web-mode
   ;; - courtesy of Patrick @halbtuerke
+  ;; UPDATE: this might be superceded with rjsx
   (defadvice web-mode-highlight-part (around tweak-jsx activate)
     (if (equal web-mode-content-type "jsx")
       (let ((web-mode-enable-part-face nil))
         ad-do-it)
       ad-do-it))
 #+END_SRC
-
 
 ** Git-link
 
@@ -1423,7 +1422,6 @@ ignored-modules=flask_sqlalchemy
        :ensure t
      )
    #+end_src
-
 
 ** Golang
 
@@ -1620,74 +1618,182 @@ p 200*300, math.Log10(1000)
        )
      (add-hook 'html-mode-hook 'my-html-mode-hook)
    #+END_SRC
-** Indium (for Javascript development)
+** Javascript
+*** Indium (for Javascript development)
 
-   Additional [[https://indium.readthedocs.io/en/latest/installation.html][setup from the documentation]]:
+    Additional [[https://indium.readthedocs.io/en/latest/installation.html][setup from the documentation]]:
 
-#+BEGIN_SRC sh
-npm install -g indium
+ #+BEGIN_SRC sh
+ npm install -g indium
+ #+END_SRC
+
+ Note that when this launches I have to run C-c C-z immediately to get
+ the \*JS REPL\* buffer. I added a hook to try to do this automatically
+ (with indium-switch-to-repl-buffer), but it doesn't seem to work.
+
+ #+BEGIN_SRC emacs-lisp
+     (use-package indium
+       :ensure t
+       :config
+       (add-hook 'js-mode-hook #'indium-interaction-mode)
+       (add-hook 'indium-repl-mode-hook #'indium-switch-to-repl-buffer)
+       )
+ #+END_SRC
+
+ See the official [[https://indium.readthedocs.io/en/latest/installation.html][installation instructions]].
+
+ Example file: ~.indium.json~ which goes in the root of your JS project
+ (currently only "chrome" or "node" are supported).
+
+ #+BEGIN_SRC json
+ {
+   "configurations": [
+     {
+       "name": "Web project",
+       "type": "chrome"
+     }
+   ]
+ }
+ #+END_SRC
+
+ When I want to run on a particular file MY_FILE.js I can use this
+ setup:
+
+ The inspect-brk will break on the first line to allow you to debug.
+ The "h"elp key is useful. Jump to a line in your code and type "h" and
+ the program will until you get "h"ere. For example, if you're in a
+ loop, "h" will cycle once more through the loop until you're "h"ere
+ again.
+
+ #+BEGIN_SRC json
+   {
+     "configurations": [
+       {
+         "name": "Debug a single file",
+         "type": "node",
+         "command": "node MY_FILE.js",
+         "inspect-brk": true
+       }
+     ]
+   }
+ #+END_SRC
+*** cannot find the page that recommends js2-minor-mode
+
+ #+BEGIN_SRC emacs-lisp :tangle no
+   (add-hook 'js-mode-hook 'js2-minor-mode)
+ #+END_SRC
+
+*** RJSX major mode for editing JSX files TURN THIS OFF FOR NOW UNTIL EVERYTHING ELSE WORKS
+    Note: rjsx mode should pick up .jsx files automatically
+    #+begin_src emacs-lisp :tangle no
+      (use-package rjsx-mode
+        :ensure t
+        :config
+        (add-to-list 'interpreter-mode-alist '("node" . rjsx-mode))
+        (add-to-list 'auto-mode-alist '("components\\/.*\\.js\\'" . rjsx-mode)))
+    #+end_src
+
+*** js2-mode
+    See: https://emacs.cafe/emacs/javascript/setup/2017/04/23/emacs-setup-javascript.html
+    Note: rjsx mode will pick up ~.jsx~ files
+    #+begin_src emacs-lisp
+      (use-package js2-mode
+        :ensure t
+        :config
+        (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+        (add-hook 'js2-mode-hook #'js2-imenu-extras-mode))
+    #+end_src
+*** js2-refactor
+
+   #+begin_src emacs-lisp
+     (use-package js2-refactor
+       :ensure t
+       :after (js2-mode)
+       :config
+       (add-hook 'js2-mode-hook #'js2-refactor-mode)
+       (js2r-add-keybindings-with-prefix "C-c C-r")
+       (define-key js2-mode-map (kbd "C-k") #'js2r-kill))
+   #+end_src
+
+*** xref-js2
+
+   #+begin_src emacs-lisp
+     (use-package xref-js2
+       :ensure t
+       :after (js2-mode xref)
+       :config
+       ;; js-mode (which js2 is based on) binds "M-." which conflicts with xref, so
+       ;; unbind it.
+       (define-key js-mode-map (kbd "M-.") nil)
+       ;; Explicitly define these to override my previous global-set-key definitions
+       (define-key js-mode-map "\M-." 'xref-find-definitions)
+       (define-key js-mode-map "\M-," 'xref-pop-marker-stack)
+       (define-key js-mode-map "\M-?" 'xref-find-references)
+       (add-hook 'js2-mode-hook
+                 (lambda ()
+                   (add-hook 'xref-backend-functions #'xref-js2-xref-backend nil t))))
+   #+end_src
+
+*** IN_PROGRESS tern not yet working
+
+    requires installation
+
+#+BEGIN_SRC shell
+cd ~/Documents/GitHub
+git clone https://github.com/ternjs/tern.git
+cd tern
+npm install -g
 #+END_SRC
 
-Note that when this launches I have to run C-c C-z immediately to get
-the \*JS REPL\* buffer. I added a hook to try to do this automatically
-(with indium-switch-to-repl-buffer), but it doesn't seem to work.
+need to read this:
 
-#+BEGIN_SRC emacs-lisp
-    (use-package indium
-      :ensure t
-      :config
-      (add-hook 'js-mode-hook #'indium-interaction-mode)
-      (add-hook 'indium-repl-mode-hook #'indium-switch-to-repl-buffer)
-      )
-#+END_SRC
+https://emacs.cafe/emacs/javascript/setup/2017/05/09/emacs-setup-javascript-2.html
 
-See the official [[https://indium.readthedocs.io/en/latest/installation.html][installation instructions]].
+#+BEGIN_QUOTE
+Now, depending on your JavaScript project, you might want to setup tern to work
+with your project structure. If completion doesn’t work out of the box using
+tern defaults you will have to set it up using a .tern-project placed in the
+root folder containing your JavaScript files.
+#+END_QUOTE
 
-Example file: ~.indium.json~ which goes in the root of your JS project
-(currently only "chrome" or "node" are supported).
-
-#+BEGIN_SRC json
-{
-  "configurations": [
-    {
-      "name": "Web project",
-      "type": "chrome"
-    }
-  ]
-}
-#+END_SRC
-
-When I want to run on a particular file MY_FILE.js I can use this
-setup:
-
-The inspect-brk will break on the first line to allow you to debug.
-The "h"elp key is useful. Jump to a line in your code and type "h" and
-the program will until you get "h"ere. For example, if you're in a
-loop, "h" will cycle once more through the loop until you're "h"ere
-again.
+Experimenting with:
 
 #+BEGIN_SRC json
   {
-    "configurations": [
-      {
-        "name": "Debug a single file",
-        "type": "node",
-        "command": "node MY_FILE.js",
-        "inspect-brk": true
-      }
-    ]
+    "ecmaVersion": 6,
+    "libs": [
+      "browser",
+      "react"
+    ],
+    "plugins": {
+      "node": {},
+      "jsx": {}
+    }
   }
 #+END_SRC
 
-** JS2
    #+begin_src emacs-lisp
-     (use-package js2-mode
+     (use-package tern
        :ensure t
        :config
-       (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
-       (setq-default js2-strict-missing-semi-warning nil)
-       (setq-default js2-basic-offset 2))
+       (add-hook 'js-mode-hook (lambda () (tern-mode t)))
+       ;; Disable completion keybindings, as we use xref-js2 instead
+       (define-key tern-mode-keymap (kbd "M-.") nil)
+       (define-key tern-mode-keymap (kbd "M-,") nil)
+       (use-package tern-auto-complete
+         :ensure t
+         :config
+         (tern-ac-setup)))
    #+end_src
+
+#+BEGIN_SRC emacs-lisp
+  (use-package company-tern
+    :ensure t
+    :after (tern company)
+    :config
+    (add-to-list 'company-backends 'company-tern)
+    (add-hook 'js2-mode-hook (lambda () (tern-mode) (company-mode))))
+#+END_SRC
 
 ** JSON
    #+begin_src emacs-lisp
@@ -2145,17 +2251,6 @@ the minus '-' is for exclude and '+' would be for include
          (setq recentf-max-saved-items 200)))
    #+end_src
 
-** RJSX major mode for editing JSX files
-
-   #+begin_src emacs-lisp
-     (use-package rjsx-mode
-       :ensure t
-       :config
-       (add-to-list 'auto-mode-alist '("\\.jsx?\\'" . rjsx-mode))
-       (add-to-list 'interpreter-mode-alist '("node" . rjsx-mode))
-       (add-to-list 'auto-mode-alist '("components\\/.*\\.js\\'" . rjsx-mode)))
-   #+end_src
-
 ** Sass
 
    #+begin_src emacs-lisp
@@ -2292,7 +2387,7 @@ the minus '-' is for exclude and '+' would be for include
        :config
        (progn
          (local-set-key "\C-cv" 'browse-url-of-file)
-         (add-to-list 'auto-mode-alist '("\\.jsx$" . web-mode))
+         ;; (add-to-list 'auto-mode-alist '("\\.jsx$" . web-mode))
          (add-hook 'html-mode-hook 'web-mode)) ;; enable web mode in html
        )
    #+end_src
