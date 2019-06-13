@@ -1734,9 +1734,15 @@ p 200*300, math.Log10(1000)
                    (add-hook 'xref-backend-functions #'xref-js2-xref-backend nil t))))
    #+end_src
 
-*** IN_PROGRESS tern not yet working
+*** tern (is a server used here for completions with company)
 
-    requires installation
+    Read: https://medium.com/@jrwillette88/tern-why-it-breaks-and-how-to-fix-it-8d1677df05f9
+
+    Emacs Reference setup: http://ternjs.net/doc/manual.html#emacs
+
+    Setup: https://emacs.cafe/emacs/javascript/setup/2017/05/09/emacs-setup-javascript-2.html
+
+    ~tern~ requires installation
 
 #+BEGIN_SRC shell
 cd ~/Documents/GitHub
@@ -1745,9 +1751,7 @@ cd tern
 npm install -g
 #+END_SRC
 
-need to read this:
-
-https://emacs.cafe/emacs/javascript/setup/2017/05/09/emacs-setup-javascript-2.html
+From the [[https://emacs.cafe/emacs/javascript/setup/2017/05/09/emacs-setup-javascript-2.html][above instructions]], regarding set up of ~.tern-project:~
 
 #+BEGIN_QUOTE
 Now, depending on your JavaScript project, you might want to setup tern to work
@@ -1756,7 +1760,13 @@ tern defaults you will have to set it up using a .tern-project placed in the
 root folder containing your JavaScript files.
 #+END_QUOTE
 
-Experimenting with:
+Note: jsx needs to be installed
+
+#+BEGIN_SRC shell
+npm i -g tern-jsx
+#+END_SRC
+
+Find the webpack.config.dev.js file and set it:
 
 #+BEGIN_SRC json
   {
@@ -1767,12 +1777,41 @@ Experimenting with:
     ],
     "plugins": {
       "node": {},
-      "jsx": {}
+      "jsx": {},
+      "webpack": {
+        "configPath": "./node_modules/bs-recipes/recipes/webpack.preact-hot-loader/webpack.config.dev.js"
+      }
     }
   }
 #+END_SRC
 
+In the webpack file I needed to make some updates to deprecated function names:
+
+#+BEGIN_SRC rjsx
+  module.exports = {
+    // ...
+    plugins: [
+      new webpack.optimize.OccurrenceOrderPlugin(), // new name
+      new webpack.NoEmitOnErrorsPlugin() // new name
+      // ...
+    ],
+    // ...
+  };
+#+END_SRC
+
+Run the server to test it. (But there is code in tern.el to find and run the
+server on its own).
+
+#+BEGIN_SRC shell
+tern # maybe with --verbose
+#+END_SRC
+
+If it seems to be working (see above Medium Article for more), let's configure
+it for emacs auto-complete with company:
+
    #+begin_src emacs-lisp
+     (use-package tern-auto-complete
+       :ensure t)
      (use-package tern
        :ensure t
        :config
@@ -1780,10 +1819,10 @@ Experimenting with:
        ;; Disable completion keybindings, as we use xref-js2 instead
        (define-key tern-mode-keymap (kbd "M-.") nil)
        (define-key tern-mode-keymap (kbd "M-,") nil)
-       (use-package tern-auto-complete
-         :ensure t
-         :config
-         (tern-ac-setup)))
+       (eval-after-load 'tern
+         '(progn
+            (require 'tern-auto-complete)
+            (tern-ac-setup))))
    #+end_src
 
 #+BEGIN_SRC emacs-lisp
