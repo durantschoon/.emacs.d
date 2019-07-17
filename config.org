@@ -146,6 +146,7 @@ Sources for this section include [[https://github.com/magnars/.emacs.d/blob/mast
   (setq visible-bell nil)
 
 #+end_src
+
 ** Package management
 *** add marmalade repo for additional packages
 
@@ -672,6 +673,7 @@ build.cmd
 #+BEGIN_SRC emacs-lisp
 (customize-set-variable 'solarized-termcolors 256)
 #+END_SRC
+
 *** Convenient theme functions
 
     I nabbed these from [[https://github.com/danielmai/.emacs.d/blob/master/config.org#convenient-theme-functions][Daniel Mai]]. They're great!
@@ -835,6 +837,7 @@ boxes around the mode line.
     (set-face-attribute `mode-line-inactive nil
                         :box nil)))
 #+end_src
+
 *** Monokai theme
 
 #+begin_src emacs-lisp :tangle no
@@ -1084,6 +1087,7 @@ lifted from [[https://stackoverflow.com/questions/2416655/file-path-to-clipboard
   :config
   (server-start))
 #+end_src
+
 * Modes (Alphabetical)
 ** Ag
 
@@ -1100,6 +1104,7 @@ lifted from [[https://stackoverflow.com/questions/2416655/file-path-to-clipboard
                               (toggle-truncate-lines t)))))
 
    #+end_src
+
 ** Anaconda (for python development)
 
 #+BEGIN_SRC emacs-lisp
@@ -1124,6 +1129,7 @@ lifted from [[https://stackoverflow.com/questions/2416655/file-path-to-clipboard
        (autopair-global-mode) ;; to enable in all buffers
      )
    #+end_src
+
 ** Avy (newer version of ace-jump-mode)
 
    Try chords with avy.
@@ -1181,11 +1187,13 @@ lifted from [[https://stackoverflow.com/questions/2416655/file-path-to-clipboard
          ;; (define-key coffee-mode-map (kbd "C-j") 'coffee-newline-and-indent))
          ))
    #+end_src
+
 ** CSS mode
 
    #+BEGIN_SRC emacs-lisp
      (add-hook 'css-mode-hook (lambda () (rainbow-mode t)))
    #+END_SRC
+
 ** Company mode
 
    Auto completion, perhaps a better or more currently maintained
@@ -1612,6 +1620,7 @@ p 200*300, math.Log10(1000)
            (message "hs-minor-mode enabled"))
        (hs-toggle-hiding))
    #+END_SRC
+
 ** HTML
 
    See also useful commands [[*html-mode][html-mode]]
@@ -1858,6 +1867,7 @@ it for emacs auto-complete with company:
 #+END_SRC
 
 ** JSON
+
    #+begin_src emacs-lisp
      (use-package json-mode
        :ensure t
@@ -1865,6 +1875,7 @@ it for emacs auto-complete with company:
        (add-to-list 'auto-mode-alist '("\\.json$" . json-mode))
        )
    #+end_src
+
 ** Livescript
 
    #+begin_src emacs-lisp
@@ -2174,6 +2185,7 @@ Try animated gifs with code from [[https://emacs.stackexchange.com/questions/359
                    (message "Truncating long lines in package menu mode...")
                    (toggle-truncate-lines t))))
    #+END_SRC
+
 ** Phi-search, Phi-replace, Phi-search-mc
 
    works with multiple cursors
@@ -2532,7 +2544,6 @@ cd ~/.emacs.d/yasnippets
     #+END_SRC
 
 * Helper Functions
-
 ** for yasnippet
 
 from [[https://emacs.stackexchange.com/questions/12613/convert-the-first-character-to-uppercase-capital-letter-using-yasnippet][Kaushal Modi 2015]] used in ~/.emacs.d/snippets/go-mode/exampletest
@@ -2686,7 +2697,6 @@ from [[https://emacs.stackexchange.com/questions/12613/convert-the-first-charact
     | C-x C--     | decrease font of buffer                   |
     |-------------+-------------------------------------------|
 
-
     |-----------------------+-------------------------------|
     | Pattern               | Description                   |
     |-----------------------+-------------------------------|
@@ -2835,6 +2845,7 @@ from [[https://emacs.stackexchange.com/questions/12613/convert-the-first-charact
       (interactive)
       (load (concat user-emacs-directory "init.el")))
   #+END_SRC
+
 * Run Last
 
   Open file work_init.el or home_init.el depending on which computer
