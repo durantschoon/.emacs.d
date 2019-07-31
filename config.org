@@ -975,8 +975,10 @@ M-x all-the-icons-install-fonts
 
 lifted from [[https://stackoverflow.com/questions/2416655/file-path-to-clipboard-in-emacs][Stack Overflow]]
 
+;;  (defun my-put-file-name-on-clipboard ()
+
 #+BEGIN_SRC emacs-lisp
-  (defun my-put-file-name-on-clipboard ()
+  (defun copy-filename-to-clipboard ()
     "Put the current file name on the clipboard"
     (interactive)
     (let ((filename (if (equal major-mode 'dired-mode)
@@ -987,6 +989,8 @@ lifted from [[https://stackoverflow.com/questions/2416655/file-path-to-clipboard
           (insert filename)
           (clipboard-kill-region (point-min) (point-max)))
         (message filename))))
+
+  (global-set-key (kbd "H-w") 'copy-filename-to-clipboard)
 #+END_SRC
 
 ** Shell
@@ -2221,15 +2225,84 @@ Try animated gifs with code from [[https://emacs.stackexchange.com/questions/359
 
 ** Python
 
-   See also useful commands [[*python-mode][python-mode]]
+   See also useful commands [[*python-mode][python-mode]] and more notes about ipython and my
+   startup file at the end of this section. Specify a separate history file
+   because I like to have a separate ipython running in an terminal and this way
+   the sqlite dbs won't get clobbered.
 
    #+begin_src emacs-lisp
      (use-package python-mode
-       :defer t
        :ensure t
        :config
-       (python-shell-interpreter "ipython"))
+       (setq-default python-shell-interpreter "ipython"
+                     python-shell-interpreter-args
+                     (concat "--HistoryManager.hist_file=/tmp/emacs_ipython_hist.sqlite "
+                             "--simple-prompt -i")))
    #+end_src
+
+#+BEGIN_SRC emacs-lisp
+  (use-package auto-virtualenv
+    :ensure t
+    :config
+    (add-hook 'python-mode-hook 'auto-virtualenv-set-virtualenv))
+#+END_SRC
+
+from [[https://stackoverflow.com/questions/8664061/emacs-python-mode-how-to-highlight-in-different-colors-a-str-vs-unicode-str][stackoverflow]]
+
+#+BEGIN_SRC emacs-lisp
+  (defface font-lock-ucs-string-face
+    '((((class grayscale) (background light)) :foreground "DarkGray" :slant italic)
+      (((class grayscale) (background dark))  :foreground "DarkGray" :slant italic)
+      (((class color) (min-colors 88) (background light)) :foreground "red")
+      (((class color) (min-colors 88) (background dark))  :foreground "red")
+      (((class color) (min-colors 16) (background light)) :foreground "red")
+      (((class color) (min-colors 16) (background dark))  :foreground "red")
+      (((class color) (min-colors 8)) :foreground "red")
+      (t :slant italic))
+    "Font Lock mode face used to highlight strings."
+    :group 'font-lock-faces)
+
+  (defun py-font-lock-syntactic-face-function (state)
+    "See variable `font-lock-syntactic-face-function'"
+    (message "Running py-font-lock-syntactic-face-function at %d." (point))
+    (if (nth 3 state)
+        (if (looking-back "u\"")
+        'font-lock-ucs-string-face
+      'font-lock-string-face)
+      'font-lock-comment-face))
+
+  (add-hook 'python-mode-hook (lambda ()
+                     (setq-default font-lock-syntactic-face-function
+                                   'py-font-lock-syntactic-face-function)))
+#+END_SRC
+
+*** ipython startup file notes
+
+    Initially, I could not get ipython to load my python startup file that I was
+    setting in PYTHONSTARTUP
+
+    Now, it works. I run my startup file with this configuration: Generate
+    ipython profile at command line with:
+
+#+BEGIN_SRC shell :tangle no
+ipython profile create
+# find again with
+# ipython profile locate
+#+END_SRC
+
+Then edit the config file (using ~ for my home dir is most generic).
+
+#+BEGIN_SRC python :tangle no
+c.InteractiveShellApp.exec_lines = ['%run ~/.python_startup.py']
+#+END_SRC
+
+Note that setting this:
+
+#+BEGIN_SRC python :tangle no
+c.InteractiveShellApp.exec_PYTHONSTARTUP = True
+#+END_SRC
+
+did NOT work in ipython in emacs for me
 
 ** Projectile
 
