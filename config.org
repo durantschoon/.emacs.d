@@ -166,7 +166,10 @@ Sources for this section include [[https://github.com/magnars/.emacs.d/blob/mast
         (normal-top-level-add-subdirs-to-load-path))
     #+END_SRC
 
-*** install use-package-chords first so other modes can use them
+*** "Quords" install use-package-chords first so other modes can use them
+
+I'll call them "quords" because q followed by any other letter than u should be
+a good candidate (unlikely to be found in English).
 
 #+BEGIN_SRC emacs-lisp
   (use-package use-package-chords
@@ -175,7 +178,8 @@ Sources for this section include [[https://github.com/magnars/.emacs.d/blob/mast
     (key-chord-mode 1)
     (key-chord-define-global "hh" 'win-swap-horizontal)
     (key-chord-define-global "vv" 'win-swap-vertical)
-    (key-chord-define-global "ww" 'toggle-window-split))
+    (key-chord-define-global "ww" 'toggle-window-split)
+    (key-chord-define-global "qf" 'ffap-no-confirmation))
 #+END_SRC
 
 ** Global Key Bindings (Alphabetical by description)
@@ -989,8 +993,22 @@ lifted from [[https://stackoverflow.com/questions/2416655/file-path-to-clipboard
           (insert filename)
           (clipboard-kill-region (point-min) (point-max)))
         (message filename))))
-
+  ;; since C-w and M-w copy and cut, this is similar
   (global-set-key (kbd "H-w") 'copy-filename-to-clipboard)
+#+END_SRC
+
+*** Find file at point (ffap) without confirmation
+
+lifted from [[https://www.reddit.com/r/emacs/comments/676r5b/how_to_stop_findfileatprompting_when_there_is_a/][reddit]]
+
+#+BEGIN_SRC emacs-lisp
+(defun ffap-no-confirmation (&optional filename)
+  (interactive)
+  (let* ((name (or filename (ffap-string-at-point 'file)))
+         (fname (expand-file-name name)))
+    (if (and name fname (file-exists-p fname))
+        (find-file fname)
+      (find-file-at-point filename))))
 #+END_SRC
 
 ** Shell
