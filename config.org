@@ -999,7 +999,7 @@ lifted from [[https://stackoverflow.com/questions/2416655/file-path-to-clipboard
 
 *** Find file at point (ffap) without confirmation
 
-lifted from [[https://www.reddit.com/r/emacs/comments/676r5b/how_to_stop_findfileatprompting_when_there_is_a/][reddit]]
+lifted from [[https://www.reddit.com/r/emacs/comments/676r5b/how_to_stop_findfileatprompting_when_there_is_a/][reddit]] but now modified
 
 #+BEGIN_SRC emacs-lisp
   (setq-default ffap-no-confirmation-extensions-order (list ".jsx" ".js" ".css"))
