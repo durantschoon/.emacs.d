@@ -1002,13 +1002,35 @@ lifted from [[https://stackoverflow.com/questions/2416655/file-path-to-clipboard
 lifted from [[https://www.reddit.com/r/emacs/comments/676r5b/how_to_stop_findfileatprompting_when_there_is_a/][reddit]]
 
 #+BEGIN_SRC emacs-lisp
-(defun ffap-no-confirmation (&optional filename)
-  (interactive)
-  (let* ((name (or filename (ffap-string-at-point 'file)))
-         (fname (expand-file-name name)))
-    (if (and name fname (file-exists-p fname))
-        (find-file fname)
-      (find-file-at-point filename))))
+  (setq-default ffap-no-confirmation-extensions-order (list ".jsx" ".js" ".css"))
+
+  (defun ffap-no-confirmation (&optional filename)
+    "Find file at point or FILENAME without asking for confirmation first if file
+  exists. If ffap-no-confirmation-extensions-order is defined, the extensions will
+  be appended in order to see if a file name exists and then it will be opened."
+    (interactive)
+    (let* ((name (or filename (ffap-string-at-point 'file)))
+           (fname (expand-file-name name))
+           (foundp nil))
+      (progn
+        (if (and name fname (file-exists-p fname))
+            (progn
+              (find-file fname)
+              (setq foundp t)))
+        (if (and (not foundp) (boundp 'ffap-no-confirmation-extensions-order))
+            (let ((i 0)
+                  (exts ffap-no-confirmation-extensions-order))
+              (while (and (not foundp) (<= i (length exts)))
+                (let* ((ext (elt exts i))
+                       (fname-w-ext (concat fname ext)))
+                  (if (file-exists-p fname-w-ext)
+                      (progn
+                        (find-file fname-w-ext)
+                        (message (concat "ffap-no-confirmation found " fname-w-ext " by extension."))
+                        (setq foundp t))))
+                (setq i (1+ i)))))
+        (if (not foundp)
+            (find-file-at-point filename)))))
 #+END_SRC
 
 ** Shell
