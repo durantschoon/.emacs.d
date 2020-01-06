@@ -1927,6 +1927,19 @@ it for emacs auto-complete with company:
        )
    #+end_src
 
+This is not needed because I already have ~json-reformat-region~.
+
+#+BEGIN_SRC emacs-lisp :tangle no
+  (defun json-format-region ()
+    (interactive)
+    (save-excursion
+      (shell-command-on-region (region-beginning)
+                               (region-end)
+                               "python -m json.tool"
+                               (buffer-name)
+                               t)))
+#+END_SRC
+
 ** Livescript
 
    #+begin_src emacs-lisp
