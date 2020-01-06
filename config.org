@@ -1759,7 +1759,7 @@ p 200*300, math.Log10(1000)
      ]
    }
  #+END_SRC
-*** cannot find the page that recommends js2-minor-mode
+*** cannot find the page that recommends js2-minor-mode, but here it is
 
  #+BEGIN_SRC emacs-lisp :tangle no
    (add-hook 'js-mode-hook 'js2-minor-mode)
