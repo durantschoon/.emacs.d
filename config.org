@@ -1409,9 +1409,10 @@ be able to find it.
        (setq-default flycheck-html-tidy-executable
                      "/usr/local/Cellar/tidy-html5/5.2.0/bin/tidy")
        (setq-default flycheck-temp-prefix ".flycheck")
+       ;; Prevent flycheck from treating files like init.el as package files
        (setq-default flycheck-disabled-checkers
                      (append flycheck-disabled-checkers
-                             '(json-jsonlist)))
+                             '(json-jsonlist emacs-lisp-checkdoc)))
        (add-to-list 'flycheck-checkers 'python-flake8)
        (add-to-list 'flycheck-checkers 'javascript-eslint)
 
