@@ -1917,6 +1917,17 @@ it for emacs auto-complete with company:
     (add-hook 'js2-mode-hook (lambda () (tern-mode) (company-mode))))
 #+END_SRC
 
+*** prettier
+
+    #+begin_src emacs-lisp
+      (use-package prettier-js
+        :ensure t
+        :after (js2 web)
+        :config
+        (add-hook 'js2-mode-hook 'prettier-js-mode)
+        (add-hook 'web-mode-hook 'prettier-js-mode))
+    #+end_src
+
 ** JSON
 
    #+begin_src emacs-lisp
