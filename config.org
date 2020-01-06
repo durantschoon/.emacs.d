@@ -373,6 +373,7 @@ a good candidate (unlikely to be found in English).
        (linum-mode 1)
        (message "Truncating long lines in programming mode...")
        (toggle-truncate-lines t)
+       (setq-local dabbrev-case-fold-search nil) ;; eg. "myVar" expands case-sensitively
        (add-to-list 'write-file-functions 'delete-trailing-whitespace))
      (add-hook 'prog-mode-hook 'my-prog-mode-hook)
    #+END_SRC
