@@ -335,6 +335,11 @@ a good candidate (unlikely to be found in English).
     #+END_SRC
 
 ** Frames (otherwise known as windows) and Windows (otherwise known as panes)
+*** Disable scroll-bar
+#+BEGIN_SRC emacs-lisp
+(toggle-scroll-bar -1)
+#+END_SRC
+
 *** New frames open maximized
 
 #+BEGIN_SRC emacs-lisp
