@@ -1160,6 +1160,7 @@ lifted from [[https://www.reddit.com/r/emacs/comments/676r5b/how_to_stop_findfil
 #+BEGIN_SRC emacs-lisp
   (use-package anaconda-mode
     :ensure t
+    :after (exec-path-from-shell)
     :hook ((python-mode . anaconda-mode)
            (python-mode . anaconda-eldoc-mode))
     :config
