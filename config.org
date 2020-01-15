@@ -1323,6 +1323,13 @@ be able to find it.
      (add-hook 'dired-mode-hook #'durant/dired-truncate-lines)
    #+END_SRC
 
+** Docker
+
+#+BEGIN_SRC emacs-lisp
+  (use-package dockerfile-mode
+    :ensure t)
+#+END_SRC
+
 ** Emmet
 
    According to [[http://emmet.io/][their website]], "Emmet — the essential toolkit for web-developers."
