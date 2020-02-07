@@ -1409,6 +1409,8 @@ be able to find it.
 
 ** Flycheck
 
+   Download [[https://github.com/koalaman/shellcheck#user-content-installing][shellcheck]] for sh-mode checking.
+
    #+begin_src emacs-lisp
      (use-package flycheck
        :ensure t
