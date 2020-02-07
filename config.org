@@ -1139,11 +1139,11 @@ lifted from [[https://www.reddit.com/r/emacs/comments/676r5b/how_to_stop_findfil
 #+end_src
 
 * Modes (Alphabetical)
-** Ag
+** OFF Ag (see Rg)
 
    Note I use helm-ag (see helm section below).
 
-   #+begin_src emacs-lisp
+   #+begin_src emacs-lisp :tangle no
      (use-package ag
        :commands ag
        :ensure t
@@ -1412,6 +1412,7 @@ be able to find it.
    #+begin_src emacs-lisp
      (use-package flycheck
        :ensure t
+       :after (sh)
        :config
        (setq-default flycheck-html-tidy-executable
                      "/usr/local/Cellar/tidy-html5/5.2.0/bin/tidy")
@@ -1426,6 +1427,7 @@ be able to find it.
        (flycheck-add-mode 'javascript-eslint 'web-mode)
        (flycheck-add-mode 'javascript-eslint 'js2-mode)
        (flycheck-add-mode 'javascript-eslint 'rjsx-mode) ; replaces 'js2-jsx-mode
+       (add-hook 'sh-mode-hook 'flycheck-mode)
        ;; Since we're using eslint
        ;; Turn off js2 mode errors & warnings (we lean on eslint/standard)
        (setq-default js2-mode-show-parse-errors nil)
@@ -2500,6 +2502,21 @@ the minus '-' is for exclude and '+' would be for include
          (recentf-mode t)
          (setq recentf-max-saved-items 200)))
    #+end_src
+
+**
+
+#+BEGIN_SRC
+
+#+END_SRC
+
+** Rg - ripgrep is faster than ag
+
+#+BEGIN_SRC emacs-lisp
+  (use-package rg
+    :config
+    ;; (rg-enable-default-bindings) ;; this steals C-c s, so would need to rebind that
+  )
+#+END_SRC
 
 ** Sass
 
