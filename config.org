@@ -2505,12 +2505,6 @@ the minus '-' is for exclude and '+' would be for include
          (setq recentf-max-saved-items 200)))
    #+end_src
 
-**
-
-#+BEGIN_SRC
-
-#+END_SRC
-
 ** Rg - ripgrep is faster than ag
 
 #+BEGIN_SRC emacs-lisp
@@ -2559,6 +2553,22 @@ the minus '-' is for exclude and '+' would be for include
       (setq solidity-comment-style 'slash)
       (define-key solidity-mode-map (kbd "C-c C-g") 'solidity-estimate-gas-at-point)
       ))
+#+END_SRC
+
+** Terraform
+
+also company-terraform
+
+#+BEGIN_SRC emacs-lisp
+  (use-package terraform-mode
+    :ensure t)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (use-package company-terraform
+    :ensure t
+    :after (terraform-mode company)
+    )
 #+END_SRC
 
 ** TextExpander
