@@ -2348,7 +2348,7 @@ Try animated gifs with code from [[https://emacs.stackexchange.com/questions/359
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-  (use-package blacken
+(use-package blacken
     :ensure t
     :config
     (add-hook 'python-mode-hook 'blacken-mode))

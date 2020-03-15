@@ -3,4 +3,4 @@
 # key: ppd
 # --
 print(f"debug: ${1:var}")
-pp.pprint({$1})
+pp.pprint($1)
