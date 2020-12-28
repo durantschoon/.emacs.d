@@ -184,12 +184,14 @@ a good candidate (unlikely to be found in English).
 
 ** Global Key Bindings (Alphabetical by description)
 *** Completion
-
     #+BEGIN_SRC emacs-lisp
       (global-set-key (kbd "C-M-/") 'comint-dynamic-complete-filename)
       (global-set-key (kbd "s-<tab>") 'completion-at-point)
     #+END_SRC
-
+*** New lines
+#+BEGIN_SRC emacs-lisp
+(define-key global-map (kbd "RET") 'newline-and-indent)
+#+END_SRC
 *** Darwin, OS X
 
     ;; key bindings
@@ -2432,6 +2434,7 @@ did NOT work in ipython in emacs for me
        (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
        (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
        (projectile-global-mode t)
+       (setq-default projectile-project-search-path '("~/Programming/PROJECTS/"))
        (setq-default projectile-require-project-root nil)
        (setq-default projectile-enable-caching t)
        (setq-default projectile-globally-ignored-directories
