@@ -32,14 +32,14 @@
 
 
 #+BEGIN_SRC sh
-# uninstall old:
-# brew uninstall emacs-plus
+# uninstall old
+brew uninstall emacs-plus
+# install new
 brew install emacs-plus@28 --with-xwidgets --with-emacs-card-blue-deep-icon
-# "brew linkapps emacs" no longer works
+# update link in /Applications in a zsh shell
+[[ -L /Applications/Emacs.app ]] && =rm /Applications/Emacs.app
 ln -si /usr/local/opt/emacs-plus@28/Emacs.app /Applications/
 #+END_SRC
-
-   Then to upgrade
 
 ** Personal Information
 
