@@ -2,6 +2,11 @@
 #+AUTHOR: Durant Schoon
 
 * Introduction
+
+** I'm now experimenting with spacemacs
+
+   See my config here: https://github.com/durantschoon/.spacemacs.d
+
 ** Setup Instructions
 
    This file was created with boilerplate files described in the video
@@ -17,16 +22,23 @@
 
    This is how I installed emacs on my mac with homebrew:
 
-#+BEGIN_SRC sh
-brew install emacs --with-cocoa --with-gnutls --with-rsvg --with-imagemagick
-# "brew linkapps emacs" no longer works
-sudo ln -s /usr/local/Cellar/emacs/26.1_1/Emacs.app /Applications
-#+END_SRC
+   I use a different (arbitrary) icon for each version, so I can tell at a
+   glance at startup which version I'm using:
 
-   Then to upgrade
+   | Version       | Icon                             |
+   |---------------+----------------------------------|
+   | emacs-plus@27 | --with-EmacsIcon4-icon           |
+   | emacs-plus@28 | --with-emacs-card-blue-deep-icon |
+
 
 #+BEGIN_SRC sh
-brew upgrade emacs --with-cocoa --with-gnutls --with-imagemagick
+# uninstall old
+brew uninstall emacs-plus
+# install new
+brew install emacs-plus@28 --with-xwidgets --with-emacs-card-blue-deep-icon
+# update link in /Applications in a zsh shell
+[[ -L /Applications/Emacs.app ]] && =rm /Applications/Emacs.app
+ln -si /usr/local/opt/emacs-plus@28/Emacs.app /Applications/
 #+END_SRC
 
 ** Personal Information
@@ -184,12 +196,14 @@ a good candidate (unlikely to be found in English).
 
 ** Global Key Bindings (Alphabetical by description)
 *** Completion
-
     #+BEGIN_SRC emacs-lisp
       (global-set-key (kbd "C-M-/") 'comint-dynamic-complete-filename)
       (global-set-key (kbd "s-<tab>") 'completion-at-point)
     #+END_SRC
-
+*** New lines
+#+BEGIN_SRC emacs-lisp
+(define-key global-map (kbd "RET") 'newline-and-indent)
+#+END_SRC
 *** Darwin, OS X
 
     ;; key bindings
@@ -2447,6 +2461,7 @@ did NOT work in ipython in emacs for me
        (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
        (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
        (projectile-global-mode t)
+       (setq-default projectile-project-search-path '("~/Programming/PROJECTS/"))
        (setq-default projectile-require-project-root nil)
        (setq-default projectile-enable-caching t)
        (setq-default projectile-globally-ignored-directories
