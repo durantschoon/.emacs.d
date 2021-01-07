@@ -2135,6 +2135,7 @@ access magit.
       (bind-key "C-c l" 'org-store-link)
       (bind-key "C-c c" 'org-capture)
       (bind-key "C-c a" 'org-agenda)
+      (bind-key "<M-C-return>" 'org-insert-subheading)
       (global-set-key "\C-cb" 'org-iswitchb)
     #+end_src
 
