@@ -1391,6 +1391,13 @@ be able to find it.
   )
 #+END_SRC
 
+** Esup - startup profiler
+
+#+begin_src emacs-lisp
+  (use-package esup
+    :ensure t)
+#+end_src
+
 ** Exec path from shell
 
    So emacs can also find executables (like "coffee" for coffee-repl).
