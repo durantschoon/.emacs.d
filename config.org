@@ -936,6 +936,7 @@ M-x all-the-icons-install-fonts
    #+BEGIN_SRC emacs-lisp
      (add-to-list 'auto-mode-alist '("\\.aliases$" . sh-mode))
      (add-to-list 'auto-mode-alist '("\..*rc\\'" . sh-mode))
+     (add-to-list 'auto-mode-alist '("\..*zsh.*\\'" . shell-script-mode))
      ;; for freemind mindmaps, yes conflicts with .mm files in Objective C
      (add-to-list 'auto-mode-alist '("\\.mm$" . xml-mode))
    #+END_SRC
