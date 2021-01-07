@@ -2789,6 +2789,17 @@ cd ~/.emacs.d/yasnippets
          [?\C-s ?\[ ?\[ ?\C-  ?\C-b ?\C-  ?\C-s ?\] ?\C-  ?\C-u ?\C-  ?\C-w backspace ?\C-s ?\] ?\] ?\C-  backspace ?\( ?\) ?\C-b ?\C-y ?\C-  ?\C-  backspace ?\C-r ?\[ ?\C-  ?\C-d ?\C-s ?\) ?\C- ])
     #+END_SRC
 
+*** org-link-jira-from-middle
+
+    #+BEGIN_SRC emacs-lisp
+      ;; This is lazy, but works
+      ;; to use org-link-jira-from-middle:
+      ;; paste into a new line: PTS-XYZ-link title text here
+      ;; place cursor between link and title, then run the macro
+      (fset 'org-link-jira-from-middle
+            (kmacro-lambda-form [?\C-  ?\C-a ?\C-w ?\[ ?\[ ?\C-y ?\C-  ?\M-b ?\M-b ?\M-w ?\M-d ?\M-d ?\C-y ?\C-f ?\[ ?\C-y ?\C-f ?\]] 0 "%d"))
+    #+END_SRC
+
 * Helper Functions
 ** for yasnippet
 
