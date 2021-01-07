@@ -205,8 +205,7 @@ a good candidate (unlikely to be found in English).
         (setq ns-function-modifier 'hyper)    ; make Fn key do Hyper
         ;; ---------- SCROLLING ----------    ; for trackpads
         (global-set-key [wheel-right] 'scroll-left)
-        (global-set-key [wheel-left] 'scroll-right)
-        )
+        (global-set-key [wheel-left] 'scroll-right))
       (global-set-key [kp-delete] 'delete-char) ;; sets fn-delete to be right-delete
     #+END_SRC
 
@@ -215,14 +214,13 @@ a good candidate (unlikely to be found in English).
     #+BEGIN_SRC emacs-lisp
       (when (eq system-type 'darwin)          ; mac specific settings
         (global-set-key "\M-`" 'other-frame)  ; act like other mac programs
-        )
+
+        ; was just f11, bad on Darwin
+        ; similar to M-<f10> which is toggle-frame-maximized
+        (global-set-key (kbd "M-<f11>") 'toggle-frame-fullscreen))
 
       (global-set-key [(meta down)] 'scroll-other-window)    ; C-M-v
       (global-set-key [(meta up)] 'scroll-other-window-down) ; C-M-S-v
-
-      ; was just f11, bad on Darwin
-      ; similar to M-<f10> which is toggle-frame-maximized
-      (global-set-key (kbd "M-<f11>") 'toggle-frame-fullscreen)
 
       (global-set-key (kbd "C-x 4 o") 'switch-to-buffer-other-window-return)
       (global-set-key (kbd "C-x 4 k") 'kill-buffer-other-window)
