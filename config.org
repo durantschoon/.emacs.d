@@ -2479,6 +2479,8 @@ did NOT work in ipython in emacs for me
        :bind ("C-c s" . sr-speedbar-toggle)
        :config
        (setq-default speedbar-show-unknown-files t)
+       (custom-set-variables '(speedbar-show-unknown-files t))
+       (setq speedbar-directory-unshown-regexp "^\(\.\.*$\)\'")
        (setq-default speedbar-directory-unshown-regexp "^\\(CVS\\|RCS\\|SCCS\\|\\.\\.*$\\)\\'")
        (speedbar-add-supported-extension ".js")
        (add-to-list 'speedbar-fetch-etags-parse-list
