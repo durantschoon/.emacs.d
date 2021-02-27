@@ -3,10 +3,10 @@
 ;;; Set up package
 (require 'package)
 (add-to-list 'package-archives
-             '("melpa" . "http://melpa.org/packages/") t)
+             '("melpa" . "https://melpa.org/packages/") t)
 (add-to-list 'package-archives
-	      '("melpa-stable" . "http://melpa-stable.milkbox.net/packages/") t)
-(package-initialize)
+	      '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+;; (package-initialize) ; no longer needed
 
 ;;; Bootstrap use-package
 ;; Install use-package if it's not already installed.
