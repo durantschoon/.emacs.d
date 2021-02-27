@@ -699,7 +699,7 @@ build.cmd
 
     I nabbed these from [[https://github.com/danielmai/.emacs.d/blob/master/config.org#convenient-theme-functions][Daniel Mai]]. They're great!
 
-#+begin_src emacs-lisp :tangle
+#+begin_src emacs-lisp :tangle no
   (defun switch-theme (theme)
     "Disables any currently active themes and loads THEME."
     ;; This interactive call is taken from `load-theme'
