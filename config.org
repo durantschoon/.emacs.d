@@ -145,7 +145,6 @@ Sources for this section include [[https://github.com/magnars/.emacs.d/blob/mast
   (column-number-mode t)
 
   (global-visual-line-mode)
-  (diminish 'visual-line-mode) ; remove this from the mode-line display
 
   (setq uniquify-buffer-name-style 'forward)
 
