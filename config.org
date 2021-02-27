@@ -163,7 +163,7 @@ Sources for this section include [[https://github.com/magnars/.emacs.d/blob/mast
 
 #+BEGIN_SRC emacs-lisp
   (require 'package)
-  ;; (package-initialize)
+  ;; (package-initialize) ; no longer needed
   (add-to-list 'package-archives
                '("marmalade" . "http://marmalade-repo.org/packages/") t)
 #+END_SRC
@@ -1623,7 +1623,6 @@ p 200*300, math.Log10(1000)
    #+BEGIN_SRC emacs-lisp
      (use-package helm
        :ensure t
-       :diminish helm-mode
        :init (progn
                (require 'helm-config)
                (use-package helm-projectile
@@ -2452,7 +2451,6 @@ did NOT work in ipython in emacs for me
      (use-package projectile
        :ensure t
        ;; :pin melpa-stable
-       :diminish projectile-mode
        :commands projectile-mode
        :config
        (projectile-mode +1)
@@ -2729,7 +2727,6 @@ cd ~/.emacs.d/yasnippets
    #+begin_src emacs-lisp
      (use-package yasnippet
        :ensure t
-       :diminish yas-global-mode
        :config
        (yas-global-mode 1)
        (setq-default yas-snippet-dirs (append yas-snippet-dirs
