@@ -2181,6 +2181,21 @@ access magit.
       (setq org-hide-emphasis-markers t)
     #+END_SRC
 
+*** MobileOrg
+
+    https://mobileorg.github.io/documentation/#using-dropbox
+
+    Run (org-mobile-push)
+
+#+BEGIN_SRC emacs-lisp
+;; Set to the location of your Org files on your local system
+(setq org-directory "~/org")
+;; Set to the name of the file where new notes will be stored
+(setq org-mobile-inbox-for-pull "~/org/flagged.org")
+;; Set to <your Dropbox root directory>/MobileOrg.
+(setq org-mobile-directory "~/Dropbox/Apps/MobileOrg")
+#+END_SRC
+
 *** Org files and apps
 
 Try animated gifs with code from [[https://emacs.stackexchange.com/questions/35931/open-org-mode-link-of-gif-image-and-display-inside-of-emacs-buffer-with-command][here]].
