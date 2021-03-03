@@ -152,7 +152,7 @@ Sources for this section include [[https://github.com/magnars/.emacs.d/blob/mast
 
 #+BEGIN_SRC emacs-lisp
   (require 'package)
-  (package-initialize)
+  ;; (package-initialize)
   (add-to-list 'package-archives
                '("marmalade" . "http://marmalade-repo.org/packages/") t)
 #+END_SRC
@@ -205,8 +205,7 @@ a good candidate (unlikely to be found in English).
         (setq ns-function-modifier 'hyper)    ; make Fn key do Hyper
         ;; ---------- SCROLLING ----------    ; for trackpads
         (global-set-key [wheel-right] 'scroll-left)
-        (global-set-key [wheel-left] 'scroll-right)
-        )
+        (global-set-key [wheel-left] 'scroll-right))
       (global-set-key [kp-delete] 'delete-char) ;; sets fn-delete to be right-delete
     #+END_SRC
 
@@ -215,14 +214,13 @@ a good candidate (unlikely to be found in English).
     #+BEGIN_SRC emacs-lisp
       (when (eq system-type 'darwin)          ; mac specific settings
         (global-set-key "\M-`" 'other-frame)  ; act like other mac programs
-        )
+
+        ; was just f11, bad on Darwin
+        ; similar to M-<f10> which is toggle-frame-maximized
+        (global-set-key (kbd "M-<f11>") 'toggle-frame-fullscreen))
 
       (global-set-key [(meta down)] 'scroll-other-window)    ; C-M-v
       (global-set-key [(meta up)] 'scroll-other-window-down) ; C-M-S-v
-
-      ; was just f11, bad on Darwin
-      ; similar to M-<f10> which is toggle-frame-maximized
-      (global-set-key (kbd "M-<f11>") 'toggle-frame-fullscreen)
 
       (global-set-key (kbd "C-x 4 o") 'switch-to-buffer-other-window-return)
       (global-set-key (kbd "C-x 4 k") 'kill-buffer-other-window)
@@ -297,6 +295,17 @@ a good candidate (unlikely to be found in English).
     #+BEGIN_SRC emacs-lisp
       (global-set-key [f5] 'global-whitespace-mode)
       (global-set-key [f6] 'toggle-truncate-lines)
+    #+END_SRC
+
+*** Git
+
+    Now that I'm switching to spacemacs my muscle memory wants to do this:
+
+    Actually this requires setting up a prefix-key properly which I'll have to
+    learn about later.
+
+    #+BEGIN_SRC emacs-lisp :tangle no
+      (global-set-key (kbd "M-m g s") 'magit-status)
     #+END_SRC
 
 *** search
@@ -414,6 +423,21 @@ tags -eR
    :PROPERTIES:
    :Visibility: CHILDREN
    :END:
+
+*** emojis on osx
+
+#+BEGIN_SRC emacs-lisp
+  (when (eq system-type 'darwin)
+         ;;; Useful for https://github.com/dunn/company-emoji
+         ;; https://www.reddit.com/r/emacs/comments/8ph0hq/i_have_converted_from_the_mac_port_to_the_ns_port/
+         ;; not tested with emacs26 (requires a patched Emacs version for multi-color font support)
+         (if (version< "27.0" emacs-version)
+             (set-fontset-font
+              "fontset-default" 'unicode "Apple Color Emoji" nil 'prepend)
+           (set-fontset-font
+            t 'symbol (font-spec :family "Apple Color Emoji") nil 'prepend)))
+#+END_SRC
+
 *** OFF - Testing Hasklig but only on Mac
 
 #+BEGIN_SRC emacs-lisp :tangle no
@@ -938,6 +962,7 @@ M-x all-the-icons-install-fonts
    #+BEGIN_SRC emacs-lisp
      (add-to-list 'auto-mode-alist '("\\.aliases$" . sh-mode))
      (add-to-list 'auto-mode-alist '("\..*rc\\'" . sh-mode))
+     (add-to-list 'auto-mode-alist '("\..*zsh.*\\'" . shell-script-mode))
      ;; for freemind mindmaps, yes conflicts with .mm files in Objective C
      (add-to-list 'auto-mode-alist '("\\.mm$" . xml-mode))
    #+END_SRC
@@ -1257,21 +1282,29 @@ lifted from [[https://www.reddit.com/r/emacs/comments/676r5b/how_to_stop_findfil
     :ensure t)
 #+END_SRC
 
+#+BEGIN_SRC emacs-lisp :tangle no
+  ;;; https://github.com/dunn/company-emoji
+  (use-package company-emoji
+    :ensure t)
+#+END_SRC
+
 #+BEGIN_SRC emacs-lisp
-    (use-package company
-      :ensure t
-      :requires company-anaconda
-      :config
-      (add-hook 'after-init-hook 'global-company-mode)
-      (setq company-tooltip-limit 20)                      ; bigger popup window
-      (setq company-idle-delay .3)                         ; decrease delay before autocompletion popup shows
-      (setq company-echo-delay 0)                          ; remove annoying blinking
-      (setq company-begin-commands '(self-insert-command)) ; start autocompletion only after typing
-      (setq company-minimum-prefix-length 3)
-      (define-key company-active-map (kbd "C-n") #'company-select-next)
-      (define-key company-active-map (kbd "C-p") #'company-select-previous)
-      (eval-after-load "company"
-        '(add-to-list 'company-backends 'company-anaconda)))
+  (use-package company
+    :ensure t
+    :requires company-anaconda
+    :config
+    (add-hook 'after-init-hook 'global-company-mode)
+    (setq company-tooltip-limit 20)                      ; bigger popup window
+    (setq company-idle-delay .3)                         ; decrease delay before autocompletion popup shows
+    (setq company-echo-delay 0)                          ; remove annoying blinking
+    (setq company-begin-commands '(self-insert-command)) ; start autocompletion only after typing
+    (setq company-minimum-prefix-length 3)
+    (define-key company-active-map (kbd "C-n") #'company-select-next)
+    (define-key company-active-map (kbd "C-p") #'company-select-previous)
+    ;; (eval-after-load "company"
+    ;;  '(add-to-list 'company-backends 'company-emoji))
+    (eval-after-load "company"
+      '(add-to-list 'company-backends 'company-anaconda)))
 #+END_SRC
 
 For file completion with golang you will need ~gocode~. See [[https://github.com/mdempsky/gocode][mdempysky's
@@ -1383,6 +1416,13 @@ be able to find it.
     (add-hook 'after-init-hook #'global-emojify-mode)
   )
 #+END_SRC
+
+** Esup - startup profiler
+
+#+begin_src emacs-lisp
+  (use-package esup
+    :ensure t)
+#+end_src
 
 ** Exec path from shell
 
@@ -2464,6 +2504,8 @@ did NOT work in ipython in emacs for me
        :bind ("C-c s" . sr-speedbar-toggle)
        :config
        (setq-default speedbar-show-unknown-files t)
+       (custom-set-variables '(speedbar-show-unknown-files t))
+       (setq speedbar-directory-unshown-regexp "^\(\.\.*$\)\'")
        (setq-default speedbar-directory-unshown-regexp "^\\(CVS\\|RCS\\|SCCS\\|\\.\\.*$\\)\\'")
        (speedbar-add-supported-extension ".js")
        (add-to-list 'speedbar-fetch-etags-parse-list
@@ -2770,6 +2812,17 @@ cd ~/.emacs.d/yasnippets
 
       (fset 'org-link-to-md
          [?\C-s ?\[ ?\[ ?\C-  ?\C-b ?\C-  ?\C-s ?\] ?\C-  ?\C-u ?\C-  ?\C-w backspace ?\C-s ?\] ?\] ?\C-  backspace ?\( ?\) ?\C-b ?\C-y ?\C-  ?\C-  backspace ?\C-r ?\[ ?\C-  ?\C-d ?\C-s ?\) ?\C- ])
+    #+END_SRC
+
+*** org-link-jira-from-middle
+
+    #+BEGIN_SRC emacs-lisp
+      ;; This is lazy, but works
+      ;; to use org-link-jira-from-middle:
+      ;; paste into a new line: PTS-XYZ-link title text here
+      ;; place cursor between link and title, then run the macro
+      (fset 'org-link-jira-from-middle
+            [?\C-  ?\C-a ?\M-\\ ?\C-x ?\C-x ?\C-w ?\[ ?\[ ?\C-f ?\C-f backspace ?\C-b ?\C-y ?\C-  ?\M-b ?\M-b ?\C-w ?\C-y ?\C-f ?\[ ?\C-y ?\C-f ?\] ?\C-a tab])
     #+END_SRC
 
 * Helper Functions
