@@ -23,3 +23,4 @@
 ;;; Load the config
 (org-babel-load-file (concat user-emacs-directory "config.org"))
 (put 'scroll-left 'disabled nil)
+(put 'magit-diff-edit-hunk-commit 'disabled nil)

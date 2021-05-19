@@ -1736,6 +1736,13 @@ p 200*300, math.Log10(1000)
        (hs-toggle-hiding))
    #+END_SRC
 
+** HL7
+
+   #+BEGIN_SRC emacs-lisp
+     (autoload 'hl7-mode "~/.emacs.d/site-lisp/hl7-mode.el" "Major mode for editing HL7v2 messages." t nil)
+     (push '("^MSH|\\^~\\\\\\&" . hl7-mode) magic-mode-alist)
+   #+END_SRC
+
 ** HTML
 
    See also useful commands [[*html-mode][html-mode]]
@@ -2770,6 +2777,7 @@ cd ~/.emacs.d/yasnippets
        :ensure t
        :config
        (yas-global-mode 1)
+       ;; (setq yas-key-syntaxes (yas-try-key-from-whitespace "w_.()" "w_." "w_" "w"))
        (setq-default yas-snippet-dirs (append yas-snippet-dirs
                                               '("~/.emacs.d/snippets"))))
    #+end_src
