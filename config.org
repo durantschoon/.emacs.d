@@ -161,9 +161,9 @@ Sources for this section include [[https://github.com/magnars/.emacs.d/blob/mast
 #+end_src
 
 ** Package management
-*** add marmalade repo for additional packages
+*** add marmalade repo for additional packages (marmalade is currently down, so disable for now)
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :tangle no
   (require 'package)
   ;; (package-initialize) ; no longer needed
   (add-to-list 'package-archives
