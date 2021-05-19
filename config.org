@@ -39,6 +39,8 @@ brew install emacs-plus@28 --with-xwidgets --with-emacs-card-blue-deep-icon
 # update link in /Applications in a zsh shell
 [[ -L /Applications/Emacs.app ]] && =rm /Applications/Emacs.app
 ln -si /usr/local/opt/emacs-plus@28/Emacs.app /Applications/
+# delete all byte compiled files in elpa to force the new version to recompile everything
+=rm -rf ~/.emacs.d/elpa
 #+END_SRC
 
 ** Personal Information
